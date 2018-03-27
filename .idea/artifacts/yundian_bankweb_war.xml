@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="yundian.bankweb:war">
+    <output-path>$PROJECT_DIR$/yundian.bankweb/target</output-path>
+    <root id="archive" name="yundian.bankweb-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="yundian.bankweb:war exploded" />
+    </root>
+  </artifact>
+</component>

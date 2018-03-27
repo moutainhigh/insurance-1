@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="yundian.approvalweb:war">
+    <output-path>$PROJECT_DIR$/yundian.approvalweb/target</output-path>
+    <root id="archive" name="yundian.approvalweb-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="yundian.approvalweb:war exploded" />
+    </root>
+  </artifact>
+</component>

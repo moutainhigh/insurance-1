@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="guaranteeweb" />
+        <module name="yundian.approvalweb" />
+        <module name="yundian.bankweb" />
+        <module name="yundian.basicservice" />
+        <module name="yundian.fssapi" />
+        <module name="yundian.fssservice" />
+        <module name="yundian.guaranteeweb" />
+        <module name="yundian.manage" />
+        <module name="yundian.result" />
+        <module name="yundian.toolkit" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="guaranteeweb" target="1.8" />
+      <module name="insurance_loan" target="1.8" />
+      <module name="yundian.approvalweb" target="1.8" />
+      <module name="yundian.bankweb" target="1.8" />
+      <module name="yundian.basicservice" target="1.8" />
+      <module name="yundian.fssapi" target="1.8" />
+      <module name="yundian.fssservice" target="1.8" />
+      <module name="yundian.guaranteeweb" target="1.8" />
+      <module name="yundian.manage" target="1.8" />
+      <module name="yundian.result" target="1.7" />
+      <module name="yundian.toolkit" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

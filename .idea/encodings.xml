@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.approvalweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.bankweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.basicservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.fssapi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.fssservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.guaranteeweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.manage" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.result" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/yundian.toolkit" charset="UTF-8" />
+  </component>
+</project>

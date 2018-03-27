@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="guaranteeweb:war">
+    <output-path>$PROJECT_DIR$/yundian.guaranteeweb/target</output-path>
+    <root id="archive" name="guaranteeweb-1.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="guaranteeweb:war exploded" />
+    </root>
+  </artifact>
+</component>
