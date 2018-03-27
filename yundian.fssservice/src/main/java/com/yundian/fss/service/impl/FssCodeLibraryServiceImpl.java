@@ -1,0 +1,120 @@
+package com.yundian.fss.service.impl;
+
+import java.util.List;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.yundian.fss.dao.FssCodeLibraryModelMapper;
+import com.yundian.fssapi.domain.FssCodeLibraryModel;
+import com.yundian.fssapi.service.FssCodeLibraryService;
+import com.yundian.result.PaginatedResult;
+import com.yundian.result.Paginator;
+import com.yundian.result.Result;
+import com.yundian.result.ResultCodeContants;
+
+/**
+ * 代码配置字典项表
+ * 
+ * @author hehaibo
+ * @version $Id: FssCodeLibraryServiceImpl.java, v 0.1 2016年7月26日 下午8:59:44 hehaibo Exp $
+ */
+public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
+	private static final Logger logger =LoggerFactory.getLogger(FssCodeLibraryServiceImpl.class);
+	@Autowired
+	private FssCodeLibraryModelMapper  fssCodeLibraryModelMapper;
+	
+	public Result<Integer> insertFssCodeLibrary (FssCodeLibraryModel fssCodeLibraryModel){
+		
+		Result<Integer> result = new Result<Integer>();
+		try {
+			Integer row= this.fssCodeLibraryModelMapper.insert(fssCodeLibraryModel);
+			result.setData(row);
+			result.setCode(ResultCodeContants.success);
+		} catch (Exception e) {
+			logger.error(String.format("添加代码配置字典项异常:%s",
+					ToStringBuilder.reflectionToString(fssCodeLibraryModel)),e);
+			result.setData(ResultCodeContants.failed);
+		}
+		return result;
+		
+	}
+	
+	public Result<Integer> updateFssCodeLibrary(FssCodeLibraryModel fssCodeLibraryModel){
+		Result<Integer> result = new Result<Integer>();
+		try {
+			Integer row= this.fssCodeLibraryModelMapper.updateByPrimaryKey(fssCodeLibraryModel);
+			result.setData(row);
+			result.setCode(ResultCodeContants.success);
+		} catch (Exception e) {
+			logger.error(String.format("修改代码配置字典项异常:%s",
+					ToStringBuilder.reflectionToString(fssCodeLibraryModel)),e);
+			result.setData(ResultCodeContants.failed);
+		}
+		return result;
+	}
+
+			
+	public Result<Integer> deleteFssCodeLibraryById ( Integer id )
+	{
+		Result<Integer> result = new Result<Integer>();
+		try {
+			Integer row= this.fssCodeLibraryModelMapper.deleteByPrimaryKey(id);
+			result.setData(row);
+			result.setCode(ResultCodeContants.success);
+		} catch (Exception e) {
+			logger.error(String.format("删除代码配置字典项异常:%s",
+					id),e);
+			result.setCode(ResultCodeContants.failed);
+		}
+		return result;
+	}
+																											
+	public Result<FssCodeLibraryModel> getFssCodeLibraryById(Integer id){
+		Result<FssCodeLibraryModel> result = new Result<FssCodeLibraryModel>();
+		try {
+			FssCodeLibraryModel row= this.fssCodeLibraryModelMapper.selectByPrimaryKey(id);
+			result.setData(row);
+			result.setCode(ResultCodeContants.success);
+		} catch (Exception e) {
+			logger.error(String.format("删除代码配置字典项异常:%s",
+					id),e);
+			result.setCode(ResultCodeContants.failed);
+		}
+		return result;
+		
+	}
+
+	public Result<List<FssCodeLibraryModel>> getFssCodeLibraryList(FssCodeLibraryModel fssCodeLibraryModel){
+		Result<List<FssCodeLibraryModel>> result = new Result<List<FssCodeLibraryModel>>();
+		try {
+			List<FssCodeLibraryModel> data =null;//TODO
+			result.setData(data);
+			result.setCode(ResultCodeContants.success);
+		} catch (Exception e) {
+			logger.error(String.format("查询列表代码配置字典项异常:%s",
+					ToStringBuilder.reflectionToString(fssCodeLibraryModel)),e);
+			result.setCode(ResultCodeContants.failed);
+		}
+		return result;
+	}
+	
+
+	public Result<PaginatedResult<FssCodeLibraryModel>> getPaginatorFssCodeLibrary(
+            Paginator<FssCodeLibraryModel> paginator){
+		Result<PaginatedResult<FssCodeLibraryModel>> result = new Result<PaginatedResult<FssCodeLibraryModel>>();
+		try {
+			PaginatedResult<FssCodeLibraryModel> data =null;//TODO
+			result.setData(data);
+			result.setCode(ResultCodeContants.success);
+		} catch (Exception e) {
+			logger.error(String.format("分页查询列表代码配置字典项异常:%s",
+					ToStringBuilder.reflectionToString(paginator)),e);
+			result.setCode(ResultCodeContants.failed);
+		}
+		return result;
+    }
+
+}

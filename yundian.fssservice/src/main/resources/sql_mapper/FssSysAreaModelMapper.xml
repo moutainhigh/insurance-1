@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssSysAreaModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssSysAreaModel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="timestr" jdbcType="VARCHAR" property="timestr" />
+    <result column="english_name" jdbcType="VARCHAR" property="englishName" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="first_py" jdbcType="VARCHAR" property="firstPy" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, name, parent_id, timestr, english_name, sort, area_code, first_py, type, remark
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_sys_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fss_sys_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssSysAreaModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fss_sys_area (
+    	name, 
+    	parent_id, 
+    	timestr, 
+      	english_name, 
+      	sort, 
+      	area_code, 
+      	first_py, 
+      	type, 
+      	remark
+     )
+    values (
+    	#{name,jdbcType=VARCHAR}, 
+    	#{parentId,jdbcType=INTEGER}, 
+    	#{timestr,jdbcType=VARCHAR}, 
+      	#{englishName,jdbcType=VARCHAR}, 
+      	#{sort,jdbcType=VARCHAR}, 
+      	#{areaCode,jdbcType=VARCHAR}, 
+      	#{firstPy,jdbcType=VARCHAR}, 
+      	#{type,jdbcType=INTEGER}, 
+      	#{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssSysAreaModel">
+    update fss_sys_area
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      timestr = #{timestr,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      first_py = #{firstPy,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    	where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

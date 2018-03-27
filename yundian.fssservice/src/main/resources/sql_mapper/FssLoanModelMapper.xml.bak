@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssLoanModelMapper">
+	<resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssLoanModel">
+		<id column="loan_id" jdbcType="BIGINT" property="loanId" />
+		<result column="bank_id" jdbcType="INTEGER" property="bankId" />
+		<result column="guarantee_id" jdbcType="INTEGER" property="guaranteeId" />
+		<result column="guarantee_name" jdbcType="VARCHAR" property="guaranteeName" />
+		<result column="guarantee_user_id" jdbcType="BIGINT" property="guaranteeUserId" />
+		<result column="guarantee_user_name" jdbcType="VARCHAR"
+			property="guaranteeUserName" />
+			
+		<result column="organization_id" jdbcType="BIGINT" property="organizationId" />
+		<result column="orguser_id" jdbcType="BIGINT" property="orguserId" />
+		<result column="orguser_name" jdbcType="VARCHAR" property="orguserName" />	
+			
+		<result column="loan_code" jdbcType="VARCHAR" property="loanCode" />
+		<result column="loan_type" jdbcType="VARCHAR" property="loanType" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="idcard" jdbcType="VARCHAR" property="idcard" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="common_repayment_count" jdbcType="INTEGER"
+			property="commonRepaymentCount" />
+		<result column="guarantee_count" jdbcType="INTEGER" property="guaranteeCount" />
+		<result column="sign_time" jdbcType="TIMESTAMP" property="signTime" />
+		<result column="audit_status" jdbcType="VARCHAR" property="auditStatus" />
+		<result column="dealwith_status" jdbcType="VARCHAR" property="dealwithStatus" />
+		<result column="is_finish" jdbcType="VARCHAR" property="isFinish" />
+		
+		<result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+	</resultMap>
+	
+	
+	<resultMap id="FssLoanQueryBaseResultMap" type="com.yundian.fssapi.domain.query.FssLoanQueryModel">
+		<result column="loan_id" jdbcType="BIGINT" property="loanId" />
+		<result column="bank_id" jdbcType="INTEGER" property="bankId" />
+		<result column="guarantee_id" jdbcType="INTEGER" property="guaranteeId" />
+		<result column="guarantee_name" jdbcType="VARCHAR" property="guaranteeName" />
+		<result column="guarantee_user_id" jdbcType="BIGINT" property="guaranteeUserId" />
+		<result column="guarantee_user_name" jdbcType="VARCHAR"
+			property="guaranteeUserName" />
+		
+		<result column="organization_id" jdbcType="BIGINT" property="organizationId" />
+		<result column="orguser_id" jdbcType="BIGINT" property="orguserId" />
+		<result column="orguser_name" jdbcType="VARCHAR" property="orguserName" />	
+		
+		<result column="loan_code" jdbcType="VARCHAR" property="loanCode" />
+		<result column="loan_type" jdbcType="VARCHAR" property="loanType" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="idcard" jdbcType="VARCHAR" property="idcard" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="common_repayment_count" jdbcType="INTEGER"
+			property="commonRepaymentCount" />
+		<result column="guarantee_count" jdbcType="INTEGER" property="guaranteeCount" />
+		<result column="sign_time" jdbcType="TIMESTAMP" property="signTime" />
+		<result column="audit_status" jdbcType="VARCHAR" property="auditStatus" />
+		<result column="dealwith_status" jdbcType="VARCHAR" property="dealwithStatus" />
+		<result column="is_finish" jdbcType="VARCHAR" property="isFinish" />
+		<result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		
+		<!-- other -->
+		<result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+		
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		loan_id, 
+		bank_id, 
+		guarantee_id, 
+		guarantee_name, 
+		guarantee_user_id,
+		guarantee_user_name,
+		organization_id,
+		orguser_id,
+		orguser_name,
+		loan_code, 
+		loan_type, 
+		name, 
+		idcard, 
+		phone, 
+		sex, 
+		common_repayment_count,
+		guarantee_count,
+		sign_time, 
+		audit_status,
+		dealwith_status, 
+		audit_time, 
+		is_finish,
+		ctime, 
+		mtime, 
+		remark
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan
+		where loan_id = #{loanId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="getFssLoanByLoanCode" parameterType="string"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan
+		where loan_code = #{loanCode}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from fss_loan
+		where loan_id = #{loanId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanModel">
+		<selectKey keyProperty="loanId" order="AFTER" resultType="java.lang.Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into fss_loan 
+		(
+			bank_id, 
+			guarantee_id, 
+			guarantee_name,
+			guarantee_user_id, 
+			guarantee_user_name, 
+			organization_id,
+			orguser_id,
+			orguser_name,
+			loan_code,
+			loan_type, 
+			name, 
+			idcard,
+			phone, 
+			sex, 
+			common_repayment_count,
+			guarantee_count, 
+			sign_time, 
+			audit_status,
+			dealwith_status,
+			is_finish,
+			audit_time, 
+			ctime, 
+			remark
+		)
+		values (
+			#{bankId,jdbcType=INTEGER},
+			#{guaranteeId,jdbcType=INTEGER},
+			#{guaranteeName,jdbcType=VARCHAR},
+			#{guaranteeUserId,jdbcType=BIGINT},
+			#{guaranteeUserName,jdbcType=VARCHAR},
+			#{organizationId,jdbcType=BIGINT},
+			#{orguserId,jdbcType=BIGINT},
+			#{orguserName,jdbcType=VARCHAR},
+			#{loanCode,jdbcType=VARCHAR},
+			#{loanType,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{idcard,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR},
+			#{sex,jdbcType=VARCHAR},
+			#{commonRepaymentCount,jdbcType=INTEGER},
+			#{guaranteeCount,jdbcType=INTEGER},
+			#{signTime,jdbcType=TIMESTAMP},
+			#{auditStatus,jdbcType=VARCHAR},
+			#{dealwithStatus,jdbcType=VARCHAR},
+			#{isFinish,jdbcType=VARCHAR},
+			#{auditTime,jdbcType=TIMESTAMP},
+			now(),
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssLoanModel">
+		update fss_loan
+		set bank_id = #{bankId,jdbcType=INTEGER},
+		guarantee_id = #{guaranteeId,jdbcType=INTEGER},
+		guarantee_name = #{guaranteeName,jdbcType=VARCHAR},
+		guarantee_user_id = #{guaranteeUserId,jdbcType=BIGINT},
+		guarantee_user_name = #{guaranteeUserName,jdbcType=VARCHAR},
+		organization_id=#{organizationId,jdbcType=BIGINT},
+		orguser_id=#{orguserId,jdbcType=BIGINT},
+		orguser_name=#{orguserName,jdbcType=BIGINT},
+		loan_type = #{loanType,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		idcard = #{idcard,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		common_repayment_count = #{commonRepaymentCount,jdbcType=INTEGER},
+		guarantee_count = #{guaranteeCount,jdbcType=INTEGER},
+		sign_time = #{signTime,jdbcType=TIMESTAMP},
+		audit_status = #{auditStatus,jdbcType=VARCHAR},
+		dealwith_status = #{dealwithStatus,jdbcType=VARCHAR},
+		is_finish = #{isFinish,jdbcType=VARCHAR},
+		<if test="auditTime != null">
+			audit_time = now(),
+		</if>
+		<if test="auditTime == null">
+			audit_time = null,
+		</if>
+		mtime = now(),
+		remark = #{remark,jdbcType=VARCHAR}
+		where loan_id = #{loanId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateLoanCode" parameterType="com.yundian.fssapi.domain.FssLoanModel">
+		update fss_loan
+		set loan_code = #{loanCode,jdbcType=VARCHAR}
+		where loan_id = #{loanId,jdbcType=BIGINT}
+	</update>
+	
+	<!-- note:注意 参数是map结构的 -->
+	<sql id="getFssLoanPagingDynamicWhere">
+		<if test="bankId != null">
+			and t1.bank_id =#{bankId}
+		</if>
+		<if test="guaranteeId != null">
+			and t1.guarantee_id =#{guaranteeId}
+		</if>
+		<if test="guaranteeUserId != null">
+			and t1.guarantee_user_id =#{guaranteeUserId}
+		</if>
+		
+		<if test="organizationId != null">
+			and t1.organization_id =#{organizationId}
+		</if>
+		<if test="orguserId != null">
+			and t1.orguser_id =#{orguserId}
+		</if>
+		
+		<if test="loanCode != null and loanCode != ''">
+			and t1.loan_code  like concat('%',#{loanCode},'%')
+		</if>
+		<if test="name != null and name != ''">
+			and t1.name  like concat('%',#{name},'%')
+		</if>
+		<if test="idcard != null and idcard != ''">
+			and t1.idcard  like concat('%',#{idcard},'%')
+		</if>
+		<if test="phone != null and phone != ''">
+			and t1.phone like concat('%',#{phone},'%')
+		</if>
+		<if test="auditStatus != null and auditStatus != ''">
+			and t1.audit_status = #{auditStatus}
+		</if>
+		<if test="dealwithStatus != null and dealwithStatus != ''">
+			and t1.dealwith_status =#{dealwithStatus}
+		</if>
+		<if test="isFinish != null and isFinish != ''">
+			and t1.is_finish =#{isFinish}
+		</if>
+		<if test="signTimeStart != null and signTimeStart != ''">
+			<![CDATA[
+				and t1.sign_time>=DATE_FORMAT(#{signTimeStart},'%Y-%m-%d 00:00:00') 
+			]]>
+		</if>
+		<if test="signTimeEnd != null and signTimeEnd != ''">
+			<![CDATA[
+				and t1.sign_time<=DATE_FORMAT(#{signTimeEnd},'%Y-%m-%d 23:59:59') 
+			]]>
+		</if>
+			
+	</sql>
+	
+	<select id="getFssLoanPaging" parameterType="map"
+		resultMap="FssLoanQueryBaseResultMap">
+		select 
+		t1.loan_id, 
+		t1.bank_id, 
+		t1.guarantee_id, 
+		t1.guarantee_name,
+		t1.guarantee_user_id,
+		t1.guarantee_user_name,
+		t1.organization_id,
+		t1.orguser_id,
+		t1.orguser_name,
+		t1.loan_code, 
+		t1.loan_type, 
+		t1.name, 
+		t1.idcard, 
+		t1.phone, 
+		t1.sex, 
+		t1.common_repayment_count,
+		t1.guarantee_count,
+		t1.sign_time, 
+		t1.audit_status,
+		t1.dealwith_status, 
+		t1.is_finish,
+		t1.audit_time, 
+		t1.ctime, 
+		t1.mtime, 
+		t1.remark,
+		t2.bank_name
+		from fss_loan t1
+		left join fss_bank t2 on t1.bank_id=t2.bank_id
+		where 1=1
+		<include refid="getFssLoanPagingDynamicWhere"/>
+		order by t1.loan_id desc
+		limit #{_offset}, #{_limit}
+	</select>
+
+	<select id="getFssLoanPagingCount" parameterType="map"
+		resultType="java.lang.Integer">
+		select
+		count(*)
+		from fss_loan t1
+		left join fss_bank t2 on t1.bank_id=t2.bank_id
+		where 1=1
+		<include refid="getFssLoanPagingDynamicWhere"/>
+	</select>
+	
+	<select id="getFssLoanStatisticsCountByAuditStatus" parameterType="com.yundian.fssapi.dto.param.FssLoanQueryParam"
+		resultType="com.yundian.fssapi.dto.FssLoanAuditStatusStatistics">
+		select audit_status auditStatus,
+		count(*) as auditStatusCount from fss_loan
+		where 1=1
+		<if test="bankId != null">
+			and bank_id =#{bankId}
+		</if>
+		<if test="guaranteeId != null">
+			and guarantee_id =#{guaranteeId}
+		</if>
+		<if test="guaranteeUserId != null">
+			and guarantee_user_id =#{guaranteeUserId}
+		</if>
+		
+		<if test="signTimeStart != null and signTimeStart != ''">
+			<![CDATA[
+				and sign_time>=DATE_FORMAT(#{signTimeStart},'%Y-%m-%d 00:00:00') 
+			]]>
+		</if>
+		<if test="signTimeEnd != null and signTimeEnd != ''">
+			<![CDATA[
+				and sign_time<=DATE_FORMAT(#{signTimeEnd},'%Y-%m-%d 23:59:59') 
+			]]>
+		</if>
+		group by audit_status
+	</select>
+
+	<select id="getFssLoanStatisticsByOrganization" resultType="com.yundian.fss.dao.vo.StatisticsGenericResult">
+		select 
+		 t1.organization_id as 'key', 
+		 count(*)  as value
+		 from fss_organization t1 left join fss_loan t2
+		 on t1.organization_id=t2.organization_id
+	   	 group by t1.organization_id
+	</select>
+	
+	<!-- 统计某机构下用户的任务量,fss_loan organization_id 字段 需要建立索引  -->
+	<select id="getFssLoanStatisticsOrgUserIdByOrganizationId" parameterType="long" resultType="com.yundian.fss.dao.vo.StatisticsGenericResult">
+		SELECT t1.orguser_id as 'key', 
+		COUNT(*) as value
+		FROM fss_organization_user t1
+		LEFT JOIN fss_loan t2 ON t1.orguser_id=t2.orguser_id
+		WHERE  t1.organization_id=#{organizationId} 
+		and  t2.organization_id=#{organizationId}
+		GROUP BY t1.orguser_id
+	</select>
+	
+
+			
+</mapper>

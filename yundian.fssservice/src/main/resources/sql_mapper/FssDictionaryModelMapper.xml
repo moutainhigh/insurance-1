@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssDictionaryModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssDictionaryModel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="item_value" jdbcType="VARCHAR" property="itemValue" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="is_enable" jdbcType="VARCHAR" property="isEnable" />
+    <result column="dict_type_code" jdbcType="VARCHAR" property="dictTypeCode" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, 
+    item_code, 
+    item_value, 
+    remark, 
+    parent_id, 
+    level, 
+    is_enable, 
+    dict_type_code, 
+    sort_no, 
+    creator, 
+    ctime, 
+    modifier, 
+    mtime
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_dictionary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getFssDictionaryByTypeAndItemCode" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_dictionary
+    where dict_type_code = #{dictTypeCode}
+    and item_code=#{itemCode}
+  </select>
+  
+   <select id="getFssDictionaryList" parameterType="com.yundian.fssapi.domain.FssDictionaryModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_dictionary
+    where dict_type_code = #{dictTypeCode}
+     <if test="itemCode != null and itemCode != ''">
+        item_code=#{itemCode}
+      </if>
+      <if test="itemValue != null and itemValue != ''">
+        item_value=#{item_value}
+      </if>
+      <if test="parentId != null">
+        parent_id=#{parentId}
+      </if>
+      <if test="level != null">
+        level=#{level}
+      </if>
+      <if test="isEnable != null and isEnable != ''">
+        is_enable=#{isEnable}
+      </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fss_dictionary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssDictionaryModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    	insert into fss_dictionary (
+    	item_code, 
+    	item_value, 
+    	remark, 
+      	parent_id, 
+      	level, 
+      	is_enable, 
+      	dict_type_code, 
+      	sort_no, 
+      	creator, 
+      	ctime
+      )
+    values (
+    	#{itemCode,jdbcType=VARCHAR}, 
+    	#{itemValue,jdbcType=VARCHAR}, 
+    	#{remark,jdbcType=VARCHAR}, 
+      	#{parentId,jdbcType=INTEGER}, 
+      	#{level,jdbcType=INTEGER}, 
+      	#{isEnable,jdbcType=VARCHAR}, 
+      	#{dictTypeCode,jdbcType=VARCHAR}, 
+      	#{sortNo,jdbcType=INTEGER}, 
+     	#{creator,jdbcType=VARCHAR}, 
+      	now()
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssDictionaryModel">
+    update fss_dictionary
+    set item_code = #{itemCode,jdbcType=VARCHAR},
+      item_value = #{itemValue,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      is_enable = #{isEnable,jdbcType=VARCHAR},
+      dict_type_code = #{dictTypeCode,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      mtime = now()
+      where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssCreditRiskDetailModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssCreditRiskDetailModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="risk_id" jdbcType="BIGINT" property="riskId" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="risk_level" jdbcType="VARCHAR" property="riskLevel" />
+    <result column="item_detail" jdbcType="VARCHAR" property="itemDetail" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, risk_id, item_name, risk_level, item_detail, ctime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_credit_risk_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from fss_credit_risk_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssCreditRiskDetailModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fss_credit_risk_detail (risk_id, item_name, risk_level, 
+      item_detail, ctime)
+    values (#{riskId,jdbcType=BIGINT}, #{itemName,jdbcType=VARCHAR}, #{riskLevel,jdbcType=VARCHAR}, 
+      #{itemDetail,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssCreditRiskDetailModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fss_credit_risk_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="riskId != null">
+        risk_id,
+      </if>
+      <if test="itemName != null and itemName != ''">
+        item_name,
+      </if>
+      <if test="riskLevel != null and riskLevel != ''">
+        risk_level,
+      </if>
+      <if test="itemDetail != null and itemDetail != ''">
+        item_detail,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="riskId != null">
+        #{riskId,jdbcType=BIGINT},
+      </if>
+      <if test="itemName != null and itemName != ''">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="riskLevel != null and riskLevel != ''">
+        #{riskLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDetail != null and itemDetail != ''">
+        #{itemDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssCreditRiskDetailModel">
+    update fss_credit_risk_detail
+    <set>
+      <if test="riskId != null">
+        risk_id = #{riskId,jdbcType=BIGINT},
+      </if>
+      <if test="itemName != null and itemName != ''">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="riskLevel != null and riskLevel != ''">
+        risk_level = #{riskLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDetail != null and itemDetail != ''">
+        item_detail = #{itemDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssCreditRiskDetailModel">
+    update fss_credit_risk_detail
+    set risk_id = #{riskId,jdbcType=BIGINT},
+      item_name = #{itemName,jdbcType=VARCHAR},
+      risk_level = #{riskLevel,jdbcType=VARCHAR},
+      item_detail = #{itemDetail,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+   <select id="getFssCreditRiskDetailByRiskId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_credit_risk_detail
+    where risk_id = #{riskId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

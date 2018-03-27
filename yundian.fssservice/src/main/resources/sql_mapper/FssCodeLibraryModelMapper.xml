@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssCodeLibraryModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssCodeLibraryModel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code_id" jdbcType="VARCHAR" property="codeId" />
+    <result column="code_name" jdbcType="VARCHAR" property="codeName" />
+    <result column="code_type" jdbcType="VARCHAR" property="codeType" />
+    <result column="sort_no" jdbcType="VARCHAR" property="sortNo" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="is_inuse" jdbcType="BIT" property="isInuse" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, 
+    code_id, 
+    code_name, 
+    code_type, 
+    sort_no, 
+    describe, 
+    is_inuse, 
+    create_time,
+    modify_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fss_code_library
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fss_code_library
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssCodeLibraryModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into fss_code_library (
+    	code_id, 
+    	code_name, 
+    	code_type, 
+      	sort_no, 
+      	describe, 
+      	is_inuse, 
+     	create_time
+     )
+    values
+    (
+    	#{codeId,jdbcType=VARCHAR}, 
+    	#{codeName,jdbcType=VARCHAR}, 
+    	#{codeType,jdbcType=VARCHAR}, 
+      	#{sortNo,jdbcType=VARCHAR}, 
+      	#{describe,jdbcType=VARCHAR}, 
+      	#{isInuse,jdbcType=BIT}, 
+      	now()
+     )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssCodeLibraryModel">
+    update fss_code_library
+    set code_id = #{codeId,jdbcType=VARCHAR},
+      code_name = #{codeName,jdbcType=VARCHAR},
+      code_type = #{codeType,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
+      is_inuse = #{isInuse,jdbcType=BIT},
+      modify_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

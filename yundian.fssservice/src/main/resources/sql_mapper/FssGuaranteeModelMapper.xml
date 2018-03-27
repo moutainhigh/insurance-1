@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssGuaranteeModelMapper">
+	<resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssGuaranteeModel">
+		<id column="guarantee_id" jdbcType="INTEGER" property="guaranteeId" />
+		<result column="guarantee_name" jdbcType="VARCHAR" property="guaranteeName" />
+		<result column="guarantee_code" jdbcType="VARCHAR" property="guaranteeCode" />
+		<result column="contactor" jdbcType="VARCHAR" property="contactor" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="businessentity" jdbcType="VARCHAR" property="businessentity" />
+		<result column="organize_code" jdbcType="VARCHAR" property="organizeCode" />
+		<result column="license_code" jdbcType="VARCHAR" property="licenseCode" />
+		<result column="province" jdbcType="INTEGER" property="province" />
+		<result column="city" jdbcType="INTEGER" property="city" />
+		<result column="area" jdbcType="INTEGER" property="area" />
+		<result column="province_name" jdbcType="VARCHAR" property="provinceName" />
+		<result column="city_name" jdbcType="VARCHAR" property="cityName" />
+		<result column="area_name" jdbcType="VARCHAR" property="areaName" />
+		<result column="street" jdbcType="VARCHAR" property="street" />
+		<result column="verify_status" jdbcType="VARCHAR" property="verifyStatus" />
+		<result column="verify_time" jdbcType="TIMESTAMP" property="verifyTime" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		guarantee_id, 
+		guarantee_name, 
+		guarantee_code, 
+		contactor, 
+		phone, 
+		businessentity,
+		organize_code,
+		license_code, 
+		province, 
+		city, 
+		area,
+		province_name, 
+		city_name, 
+		area_name,  
+		street, 
+		verify_status, 
+		verify_time, 
+		ctime,
+		mtime, 
+		remark
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_guarantee
+		where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="long">
+		delete from fss_guarantee
+		where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="com.yundian.fssapi.domain.FssGuaranteeModel">
+		<selectKey keyProperty="guaranteeId" order="AFTER"
+			resultType="long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into fss_guarantee 
+		(
+			guarantee_name, 
+			guarantee_code, 
+			contactor,
+			phone, 
+			businessentity, 
+			organize_code,
+			license_code, 
+			province, 
+			city, 
+			area,
+			province_name, 
+			city_name, 
+			area_name, 
+			street, 
+			verify_status,
+			verify_time, 
+			ctime, 
+			remark
+		)
+		values
+		(
+			#{guaranteeName,jdbcType=VARCHAR},
+			#{guaranteeCode,jdbcType=VARCHAR}, 
+			#{contactor,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR}, 
+			#{businessentity,jdbcType=VARCHAR},
+			#{organizeCode,jdbcType=VARCHAR},
+			#{licenseCode,jdbcType=VARCHAR}, 
+			#{province,jdbcType=INTEGER},
+			#{city,jdbcType=INTEGER},
+			#{area,jdbcType=INTEGER},
+			#{provinceName,jdbcType=VARCHAR}, 
+			#{cityName,jdbcType=VARCHAR}, 
+			#{areaName,jdbcType=VARCHAR}, 
+			#{street,jdbcType=VARCHAR},
+			#{verifyStatus,jdbcType=VARCHAR},
+			#{verifyTime,jdbcType=TIMESTAMP}, 
+			now(),
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	<update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssGuaranteeModel">
+		update fss_guarantee
+		set guarantee_name = #{guaranteeName,jdbcType=VARCHAR},
+		guarantee_code = #{guaranteeCode,jdbcType=VARCHAR},
+		contactor = #{contactor,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		businessentity = #{businessentity,jdbcType=VARCHAR},
+		organize_code = #{organizeCode,jdbcType=VARCHAR},
+		license_code = #{licenseCode,jdbcType=VARCHAR},
+		province = #{province,jdbcType=INTEGER},
+		city = #{city,jdbcType=INTEGER},
+		area = #{area,jdbcType=INTEGER},
+		province_name = #{provinceName,jdbcType=VARCHAR},
+		city_name = #{cityName,jdbcType=VARCHAR},
+		area_name = #{areaName,jdbcType=VARCHAR},
+		street = #{street,jdbcType=VARCHAR},
+		verify_status = #{verifyStatus,jdbcType=VARCHAR},
+		verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+		mtime = now(),
+		remark = #{remark,jdbcType=VARCHAR}
+		where guarantee_id = #{guaranteeId,jdbcType=INTEGER}
+	</update>
+	
+	<sql id="getFssGuaranteePagingDynamicWhere">
+		<if test="verifyStatus != null and verifyStatus != ''">
+			and verify_status =#{verifyStatus}
+		</if>
+		<if test="guaranteeName != null and guaranteeName != ''">
+			and guarantee_name like concat('%',#{guaranteeName},'%')
+		</if>
+		<if test="guaranteeCode != null and guaranteeCode != ''">
+			and guarantee_code like concat('%',#{guaranteeCode},'%')
+		</if>
+		<if test="licenseCode != null and licenseCode != ''">
+			and license_code like concat('%',#{licenseCode},'%')
+		</if>
+		
+	</sql>
+	<select id="getFssGuaranteePaging" parameterType="map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_guarantee
+		where 1=1
+		<include refid="getFssGuaranteePagingDynamicWhere"/>
+		limit #{_offset}, #{_limit}
+	</select>
+	
+	<select id="getFssGuaranteePagingCount" parameterType="map"
+		resultType="java.lang.Integer">
+		select
+		count(*)
+		from fss_guarantee
+		where 1=1
+		<include refid="getFssGuaranteePagingDynamicWhere"/>
+	</select>
+</mapper>

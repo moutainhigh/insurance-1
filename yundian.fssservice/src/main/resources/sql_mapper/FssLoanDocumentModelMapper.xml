@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssLoanDocumentModelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.yundian.fssapi.domain.FssLoanDocumentModel">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="loan_id" jdbcType="BIGINT" property="loanId" />
+		<result column="relation_id" jdbcType="BIGINT" property="relationId" />
+		<result column="document_type" jdbcType="VARCHAR" property="documentType" />
+		<result column="file_name" jdbcType="VARCHAR" property="fileName" />
+		<result column="file_type" jdbcType="VARCHAR" property="fileType" />
+		<result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+		<result column="file_size" jdbcType="INTEGER" property="fileSize" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, loan_id, 
+		relation_id, 
+		document_type, 
+		file_name,
+		file_type, 
+		file_url,
+		file_size,
+		ctime, 
+		mtime, 
+		remark
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan_document
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		fss_loan_document
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanDocumentModel">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into fss_loan_document
+		(
+			loan_id,
+			relation_id,
+			document_type,
+			file_name,
+			file_type,
+			file_url,
+			file_size,
+			ctime,
+			remark
+		)
+		values 
+		(
+			#{loanId,jdbcType=BIGINT},
+			#{relationId,jdbcType=BIGINT},
+			#{documentType,jdbcType=VARCHAR},
+			#{fileName,jdbcType=VARCHAR}, 
+			#{fileType,jdbcType=VARCHAR},
+			#{fileUrl,jdbcType=VARCHAR},
+			#{fileSize,jdbcType=INTEGER},
+			now(),
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="batchInsert" parameterType="com.yundian.fssapi.domain.FssLoanDocumentModel"
+		useGeneratedKeys="false">
+		insert into fss_loan_document (
+		loan_id,
+		relation_id,
+		document_type,
+		file_name,
+		file_type,
+		file_url,
+		file_size,
+		ctime,
+		remark
+		)
+		values
+		<foreach collection="loanDocumentList" item="model" separator=",">
+			(
+			#{model.loanId,jdbcType=BIGINT},
+			#{model.relationId,jdbcType=BIGINT},
+			#{model.documentType,jdbcType=VARCHAR},
+			#{model.fileName,jdbcType=VARCHAR},
+			#{model.fileType,jdbcType=VARCHAR},
+			#{model.fileUrl,jdbcType=VARCHAR},
+			#{model.fileSize,jdbcType=INTEGER},
+			now(),
+			#{model.remark,jdbcType=VARCHAR}
+			)
+		</foreach>
+
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssLoanDocumentModel">
+		update
+		fss_loan_document
+		set loan_id = #{loanId,jdbcType=BIGINT},
+		relation_id = #{relationId,jdbcType=BIGINT},
+		document_type =#{documentType,jdbcType=VARCHAR},
+		file_name =#{fileName,jdbcType=VARCHAR},
+		file_type = #{fileType,jdbcType=VARCHAR},
+		file_url = #{fileUrl,jdbcType=VARCHAR},
+		file_size =#{fileSize,jdbcType=INTEGER},
+		mtime =now(),
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getFssLoanDocumentListByLoanId" 
+		parameterType="long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan_document
+		where loan_id = #{loanId}
+	</select>
+	
+	<select id="getFssLoanDocumentListByLoanIdAndDocumentType" 
+		parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan_document
+		where loan_id = #{loanId}
+		and document_type=#{documentType}
+	</select>
+	
+</mapper>

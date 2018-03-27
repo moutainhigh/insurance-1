@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssLoanRelationModelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.yundian.fssapi.domain.FssLoanRelationModel">
+		<id column="relation_id" jdbcType="BIGINT" property="relationId" />
+		<result column="loan_id" jdbcType="BIGINT" property="loanId" />
+		<result column="relation_name" jdbcType="VARCHAR" property="relationName" />
+		<result column="relation_type" jdbcType="VARCHAR" property="relationType" />
+		<result column="relation_type_name" jdbcType="VARCHAR"
+			property="relationTypeName" />
+		<result column="id_type" jdbcType="VARCHAR" property="idType" />
+		<result column="idcard" jdbcType="VARCHAR" property="idcard" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="relation_with" jdbcType="VARCHAR" property="relationWith" />
+		<result column="relation_with_name" jdbcType="VARCHAR"
+			property="relationWithName" />
+		<result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+		<result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		relation_id, 
+		loan_id, 
+		relation_name, 
+		relation_type, 
+		relation_type_name, 
+		id_type,
+		idcard, 
+		sex, 
+		phone, 
+		relation_with, 
+		relation_with_name, 
+		ctime, 
+		mtime,
+		remark
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan_relation
+		where relation_id = #{relationId,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from fss_loan_relation
+		where relation_id = #{relationId,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanRelationModel">
+		<selectKey keyProperty="relationId" order="AFTER"
+			resultType="java.lang.Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into fss_loan_relation 
+		(
+			loan_id, 
+			relation_name, 
+			relation_type,
+			relation_type_name, 
+			id_type, 
+			idcard,
+			sex,
+			phone, 
+			relation_with,
+			relation_with_name, 
+			ctime,
+			remark
+		)
+		values 
+		(
+			#{loanId,jdbcType=BIGINT},
+			#{relationName,jdbcType=VARCHAR},
+			#{relationType,jdbcType=VARCHAR},
+			#{relationTypeName,jdbcType=VARCHAR},
+			#{idType,jdbcType=VARCHAR},
+			#{idcard,jdbcType=VARCHAR},
+			#{sex,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR},
+			#{relationWith,jdbcType=VARCHAR},
+			#{relationWithName,jdbcType=VARCHAR},
+			now(),
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssLoanRelationModel">
+		update fss_loan_relation
+		set loan_id = #{loanId,jdbcType=BIGINT},
+		relation_name = #{relationName,jdbcType=VARCHAR},
+		relation_type = #{relationType,jdbcType=VARCHAR},
+		relation_type_name = #{relationTypeName,jdbcType=VARCHAR},
+		id_type = #{idType,jdbcType=VARCHAR},
+		idcard = #{idcard,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		relation_with = #{relationWith,jdbcType=VARCHAR},
+		relation_with_name = #{relationWithName,jdbcType=VARCHAR},
+		mtime = now(),
+		remark = #{remark,jdbcType=VARCHAR}
+		where relation_id = #{relationId,jdbcType=BIGINT}
+	</update>
+	
+	
+	<select id="getFssLoanRelationListByLoanId" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from fss_loan_relation
+		where loan_id = #{loanId}
+	</select>
+	
+</mapper>
