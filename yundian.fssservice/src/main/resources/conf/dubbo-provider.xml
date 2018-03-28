@@ -96,25 +96,25 @@
 	<dubbo:service ref="fssDictionaryService" interface="com.yundian.fssapi.service.FssDictionaryService"  
 		group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
 	
-	<!-- ************人脸识别**************-->
-	<dubbo:service ref="fssFaceMatchingService" interface="com.yundian.fssapi.service.FssFaceMatchingService"  
-		group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
-		
-		
-	<!-- 征信模块 -->
-	<dubbo:service ref="fssBankAddedConfService" interface="com.yundian.fssapi.service.FssBankAddedConfService"  
-		group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
-		
-	<dubbo:service ref="fssCreditLogService" interface="com.yundian.fssapi.service.FssCreditLogService"  
-			group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
-			
-	<dubbo:service ref="fssCreditService" interface="com.yundian.fssapi.service.FssCreditService"  
-			group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
-			
-	<dubbo:service ref="fssCreditRiskDetailService" interface="com.yundian.fssapi.service.FssCreditRiskDetailService"  
-			group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
-			
-	<dubbo:service ref="fssCreditRiskService" interface="com.yundian.fssapi.service.FssCreditRiskService"  
-			group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />
+	<!--&lt;!&ndash; ************人脸识别**************&ndash;&gt;-->
+	<!--<dubbo:service ref="fssFaceMatchingService" interface="com.yundian.fssapi.service.FssFaceMatchingService"  -->
+		<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />-->
+		<!---->
+		<!---->
+	<!--&lt;!&ndash; 征信模块 &ndash;&gt;-->
+	<!--<dubbo:service ref="fssBankAddedConfService" interface="com.yundian.fssapi.service.FssBankAddedConfService"  -->
+		<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />-->
+		<!---->
+	<!--<dubbo:service ref="fssCreditLogService" interface="com.yundian.fssapi.service.FssCreditLogService"  -->
+			<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />-->
+			<!---->
+	<!--<dubbo:service ref="fssCreditService" interface="com.yundian.fssapi.service.FssCreditService"  -->
+			<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />-->
+			<!---->
+	<!--<dubbo:service ref="fssCreditRiskDetailService" interface="com.yundian.fssapi.service.FssCreditRiskDetailService"  -->
+			<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />-->
+			<!---->
+	<!--<dubbo:service ref="fssCreditRiskService" interface="com.yundian.fssapi.service.FssCreditRiskService"  -->
+			<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" />-->
 
 </beans>

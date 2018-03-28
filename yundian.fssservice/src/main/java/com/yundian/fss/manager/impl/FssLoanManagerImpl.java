@@ -23,13 +23,12 @@ import org.springframework.util.CollectionUtils;
 
 import com.yundian.fss.dao.FssGuaranteeModelMapper;
 import com.yundian.fss.dao.FssLoanModelMapper;
-import com.yundian.fss.dao.FssOrganizationUserModelMapper;
 import com.yundian.fss.exception.FssLoanBizException;
 import com.yundian.fss.manager.FssBankManager;
 import com.yundian.fss.manager.FssGuaranteeUserManager;
 import com.yundian.fss.manager.FssLoanAuditingLogManager;
 import com.yundian.fss.manager.FssLoanManager;
-import com.yundian.fss.manager.assignrule.FssLoanBankAssignRule;
+
 import com.yundian.fss.manager.impl.support.CommonFssManagerSupportImpl;
 import com.yundian.fssapi.domain.FssGuaranteeModel;
 import com.yundian.fssapi.domain.FssLoanAuditingLogModel;
@@ -79,8 +78,6 @@ public class FssLoanManagerImpl extends CommonFssManagerSupportImpl implements
 	@Autowired
 	private FssBankManager fssBankManager;
 	@Autowired
-	private FssOrganizationUserModelMapper fssOrganizationUserModelMapper;
-	@Autowired
 	private FssGuaranteeModelMapper fssGuaranteeModelMapper;
 	@Autowired
 	private FssLoanAuditingLogManager fssLoanAuditingLogManager;
@@ -92,10 +89,9 @@ public class FssLoanManagerImpl extends CommonFssManagerSupportImpl implements
 	@Qualifier("loanStatusTransformChannelAdaptor")
 	private FssLoanStatusTransformAdaptor<FssUserModel> loanStatusTransformChannelAdaptor;
 
-	@Autowired
-	@Qualifier("fssLoanBankOneBankAssignRule")
-	private FssLoanBankAssignRule fssLoanBankAssignRule;
 
+
+	@Override
 	public Long insertFssLoan(FssLoanModel fssLoanModel) {
 		try {
 			FssUserModel fssUserModel = this.fssGuaranteeUserManager

@@ -48,7 +48,7 @@ public class FssGuaranteeServiceTest extends AbstractJUnit {
 	/**
 	 * 分页查询审批机构信息
 	 * 
-	 * @param paginator
+	 *
 	 * @return
 	 */
 	@Test

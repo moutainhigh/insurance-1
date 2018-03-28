@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+         http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
+	
+	<dubbo:application name="guaranteeweb_consumer"/>
+	<!-- 使用zookeeper注册中心暴露服务地址  -->
+	<dubbo:registry id="yundian_center" protocol="dubbo" address="${dubbo.yundian.address}" />
+	<dubbo:consumer group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" registry="yundian_center" check="false" />
+		
+	<!-- 声明需要引用的服务接口  -->
+	<dubbo:reference id="fssDictionaryService" registry="yundian_center" interface="com.yundian.fssapi.service.FssDictionaryService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+  
+	<dubbo:reference id="fssOrganizationService" registry="yundian_center" interface="com.yundian.fssapi.service.FssOrganizationService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+                         
+    <dubbo:reference id="fssOrganizationUserService" registry="yundian_center" interface="com.yundian.fssapi.service.FssOrganizationUserService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+                     
+	<dubbo:reference id="fssGuaranteeService" registry="yundian_center" interface="com.yundian.fssapi.service.FssGuaranteeService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+    <dubbo:reference id="fssGuaranteeUserService" registry="yundian_center" interface="com.yundian.fssapi.service.FssGuaranteeUserService"
+                  group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+                         
+  	<dubbo:reference id="fssBankService" registry="yundian_center" interface="com.yundian.fssapi.service.FssBankService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+    <dubbo:reference id="fssBankUserService" registry="yundian_center" interface="com.yundian.fssapi.service.FssBankUserService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+   	
+   	<dubbo:reference id="fssLoanService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+                       
+	<dubbo:reference id="fssLoanAuditingLogService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanAuditingLogService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+ 	<dubbo:reference id="fssLoanDistributeService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanDistributeService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+ 	<dubbo:reference id="fssLoanDocumentService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanDocumentService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+ 	<dubbo:reference id="fssLoanRelationRecognitionService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanRelationRecognitionService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+ 	<dubbo:reference id="fssLoanRelationService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanRelationService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+  	<!-- 征信部分 -->
+    <dubbo:reference id="fssCreditService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCreditService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    <dubbo:reference id="fssCreditRiskService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCreditRiskService"
+                    group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    <dubbo:reference id="fssCreditLogService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCreditLogService"
+                    group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+ 	<dubbo:reference id="fssCreditRiskDetailService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCreditRiskDetailService"
+                    group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+	<dubbo:reference id="fssBankAddedConfService" registry="yundian_center" interface="com.yundian.fssapi.service.FssBankAddedConfService"
+                    group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+    
+                     
+</beans>

@@ -1,0 +1,87 @@
+	<script src="${rc.contextPath}/theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="${rc.contextPath}/theme/assets/global/plugins/html5gallery/html5gallery.js"></script>
+	<script type="text/javascript" src="${rc.contextPath}/theme/assets/global/plugins/html5gallery/jQueryRotate.2.2.js"></script>
+	
+	<div style="text-align:center; padding: 8px 40px;">
+	<div class="html5gallery-loading" style="display:block;margin:0 auto;width:300px;height:300px;
+	background:url('${rc.contextPath}/theme/assets/global/plugins/html5gallery/loading.gif') no-repeat center center;"></div> 
+	<div id="html5gallery" style="display:none;margin:0 auto;" class="html5gallery" data-onchange="onSlideChange" 
+				data-onthumbclick="onThumbClick" data-skin="gallery" data-autoplayvideo="false" 
+				data-responsive="true" data-resizemode="fill" data-html5player="true" 
+				data-autoslide="false" data-autoplayvideo="false" data-width="1000" 
+				data-height="800" data-effect="fadeout" data-shownumbering="true" data-responsivefullscreen="1"
+				data-numberingformat="%NUM of %TOTAL - " data-freelink="#" >
+			
+				<#if (documentList?size>0)>
+					<#list documentList as doc>
+						
+						<#if doc.fileType=='IMAGE'>
+							<a href="${doc.fileUrl}"><img data-img='hh' style="width:400px;height:600px !important;" src="${doc.fileUrl}" alt="${doc.fileUrl}"></a>
+						<#elseif doc.fileType=='VIDEO' >
+							<a href="${doc.fileUrl}" data-hd="${doc.fileUrl}" data-webm="${doc.fileUrl}" data-hdwebm="${doc.fileUrl}" data-poster="${rc.contextPath}/theme/assets/global/plugins/html5gallery/defaultvideo.jpg" ><img src="${rc.contextPath}/theme/assets/global/plugins/html5gallery/defaultvideo.jpg" alt="HD Video" data-description="视频文件"></a>
+						<#else>
+							未知
+						</#if>
+					</#list>
+				<#else>
+						<a href="${rc.contextPath}/theme/assets/global/plugins/html5gallery/noimage.jpg"><img src="${rc.contextPath}/theme/assets/global/plugins/html5gallery/noimage.jpg" alt="暂无图片"></a>
+				</#if>
+			
+			<!-- <a href="https://html5box.com/html5gallery/images/Waves_1024.jpg" ><img src="https://html5box.com/html5gallery/images/Waves_256.jpg" alt="Waves" 
+			data-description="The storm is raging up above, and waves are dashing high. Powered by <a href='http://html5box.com' target='_blank'>HTML5 Gallery</a>"></a>
+			
+			<a href="https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4" data-hd="https://html5box.com/html5gallery/images/BigBuckBunny_1_hd.m4v" data-webm="https://html5box.com/html5gallery/images/BigBuckBunny_1.webm" data-hdwebm="images/BigBuckBunny_1_hd.webm" data-poster="https://html5box.com/html5gallery/images/Big_Buck_Bunny_1_1024.jpg" ><img src="https://html5box.com/html5gallery/images/Big_Buck_Bunny_1.jpg" alt="HD Video" data-description="Big Buck Bunny 1 - <a href='http://www.bigbuckbunny.org' target='_blank'>Copyright Blender Foundation</a>"></a>
+			
+			<a href="https://www.youtube.com/embed/YE7VzlLtp-4" data-poster="https://html5box.com/html5gallery/images/Big_Buck_Bunny_3_1024.jpg"><img src="https://html5box.com/html5gallery/images/Big_Buck_Bunny_3.jpg" alt="YouTube" data-description="YouTube Video - Big Buck Bunny"></a>
+			<a href="https://player.vimeo.com/video/1132937?title=0&amp;byline=0&amp;portrait=0" data-poster="https://html5box.com/html5gallery/images/Elephant_Dreams_954.jpg"><img src="https://html5box.com/html5gallery/images/Elephant_Dreams.jpg" alt="Vimeo" data-description="Vimeo Video - Elephant Dreams">></a>
+			<a href="https://dai.ly/x1yj6t9" data-poster="https://html5box.com/html5gallery/images/Big_Buck_Bunny_2_1024.jpg"><img src="https://html5box.com/html5gallery/images/Big_Buck_Bunny_2.jpg" alt="Dailymotion" data-description="Dailymotion Video - Big Buck Bunny">></a>
+			<a href="https://html5box.com/html5gallery/images/Wilderness_1024.jpg"><img src="https://html5box.com/html5gallery/images/Wilderness_256.jpg" alt="Wilderness"></a>
+			<a href="https://html5box.com/html5gallery/images/Forest_1024.jpg"><img src="https://html5box.com/html5gallery/images/Forest_256.jpg" alt="Forest"></a>
+			<a href="https://html5box.com/html5gallery/images/Green_1024.jpg"><img src="https://html5box.com/html5gallery/images/Green_256.jpg" alt="Green"></a>
+			<a href="https://html5box.com/html5gallery/images/Dark_Beach_1024.jpg"><img src="https://html5box.com/html5gallery/images/Dark_Beach_256.jpg" alt="Dark Beach"></a>
+			
+			<a href="https://html5box.com/html5gallery/images/Desert_1024.jpg"><img src="https://html5box.com/html5gallery/images/Desert_256.jpg" alt="Desert"></a>
+			<a href="https://html5box.com/html5gallery/images/Evening_1024.jpg"><img src="https://html5box.com/html5gallery/images/Evening_256.jpg" alt="Evening"></a>
+			<a href="https://html5box.com/html5gallery/images/Island_1024.jpg"><img src="https://html5box.com/html5gallery/images/Island_256.jpg" alt="Island"></a>
+			<a href="https://html5box.com/html5gallery/images/Sunrise_1024.jpg"><img src="https://html5box.com/html5gallery/images/Sunrise_256.jpg" alt="Sunrise"></a>
+			<a href="https://html5box.com/html5gallery/images/Toronto_1024.jpg"><img src="https://html5box.com/html5gallery/images/Toronto_256.jpg" alt="Toronto"></a>
+			<a href="https://html5box.com/html5gallery/images/Tulip_1024.jpg"><img src="https://html5box.com/html5gallery/images/Tulip_256.jpg" alt="Tulips"></a>
+			<a href="https://html5box.com/html5gallery/images/Colourful_Tulip_1024.jpg"><img src="https://html5box.com/html5gallery/images/Colourful_Tulip_256.jpg" alt="Colourful Tulips"></a>
+			<a href="https://html5box.com/html5gallery/images/Swan_1024.jpg"><img src="https://html5box.com/html5gallery/images/Swan_256.jpg" alt="Swan on Lake"></a>
+			<a href="https://html5box.com/html5gallery/images/Red_Tulip_1024.jpg"><img src="https://html5box.com/html5gallery/images/Red_Tulip_256.jpg" alt="Red Tulips"></a>
+			<a href="https://html5box.com/html5gallery/images/Sakura_Tree_1024.jpg"><img src="https://html5box.com/html5gallery/images/Sakura_Tree_256.jpg" alt="Sakura Trees"></a>
+			 --></div>
+	</div>  
+	
+	<script>
+		jQuery(document).ready(function(){
+			function imagerotate(_this){
+				var value=0;
+				if(typeof (jQuery(_this).attr('data-rotate-value') ) =='undefined'){
+					console.log("value:"+value)
+					value=0;
+				}else{
+					value = parseInt(jQuery(_this).attr('data-rotate-value'));
+					console.log("value1:"+value)
+
+				}
+				value+=90;
+				$(_this).rotate({ animateTo:value})
+				jQuery(_this).attr("data-rotate-value",value);
+				
+			}
+			jQuery("#html5gallery").on('click','img',function(){
+				if(jQuery(this).parents('div.html5gallery-car-0').length>0){
+					return true;
+				}
+				imagerotate(this);
+			});
+			
+			jQuery("body").on('click','img',function(){
+				if(jQuery(this).parents('div.html5gallery-fullscreen-0').length>0){
+					imagerotate(this);
+				}
+			});
+			
+		});
+	</script>
