@@ -1,9 +1,5 @@
 package com.yundian.fss.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.yundian.fssapi.domain.FssLoanDocumentModel;
 
 public interface FssLoanDocumentModelMapper {
@@ -11,14 +7,11 @@ public interface FssLoanDocumentModelMapper {
 
     int insert(FssLoanDocumentModel record);
 
+    int insertSelective(FssLoanDocumentModel record);
+
     FssLoanDocumentModel selectByPrimaryKey(Long id);
 
+    int updateByPrimaryKeySelective(FssLoanDocumentModel record);
+
     int updateByPrimaryKey(FssLoanDocumentModel record);
-
-	int batchInsert(@Param("loanDocumentList") List<FssLoanDocumentModel> loanDocumentList);
-
-	List<FssLoanDocumentModel> getFssLoanDocumentListByLoanId(Long loanId);
-
-	List<FssLoanDocumentModel> getFssLoanDocumentListByLoanIdAndDocumentType(@Param("loanId")
-			Long loanId,@Param("documentType") String documentType);
 }

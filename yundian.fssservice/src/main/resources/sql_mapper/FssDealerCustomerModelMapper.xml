@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yundian.fss.dao.FssLoanModelMapper" >
-  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssLoanModel" >
-    <id column="loan_id" property="loanId" jdbcType="BIGINT" />
-    <result column="fund_id" property="fundId" jdbcType="INTEGER" />
-    <result column="fund_name" property="fundName" jdbcType="VARCHAR" />
+<mapper namespace="com.yundian.fss.dao.FssDealerCustomerModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssDealerCustomerModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="dealer_id" property="dealerId" jdbcType="BIGINT" />
-    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
-    <result column="dealer_name" property="dealerName" jdbcType="VARCHAR" />
-    <result column="dealer_user_id" property="dealerUserId" jdbcType="BIGINT" />
-    <result column="dealer_user_name" property="dealerUserName" jdbcType="VARCHAR" />
-    <result column="loan_code" property="loanCode" jdbcType="VARCHAR" />
-    <result column="loan_type" property="loanType" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="insures_name" property="insuresName" jdbcType="VARCHAR" />
     <result column="insures_idcard" property="insuresIdcard" jdbcType="VARCHAR" />
     <result column="insures_phone" property="insuresPhone" jdbcType="VARCHAR" />
@@ -53,27 +48,12 @@
     <result column="policy_disregard_contributing" property="policyDisregardContributing" jdbcType="INTEGER" />
     <result column="policy_seat_driver" property="policySeatDriver" jdbcType="INTEGER" />
     <result column="policy_wading" property="policyWading" jdbcType="INTEGER" />
-    <result column="plan_id" property="planId" jdbcType="INTEGER" />
-    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
-    <result column="plan_period" property="planPeriod" jdbcType="INTEGER" />
-    <result column="plan_financing_type" property="planFinancingType" jdbcType="VARCHAR" />
-    <result column="plan_loan_amount" property="planLoanAmount" jdbcType="INTEGER" />
-    <result column="repayment_bank_code" property="repaymentBankCode" jdbcType="VARCHAR" />
-    <result column="repayment_bank_name" property="repaymentBankName" jdbcType="VARCHAR" />
-    <result column="repayment_card" property="repaymentCard" jdbcType="VARCHAR" />
-    <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
-    <result column="audit_status" property="auditStatus" jdbcType="VARCHAR" />
-    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
-    <result column="audit_name" property="auditName" jdbcType="VARCHAR" />
-    <result column="loan_time" property="loanTime" jdbcType="TIMESTAMP" />
-    <result column="submit_person" property="submitPerson" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    loan_id, fund_id, fund_name, dealer_id, customer_id, dealer_name, dealer_user_id, 
-    dealer_user_name, loan_code, loan_type, insures_name, insures_idcard, insures_phone, 
+    id, dealer_id, user_id, name, phone, insures_name, insures_idcard, insures_phone, 
     insures_address, insures_type, insures_link_name, insures_link_phone, car_brand, 
     car_brand_name, car_vehicle, car_vehicle_name, car_model, car_model_name, car_plate_number, 
     car_vin, car_engine_no, car_type, car_buy_type, car_color, car_buy_date, car_seat_number, 
@@ -81,102 +61,71 @@
     policy_effect_date, policy_expire_date, policy_compulsory_insurance, policy_vehicle_tax, 
     policy_three_pay, policy_three_pay_level, policy_damage, policy_lost, policy_auto_ignition, 
     policy_seat_passenger, policy_scratch, policy_glass_breakage, policy_disregard_contributing, 
-    policy_seat_driver, policy_wading, plan_id, plan_name, plan_period, plan_financing_type, 
-    plan_loan_amount, repayment_bank_code, repayment_bank_name, repayment_card, sign_time, 
-    audit_status, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark
+    policy_seat_driver, policy_wading, ctime, mtime, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from fss_loan
-    where loan_id = #{loanId,jdbcType=BIGINT}
+    from fss_dealer_customer
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from fss_loan
-    where loan_id = #{loanId,jdbcType=BIGINT}
+    delete from fss_dealer_customer
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
-    insert into fss_loan (loan_id, fund_id, fund_name, 
-      dealer_id, customer_id, dealer_name, 
-      dealer_user_id, dealer_user_name, loan_code, 
-      loan_type, insures_name, insures_idcard, 
-      insures_phone, insures_address, insures_type, 
-      insures_link_name, insures_link_phone, car_brand, 
-      car_brand_name, car_vehicle, car_vehicle_name, 
-      car_model, car_model_name, car_plate_number, 
-      car_vin, car_engine_no, car_type, 
-      car_buy_type, car_color, car_buy_date, 
-      car_seat_number, car_displacement, car_imports, 
-      policy_type, policy_insurance_company, policy_total_amount, 
-      policy_effect_date, policy_expire_date, policy_compulsory_insurance, 
-      policy_vehicle_tax, policy_three_pay, policy_three_pay_level, 
-      policy_damage, policy_lost, policy_auto_ignition, 
-      policy_seat_passenger, policy_scratch, policy_glass_breakage, 
-      policy_disregard_contributing, policy_seat_driver, 
-      policy_wading, plan_id, plan_name, 
-      plan_period, plan_financing_type, plan_loan_amount, 
-      repayment_bank_code, repayment_bank_name, repayment_card, 
-      sign_time, audit_status, audit_time, 
-      audit_name, loan_time, submit_person, 
-      ctime, mtime, remark
-      )
-    values (#{loanId,jdbcType=BIGINT}, #{fundId,jdbcType=INTEGER}, #{fundName,jdbcType=VARCHAR}, 
-      #{dealerId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{dealerName,jdbcType=VARCHAR}, 
-      #{dealerUserId,jdbcType=BIGINT}, #{dealerUserName,jdbcType=VARCHAR}, #{loanCode,jdbcType=VARCHAR}, 
-      #{loanType,jdbcType=VARCHAR}, #{insuresName,jdbcType=VARCHAR}, #{insuresIdcard,jdbcType=VARCHAR}, 
-      #{insuresPhone,jdbcType=VARCHAR}, #{insuresAddress,jdbcType=VARCHAR}, #{insuresType,jdbcType=VARCHAR}, 
-      #{insuresLinkName,jdbcType=VARCHAR}, #{insuresLinkPhone,jdbcType=VARCHAR}, #{carBrand,jdbcType=VARCHAR}, 
-      #{carBrandName,jdbcType=VARCHAR}, #{carVehicle,jdbcType=VARCHAR}, #{carVehicleName,jdbcType=VARCHAR}, 
-      #{carModel,jdbcType=VARCHAR}, #{carModelName,jdbcType=VARCHAR}, #{carPlateNumber,jdbcType=VARCHAR}, 
-      #{carVin,jdbcType=VARCHAR}, #{carEngineNo,jdbcType=VARCHAR}, #{carType,jdbcType=INTEGER}, 
-      #{carBuyType,jdbcType=INTEGER}, #{carColor,jdbcType=VARCHAR}, #{carBuyDate,jdbcType=VARCHAR}, 
-      #{carSeatNumber,jdbcType=INTEGER}, #{carDisplacement,jdbcType=VARCHAR}, #{carImports,jdbcType=INTEGER}, 
-      #{policyType,jdbcType=VARCHAR}, #{policyInsuranceCompany,jdbcType=VARCHAR}, #{policyTotalAmount,jdbcType=INTEGER}, 
-      #{policyEffectDate,jdbcType=VARCHAR}, #{policyExpireDate,jdbcType=VARCHAR}, #{policyCompulsoryInsurance,jdbcType=INTEGER}, 
-      #{policyVehicleTax,jdbcType=INTEGER}, #{policyThreePay,jdbcType=INTEGER}, #{policyThreePayLevel,jdbcType=INTEGER}, 
-      #{policyDamage,jdbcType=INTEGER}, #{policyLost,jdbcType=INTEGER}, #{policyAutoIgnition,jdbcType=INTEGER}, 
-      #{policySeatPassenger,jdbcType=INTEGER}, #{policyScratch,jdbcType=INTEGER}, #{policyGlassBreakage,jdbcType=INTEGER}, 
-      #{policyDisregardContributing,jdbcType=INTEGER}, #{policySeatDriver,jdbcType=INTEGER}, 
-      #{policyWading,jdbcType=INTEGER}, #{planId,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, 
-      #{planPeriod,jdbcType=INTEGER}, #{planFinancingType,jdbcType=VARCHAR}, #{planLoanAmount,jdbcType=INTEGER}, 
-      #{repaymentBankCode,jdbcType=VARCHAR}, #{repaymentBankName,jdbcType=VARCHAR}, #{repaymentCard,jdbcType=VARCHAR}, 
-      #{signTime,jdbcType=TIMESTAMP}, #{auditStatus,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
-      #{auditName,jdbcType=VARCHAR}, #{loanTime,jdbcType=TIMESTAMP}, #{submitPerson,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssDealerCustomerModel" >
+    insert into fss_dealer_customer (id, dealer_id, user_id, 
+      name, phone, insures_name, 
+      insures_idcard, insures_phone, insures_address, 
+      insures_type, insures_link_name, insures_link_phone, 
+      car_brand, car_brand_name, car_vehicle, 
+      car_vehicle_name, car_model, car_model_name, 
+      car_plate_number, car_vin, car_engine_no, 
+      car_type, car_buy_type, car_color, 
+      car_buy_date, car_seat_number, car_displacement, 
+      car_imports, policy_type, policy_insurance_company, 
+      policy_total_amount, policy_effect_date, policy_expire_date, 
+      policy_compulsory_insurance, policy_vehicle_tax, 
+      policy_three_pay, policy_three_pay_level, policy_damage, 
+      policy_lost, policy_auto_ignition, policy_seat_passenger, 
+      policy_scratch, policy_glass_breakage, policy_disregard_contributing, 
+      policy_seat_driver, policy_wading, ctime, 
+      mtime, remark)
+    values (#{id,jdbcType=BIGINT}, #{dealerId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{insuresName,jdbcType=VARCHAR}, 
+      #{insuresIdcard,jdbcType=VARCHAR}, #{insuresPhone,jdbcType=VARCHAR}, #{insuresAddress,jdbcType=VARCHAR}, 
+      #{insuresType,jdbcType=VARCHAR}, #{insuresLinkName,jdbcType=VARCHAR}, #{insuresLinkPhone,jdbcType=VARCHAR}, 
+      #{carBrand,jdbcType=VARCHAR}, #{carBrandName,jdbcType=VARCHAR}, #{carVehicle,jdbcType=VARCHAR}, 
+      #{carVehicleName,jdbcType=VARCHAR}, #{carModel,jdbcType=VARCHAR}, #{carModelName,jdbcType=VARCHAR}, 
+      #{carPlateNumber,jdbcType=VARCHAR}, #{carVin,jdbcType=VARCHAR}, #{carEngineNo,jdbcType=VARCHAR}, 
+      #{carType,jdbcType=INTEGER}, #{carBuyType,jdbcType=INTEGER}, #{carColor,jdbcType=VARCHAR}, 
+      #{carBuyDate,jdbcType=VARCHAR}, #{carSeatNumber,jdbcType=INTEGER}, #{carDisplacement,jdbcType=VARCHAR}, 
+      #{carImports,jdbcType=INTEGER}, #{policyType,jdbcType=VARCHAR}, #{policyInsuranceCompany,jdbcType=VARCHAR}, 
+      #{policyTotalAmount,jdbcType=INTEGER}, #{policyEffectDate,jdbcType=VARCHAR}, #{policyExpireDate,jdbcType=VARCHAR}, 
+      #{policyCompulsoryInsurance,jdbcType=INTEGER}, #{policyVehicleTax,jdbcType=INTEGER}, 
+      #{policyThreePay,jdbcType=INTEGER}, #{policyThreePayLevel,jdbcType=INTEGER}, #{policyDamage,jdbcType=INTEGER}, 
+      #{policyLost,jdbcType=INTEGER}, #{policyAutoIgnition,jdbcType=INTEGER}, #{policySeatPassenger,jdbcType=INTEGER}, 
+      #{policyScratch,jdbcType=INTEGER}, #{policyGlassBreakage,jdbcType=INTEGER}, #{policyDisregardContributing,jdbcType=INTEGER}, 
+      #{policySeatDriver,jdbcType=INTEGER}, #{policyWading,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
-    insert into fss_loan
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssDealerCustomerModel" >
+    insert into fss_dealer_customer
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="loanId != null" >
-        loan_id,
-      </if>
-      <if test="fundId != null" >
-        fund_id,
-      </if>
-      <if test="fundName != null" >
-        fund_name,
+      <if test="id != null" >
+        id,
       </if>
       <if test="dealerId != null" >
         dealer_id,
       </if>
-      <if test="customerId != null" >
-        customer_id,
+      <if test="userId != null" >
+        user_id,
       </if>
-      <if test="dealerName != null" >
-        dealer_name,
+      <if test="name != null" >
+        name,
       </if>
-      <if test="dealerUserId != null" >
-        dealer_user_id,
-      </if>
-      <if test="dealerUserName != null" >
-        dealer_user_name,
-      </if>
-      <if test="loanCode != null" >
-        loan_code,
-      </if>
-      <if test="loanType != null" >
-        loan_type,
+      <if test="phone != null" >
+        phone,
       </if>
       <if test="insuresName != null" >
         insures_name,
@@ -301,48 +250,6 @@
       <if test="policyWading != null" >
         policy_wading,
       </if>
-      <if test="planId != null" >
-        plan_id,
-      </if>
-      <if test="planName != null" >
-        plan_name,
-      </if>
-      <if test="planPeriod != null" >
-        plan_period,
-      </if>
-      <if test="planFinancingType != null" >
-        plan_financing_type,
-      </if>
-      <if test="planLoanAmount != null" >
-        plan_loan_amount,
-      </if>
-      <if test="repaymentBankCode != null" >
-        repayment_bank_code,
-      </if>
-      <if test="repaymentBankName != null" >
-        repayment_bank_name,
-      </if>
-      <if test="repaymentCard != null" >
-        repayment_card,
-      </if>
-      <if test="signTime != null" >
-        sign_time,
-      </if>
-      <if test="auditStatus != null" >
-        audit_status,
-      </if>
-      <if test="auditTime != null" >
-        audit_time,
-      </if>
-      <if test="auditName != null" >
-        audit_name,
-      </if>
-      <if test="loanTime != null" >
-        loan_time,
-      </if>
-      <if test="submitPerson != null" >
-        submit_person,
-      </if>
       <if test="ctime != null" >
         ctime,
       </if>
@@ -354,35 +261,20 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="loanId != null" >
-        #{loanId,jdbcType=BIGINT},
-      </if>
-      <if test="fundId != null" >
-        #{fundId,jdbcType=INTEGER},
-      </if>
-      <if test="fundName != null" >
-        #{fundName,jdbcType=VARCHAR},
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="dealerId != null" >
         #{dealerId,jdbcType=BIGINT},
       </if>
-      <if test="customerId != null" >
-        #{customerId,jdbcType=BIGINT},
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
       </if>
-      <if test="dealerName != null" >
-        #{dealerName,jdbcType=VARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="dealerUserId != null" >
-        #{dealerUserId,jdbcType=BIGINT},
-      </if>
-      <if test="dealerUserName != null" >
-        #{dealerUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="loanCode != null" >
-        #{loanCode,jdbcType=VARCHAR},
-      </if>
-      <if test="loanType != null" >
-        #{loanType,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="insuresName != null" >
         #{insuresName,jdbcType=VARCHAR},
@@ -507,48 +399,6 @@
       <if test="policyWading != null" >
         #{policyWading,jdbcType=INTEGER},
       </if>
-      <if test="planId != null" >
-        #{planId,jdbcType=INTEGER},
-      </if>
-      <if test="planName != null" >
-        #{planName,jdbcType=VARCHAR},
-      </if>
-      <if test="planPeriod != null" >
-        #{planPeriod,jdbcType=INTEGER},
-      </if>
-      <if test="planFinancingType != null" >
-        #{planFinancingType,jdbcType=VARCHAR},
-      </if>
-      <if test="planLoanAmount != null" >
-        #{planLoanAmount,jdbcType=INTEGER},
-      </if>
-      <if test="repaymentBankCode != null" >
-        #{repaymentBankCode,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentBankName != null" >
-        #{repaymentBankName,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentCard != null" >
-        #{repaymentCard,jdbcType=VARCHAR},
-      </if>
-      <if test="signTime != null" >
-        #{signTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="auditStatus != null" >
-        #{auditStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="auditTime != null" >
-        #{auditTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="auditName != null" >
-        #{auditName,jdbcType=VARCHAR},
-      </if>
-      <if test="loanTime != null" >
-        #{loanTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="submitPerson != null" >
-        #{submitPerson,jdbcType=VARCHAR},
-      </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
       </if>
@@ -560,35 +410,20 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
-    update fss_loan
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssDealerCustomerModel" >
+    update fss_dealer_customer
     <set >
-      <if test="fundId != null" >
-        fund_id = #{fundId,jdbcType=INTEGER},
-      </if>
-      <if test="fundName != null" >
-        fund_name = #{fundName,jdbcType=VARCHAR},
-      </if>
       <if test="dealerId != null" >
         dealer_id = #{dealerId,jdbcType=BIGINT},
       </if>
-      <if test="customerId != null" >
-        customer_id = #{customerId,jdbcType=BIGINT},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="dealerName != null" >
-        dealer_name = #{dealerName,jdbcType=VARCHAR},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="dealerUserId != null" >
-        dealer_user_id = #{dealerUserId,jdbcType=BIGINT},
-      </if>
-      <if test="dealerUserName != null" >
-        dealer_user_name = #{dealerUserName,jdbcType=VARCHAR},
-      </if>
-      <if test="loanCode != null" >
-        loan_code = #{loanCode,jdbcType=VARCHAR},
-      </if>
-      <if test="loanType != null" >
-        loan_type = #{loanType,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="insuresName != null" >
         insures_name = #{insuresName,jdbcType=VARCHAR},
@@ -713,48 +548,6 @@
       <if test="policyWading != null" >
         policy_wading = #{policyWading,jdbcType=INTEGER},
       </if>
-      <if test="planId != null" >
-        plan_id = #{planId,jdbcType=INTEGER},
-      </if>
-      <if test="planName != null" >
-        plan_name = #{planName,jdbcType=VARCHAR},
-      </if>
-      <if test="planPeriod != null" >
-        plan_period = #{planPeriod,jdbcType=INTEGER},
-      </if>
-      <if test="planFinancingType != null" >
-        plan_financing_type = #{planFinancingType,jdbcType=VARCHAR},
-      </if>
-      <if test="planLoanAmount != null" >
-        plan_loan_amount = #{planLoanAmount,jdbcType=INTEGER},
-      </if>
-      <if test="repaymentBankCode != null" >
-        repayment_bank_code = #{repaymentBankCode,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentBankName != null" >
-        repayment_bank_name = #{repaymentBankName,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentCard != null" >
-        repayment_card = #{repaymentCard,jdbcType=VARCHAR},
-      </if>
-      <if test="signTime != null" >
-        sign_time = #{signTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="auditStatus != null" >
-        audit_status = #{auditStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="auditTime != null" >
-        audit_time = #{auditTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="auditName != null" >
-        audit_name = #{auditName,jdbcType=VARCHAR},
-      </if>
-      <if test="loanTime != null" >
-        loan_time = #{loanTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="submitPerson != null" >
-        submit_person = #{submitPerson,jdbcType=VARCHAR},
-      </if>
       <if test="ctime != null" >
         ctime = #{ctime,jdbcType=TIMESTAMP},
       </if>
@@ -765,19 +558,14 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
-    where loan_id = #{loanId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
-    update fss_loan
-    set fund_id = #{fundId,jdbcType=INTEGER},
-      fund_name = #{fundName,jdbcType=VARCHAR},
-      dealer_id = #{dealerId,jdbcType=BIGINT},
-      customer_id = #{customerId,jdbcType=BIGINT},
-      dealer_name = #{dealerName,jdbcType=VARCHAR},
-      dealer_user_id = #{dealerUserId,jdbcType=BIGINT},
-      dealer_user_name = #{dealerUserName,jdbcType=VARCHAR},
-      loan_code = #{loanCode,jdbcType=VARCHAR},
-      loan_type = #{loanType,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssDealerCustomerModel" >
+    update fss_dealer_customer
+    set dealer_id = #{dealerId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       insures_name = #{insuresName,jdbcType=VARCHAR},
       insures_idcard = #{insuresIdcard,jdbcType=VARCHAR},
       insures_phone = #{insuresPhone,jdbcType=VARCHAR},
@@ -819,23 +607,9 @@
       policy_disregard_contributing = #{policyDisregardContributing,jdbcType=INTEGER},
       policy_seat_driver = #{policySeatDriver,jdbcType=INTEGER},
       policy_wading = #{policyWading,jdbcType=INTEGER},
-      plan_id = #{planId,jdbcType=INTEGER},
-      plan_name = #{planName,jdbcType=VARCHAR},
-      plan_period = #{planPeriod,jdbcType=INTEGER},
-      plan_financing_type = #{planFinancingType,jdbcType=VARCHAR},
-      plan_loan_amount = #{planLoanAmount,jdbcType=INTEGER},
-      repayment_bank_code = #{repaymentBankCode,jdbcType=VARCHAR},
-      repayment_bank_name = #{repaymentBankName,jdbcType=VARCHAR},
-      repayment_card = #{repaymentCard,jdbcType=VARCHAR},
-      sign_time = #{signTime,jdbcType=TIMESTAMP},
-      audit_status = #{auditStatus,jdbcType=VARCHAR},
-      audit_time = #{auditTime,jdbcType=TIMESTAMP},
-      audit_name = #{auditName,jdbcType=VARCHAR},
-      loan_time = #{loanTime,jdbcType=TIMESTAMP},
-      submit_person = #{submitPerson,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=TIMESTAMP},
       mtime = #{mtime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
-    where loan_id = #{loanId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

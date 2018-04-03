@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssPlanModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssPlanModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="capital_type" property="capitalType" jdbcType="VARCHAR" />
+    <result column="interest_type" property="interestType" jdbcType="VARCHAR" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="rate" property="rate" jdbcType="INTEGER" />
+    <result column="bond_percent" property="bondPercent" jdbcType="INTEGER" />
+    <result column="service_percent" property="servicePercent" jdbcType="INTEGER" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="discount_percent" property="discountPercent" jdbcType="INTEGER" />
+    <result column="offset_final_payment" property="offsetFinalPayment" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_name, capital_type, interest_type, period, rate, bond_percent, service_percent, 
+    discount, discount_percent, offset_final_payment, ctime, mtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fss_plan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fss_plan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssPlanModel" >
+    insert into fss_plan (id, product_name, capital_type, 
+      interest_type, period, rate, 
+      bond_percent, service_percent, discount, 
+      discount_percent, offset_final_payment, ctime, 
+      mtime)
+    values (#{id,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR}, #{capitalType,jdbcType=VARCHAR}, 
+      #{interestType,jdbcType=VARCHAR}, #{period,jdbcType=INTEGER}, #{rate,jdbcType=INTEGER}, 
+      #{bondPercent,jdbcType=INTEGER}, #{servicePercent,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, 
+      #{discountPercent,jdbcType=INTEGER}, #{offsetFinalPayment,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{mtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssPlanModel" >
+    insert into fss_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="capitalType != null" >
+        capital_type,
+      </if>
+      <if test="interestType != null" >
+        interest_type,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="bondPercent != null" >
+        bond_percent,
+      </if>
+      <if test="servicePercent != null" >
+        service_percent,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="discountPercent != null" >
+        discount_percent,
+      </if>
+      <if test="offsetFinalPayment != null" >
+        offset_final_payment,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="mtime != null" >
+        mtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalType != null" >
+        #{capitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="interestType != null" >
+        #{interestType,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="bondPercent != null" >
+        #{bondPercent,jdbcType=INTEGER},
+      </if>
+      <if test="servicePercent != null" >
+        #{servicePercent,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="discountPercent != null" >
+        #{discountPercent,jdbcType=INTEGER},
+      </if>
+      <if test="offsetFinalPayment != null" >
+        #{offsetFinalPayment,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        #{mtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssPlanModel" >
+    update fss_plan
+    <set >
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalType != null" >
+        capital_type = #{capitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="interestType != null" >
+        interest_type = #{interestType,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="bondPercent != null" >
+        bond_percent = #{bondPercent,jdbcType=INTEGER},
+      </if>
+      <if test="servicePercent != null" >
+        service_percent = #{servicePercent,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="discountPercent != null" >
+        discount_percent = #{discountPercent,jdbcType=INTEGER},
+      </if>
+      <if test="offsetFinalPayment != null" >
+        offset_final_payment = #{offsetFinalPayment,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        mtime = #{mtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssPlanModel" >
+    update fss_plan
+    set product_name = #{productName,jdbcType=VARCHAR},
+      capital_type = #{capitalType,jdbcType=VARCHAR},
+      interest_type = #{interestType,jdbcType=VARCHAR},
+      period = #{period,jdbcType=INTEGER},
+      rate = #{rate,jdbcType=INTEGER},
+      bond_percent = #{bondPercent,jdbcType=INTEGER},
+      service_percent = #{servicePercent,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=INTEGER},
+      discount_percent = #{discountPercent,jdbcType=INTEGER},
+      offset_final_payment = #{offsetFinalPayment,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

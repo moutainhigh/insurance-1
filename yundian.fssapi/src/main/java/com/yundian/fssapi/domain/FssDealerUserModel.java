@@ -2,28 +2,38 @@ package com.yundian.fssapi.domain;
 
 import java.util.Date;
 
-public class FssUserModel {
+public class FssDealerUserModel {
+    private Long id;
+
     private Long userId;
 
     private Long dealerId;
 
-    private String userName;
-
-    private String userPwd;
-
-    private String phone;
+    private String roleId;
 
     private String name;
 
     private String sex;
 
-    private Date registerTime;
+    private String tel;
+
+    private String station;
+
+    private String region;
 
     private Date ctime;
 
     private Date mtime;
 
     private String remark;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -41,28 +51,12 @@ public class FssUserModel {
         this.dealerId = dealerId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    public String getUserPwd() {
-        return userPwd;
-    }
-
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd == null ? null : userPwd.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    public void setRoleId(String roleId) {
+        this.roleId = roleId == null ? null : roleId.trim();
     }
 
     public String getName() {
@@ -81,12 +75,28 @@ public class FssUserModel {
         this.sex = sex == null ? null : sex.trim();
     }
 
-    public Date getRegisterTime() {
-        return registerTime;
+    public String getTel() {
+        return tel;
     }
 
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
+    }
+
+    public String getStation() {
+        return station;
+    }
+
+    public void setStation(String station) {
+        this.station = station == null ? null : station.trim();
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region == null ? null : region.trim();
     }
 
     public Date getCtime() {

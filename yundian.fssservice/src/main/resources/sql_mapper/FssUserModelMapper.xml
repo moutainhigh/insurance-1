@@ -1,194 +1,164 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yundian.fss.dao.FssUserModelMapper">
-  
-  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssUserModel">
-    <id column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_pwd" jdbcType="VARCHAR" property="userPwd" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
-    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
-    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssUserModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssUserModel" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="dealer_id" property="dealerId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
-  
-   <resultMap id="FssUserQueryBaseResultMap" type="com.yundian.fssapi.domain.query.FssUserQueryModel">
-    <!-- 用户部分 -->
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
-    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
-    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-  	<!-- 机构部分  -->
-	<result column="guarantee_id" jdbcType="INTEGER" property="guaranteeId" />
-	<result column="guarantee_name" jdbcType="VARCHAR" property="guaranteeName" />
-	<result column="guarantee_code" jdbcType="VARCHAR" property="guaranteeCode" />
-	<result column="is_default_guarantee" jdbcType="VARCHAR" property="isDefaultGuarantee" />
- 	<result column="role_id" jdbcType="VARCHAR" property="roleId" />
-	<result column="station" jdbcType="VARCHAR" property="station" />
-   	<result column="region" jdbcType="VARCHAR" property="region" />
- 
-  </resultMap>
-  
-  <sql id="Base_Column_List">
-    user_id, 
-    user_name, 
-    user_pwd, 
-    phone, 
-    name, 
-    sex, 
-    register_time, 
-    ctime, 
-    mtime, 
-    remark
+  <sql id="Base_Column_List" >
+    user_id, dealer_id, user_name, user_pwd, phone, name, sex, register_time, ctime, 
+    mtime, remark
   </sql>
-  
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from fss_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from fss_user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  
-  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssUserModel">
-    <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into fss_user (
-    	user_name, 
-    	user_pwd, 
-    	phone, 
-      	name, 
-      	sex, 
-      	register_time, 
-      	ctime,
-      	remark
-      )
-    values 
-    (
-    	#{userName,jdbcType=VARCHAR}, 
-    	#{userPwd,jdbcType=VARCHAR}, 
-    	#{phone,jdbcType=VARCHAR}, 
-      	#{name,jdbcType=VARCHAR}, 
-      	#{sex,jdbcType=INTEGER}, 
-      	#{registerTime,jdbcType=TIMESTAMP}, 
-      	now(), 
-      	#{remark,jdbcType=VARCHAR}
-     )
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssUserModel" >
+    insert into fss_user (user_id, dealer_id, user_name, 
+      user_pwd, phone, name, 
+      sex, register_time, ctime, 
+      mtime, remark)
+    values (#{userId,jdbcType=BIGINT}, #{dealerId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{userPwd,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  
-  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssUserModel">
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssUserModel" >
+    insert into fss_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="dealerId != null" >
+        dealer_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="mtime != null" >
+        mtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="dealerId != null" >
+        #{dealerId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssUserModel" >
     update fss_user
-    set 
+    <set >
+      <if test="dealerId != null" >
+        dealer_id = #{dealerId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        mtime = #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssUserModel" >
+    update fss_user
+    set dealer_id = #{dealerId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      mtime =now(),
+      sex = #{sex,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
-  
-  <update id="updateGuaranteeUserPwd" parameterType="com.yundian.fssapi.domain.FssUserModel">
-    	update fss_user set 
-      	user_pwd = #{userPwd,jdbcType=VARCHAR}, 
-      	mtime =now()
-   	 where user_id = #{userId,jdbcType=BIGINT}
-  </update>
-  
-	<select id="getFssGuaranteeUserByUserNameAndPwd" parameterType="map"
-		resultMap="BaseResultMap">
-		select  
-		<include refid="Base_Column_List" />
-		from fss_user
-		where user_name=concat('',#{userName},'')
-		and user_pwd = concat('',#{userPwd},'')
-	</select>
-	
-	<!-- 分页查询 start -->
-	
-	<sql id="getFssUserPagingDynamicWhere">
-		<if test="guaranteeId != null">
-			and t3.guarantee_id =#{guaranteeId}
-		</if>
-		<if test="userId != null">
-			and t1.user_id =#{userId}
-		</if>
-		<if test="userName != null and userName != ''">
-			and t1.user_name  like concat('%',#{userName},'%')
-		</if>
-		<if test="name != null and name != ''">
-			and t1.name like concat('%',#{name},'%')
-		</if>
-		
-		<if test="phone != null and phone != ''">
-			and t1.phone  like concat('%',#{phone},'%')
-		</if>
-		
-		<if test="roleId != null and roleId != ''">
-			and t2.role_id  = #{roleId}
-		</if>
-		
-		<if test="region != null and region != ''">
-			and t2.region  like concat('%',#{region},'%')
-		</if>
-		
-		
-		<if test="station != null and station != ''">
-			and t2.station  like concat('%',#{station},'%')
-		</if>
-		<if test="isDefaultGuarantee != null and isDefaultGuarantee != ''">
-			and t2.is_default_guarantee =#{isDefaultGuarantee}
-		</if>
-		
-	</sql>
-	
-	<select id="getFssUserPaging" parameterType="map" resultMap="FssUserQueryBaseResultMap">
-		select
-		t1.user_id, 
-	    t1.user_name, 
-	    t1.phone, 
-	    t1.name, 
-	    t1.sex, 
-	    t1.register_time, 
-	    t1.ctime, 
-	    t1.mtime, 
-	    t1.remark,
-	    t2.role_id,
-	    t2.station,
-	    t2.region,
-	    t2.is_default_guarantee,
-		t3.guarantee_id,
-	    t3.guarantee_name,
-	    t3.guarantee_code
-		from fss_user t1
-		left join fss_guarantee_user t2 on t1.user_id=t2.user_id
-		left join fss_guarantee t3 on t3.guarantee_id=t2.guarantee_id
-		where 1=1
-		<include refid="getFssUserPagingDynamicWhere"/>
-		limit #{_offset}, #{_limit}
-	</select>
-  
-  	<select id="getFssUserPagingCount" resultType="java.lang.Integer" parameterType="map">
-		select
-		count(*)
-		from fss_user  t1
-		left join fss_guarantee_user t2 on t1.user_id=t2.user_id
-		left join fss_guarantee t3 on t3.guarantee_id=t2.guarantee_id
-		where 1=1
-		<include refid="getFssUserPagingDynamicWhere"/>
-	</select>
-	<!-- 分页查询 end -->
-	
 </mapper>

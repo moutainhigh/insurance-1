@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssLoanRepaymentPlanModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="loan_id" property="loanId" jdbcType="BIGINT" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="agreed_repayment_date" property="agreedRepaymentDate" jdbcType="VARCHAR" />
+    <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
+    <result column="pay_fee" property="payFee" jdbcType="INTEGER" />
+    <result column="plan_amount" property="planAmount" jdbcType="INTEGER" />
+    <result column="plan_captial_amount" property="planCaptialAmount" jdbcType="INTEGER" />
+    <result column="plan_interest_amount" property="planInterestAmount" jdbcType="INTEGER" />
+    <result column="overdue_days" property="overdueDays" jdbcType="INTEGER" />
+    <result column="repayment_status" property="repaymentStatus" jdbcType="VARCHAR" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_id, period, agreed_repayment_date, pay_amount, pay_fee, plan_amount, plan_captial_amount, 
+    plan_interest_amount, overdue_days, repayment_status, ctime, mtime, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fss_loan_repayment_plan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fss_loan_repayment_plan
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
+    insert into fss_loan_repayment_plan (id, loan_id, period, 
+      agreed_repayment_date, pay_amount, pay_fee, 
+      plan_amount, plan_captial_amount, plan_interest_amount, 
+      overdue_days, repayment_status, ctime, 
+      mtime, remark)
+    values (#{id,jdbcType=BIGINT}, #{loanId,jdbcType=BIGINT}, #{period,jdbcType=INTEGER}, 
+      #{agreedRepaymentDate,jdbcType=VARCHAR}, #{payAmount,jdbcType=INTEGER}, #{payFee,jdbcType=INTEGER}, 
+      #{planAmount,jdbcType=INTEGER}, #{planCaptialAmount,jdbcType=INTEGER}, #{planInterestAmount,jdbcType=INTEGER}, 
+      #{overdueDays,jdbcType=INTEGER}, #{repaymentStatus,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
+    insert into fss_loan_repayment_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanId != null" >
+        loan_id,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="agreedRepaymentDate != null" >
+        agreed_repayment_date,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="payFee != null" >
+        pay_fee,
+      </if>
+      <if test="planAmount != null" >
+        plan_amount,
+      </if>
+      <if test="planCaptialAmount != null" >
+        plan_captial_amount,
+      </if>
+      <if test="planInterestAmount != null" >
+        plan_interest_amount,
+      </if>
+      <if test="overdueDays != null" >
+        overdue_days,
+      </if>
+      <if test="repaymentStatus != null" >
+        repayment_status,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="mtime != null" >
+        mtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanId != null" >
+        #{loanId,jdbcType=BIGINT},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="agreedRepaymentDate != null" >
+        #{agreedRepaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=INTEGER},
+      </if>
+      <if test="payFee != null" >
+        #{payFee,jdbcType=INTEGER},
+      </if>
+      <if test="planAmount != null" >
+        #{planAmount,jdbcType=INTEGER},
+      </if>
+      <if test="planCaptialAmount != null" >
+        #{planCaptialAmount,jdbcType=INTEGER},
+      </if>
+      <if test="planInterestAmount != null" >
+        #{planInterestAmount,jdbcType=INTEGER},
+      </if>
+      <if test="overdueDays != null" >
+        #{overdueDays,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentStatus != null" >
+        #{repaymentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
+    update fss_loan_repayment_plan
+    <set >
+      <if test="loanId != null" >
+        loan_id = #{loanId,jdbcType=BIGINT},
+      </if>
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="agreedRepaymentDate != null" >
+        agreed_repayment_date = #{agreedRepaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=INTEGER},
+      </if>
+      <if test="payFee != null" >
+        pay_fee = #{payFee,jdbcType=INTEGER},
+      </if>
+      <if test="planAmount != null" >
+        plan_amount = #{planAmount,jdbcType=INTEGER},
+      </if>
+      <if test="planCaptialAmount != null" >
+        plan_captial_amount = #{planCaptialAmount,jdbcType=INTEGER},
+      </if>
+      <if test="planInterestAmount != null" >
+        plan_interest_amount = #{planInterestAmount,jdbcType=INTEGER},
+      </if>
+      <if test="overdueDays != null" >
+        overdue_days = #{overdueDays,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentStatus != null" >
+        repayment_status = #{repaymentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        mtime = #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
+    update fss_loan_repayment_plan
+    set loan_id = #{loanId,jdbcType=BIGINT},
+      period = #{period,jdbcType=INTEGER},
+      agreed_repayment_date = #{agreedRepaymentDate,jdbcType=VARCHAR},
+      pay_amount = #{payAmount,jdbcType=INTEGER},
+      pay_fee = #{payFee,jdbcType=INTEGER},
+      plan_amount = #{planAmount,jdbcType=INTEGER},
+      plan_captial_amount = #{planCaptialAmount,jdbcType=INTEGER},
+      plan_interest_amount = #{planInterestAmount,jdbcType=INTEGER},
+      overdue_days = #{overdueDays,jdbcType=INTEGER},
+      repayment_status = #{repaymentStatus,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

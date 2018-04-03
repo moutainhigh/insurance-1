@@ -1,5 +1,6 @@
 package com.yundian.fssapi.domain.query;
 
+
 import com.yundian.fssapi.domain.FssUserModel;
 
 public class FssUserQueryModel extends FssUserModel {

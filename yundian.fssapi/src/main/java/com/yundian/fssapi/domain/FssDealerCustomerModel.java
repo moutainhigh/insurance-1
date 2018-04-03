@@ -2,26 +2,16 @@ package com.yundian.fssapi.domain;
 
 import java.util.Date;
 
-public class FssLoanModel {
-    private Long loanId;
-
-    private Integer fundId;
-
-    private String fundName;
+public class FssDealerCustomerModel {
+    private Long id;
 
     private Long dealerId;
 
-    private Long customerId;
+    private Long userId;
 
-    private String dealerName;
+    private String name;
 
-    private Long dealerUserId;
-
-    private String dealerUserName;
-
-    private String loanCode;
-
-    private String loanType;
+    private String phone;
 
     private String insuresName;
 
@@ -105,62 +95,18 @@ public class FssLoanModel {
 
     private Integer policyWading;
 
-    private Integer planId;
-
-    private String planName;
-
-    private Integer planPeriod;
-
-    private String planFinancingType;
-
-    private Integer planLoanAmount;
-
-    private String repaymentBankCode;
-
-    private String repaymentBankName;
-
-    private String repaymentCard;
-
-    private Date signTime;
-
-    private String auditStatus;
-
-    private Date auditTime;
-
-    private String auditName;
-
-    private Date loanTime;
-
-    private String submitPerson;
-
     private Date ctime;
 
     private Date mtime;
 
     private String remark;
 
-    public Long getLoanId() {
-        return loanId;
+    public Long getId() {
+        return id;
     }
 
-    public void setLoanId(Long loanId) {
-        this.loanId = loanId;
-    }
-
-    public Integer getFundId() {
-        return fundId;
-    }
-
-    public void setFundId(Integer fundId) {
-        this.fundId = fundId;
-    }
-
-    public String getFundName() {
-        return fundName;
-    }
-
-    public void setFundName(String fundName) {
-        this.fundName = fundName == null ? null : fundName.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getDealerId() {
@@ -171,52 +117,28 @@ public class FssLoanModel {
         this.dealerId = dealerId;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getDealerName() {
-        return dealerName;
+    public String getName() {
+        return name;
     }
 
-    public void setDealerName(String dealerName) {
-        this.dealerName = dealerName == null ? null : dealerName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public Long getDealerUserId() {
-        return dealerUserId;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setDealerUserId(Long dealerUserId) {
-        this.dealerUserId = dealerUserId;
-    }
-
-    public String getDealerUserName() {
-        return dealerUserName;
-    }
-
-    public void setDealerUserName(String dealerUserName) {
-        this.dealerUserName = dealerUserName == null ? null : dealerUserName.trim();
-    }
-
-    public String getLoanCode() {
-        return loanCode;
-    }
-
-    public void setLoanCode(String loanCode) {
-        this.loanCode = loanCode == null ? null : loanCode.trim();
-    }
-
-    public String getLoanType() {
-        return loanType;
-    }
-
-    public void setLoanType(String loanType) {
-        this.loanType = loanType == null ? null : loanType.trim();
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getInsuresName() {
@@ -545,118 +467,6 @@ public class FssLoanModel {
 
     public void setPolicyWading(Integer policyWading) {
         this.policyWading = policyWading;
-    }
-
-    public Integer getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(Integer planId) {
-        this.planId = planId;
-    }
-
-    public String getPlanName() {
-        return planName;
-    }
-
-    public void setPlanName(String planName) {
-        this.planName = planName == null ? null : planName.trim();
-    }
-
-    public Integer getPlanPeriod() {
-        return planPeriod;
-    }
-
-    public void setPlanPeriod(Integer planPeriod) {
-        this.planPeriod = planPeriod;
-    }
-
-    public String getPlanFinancingType() {
-        return planFinancingType;
-    }
-
-    public void setPlanFinancingType(String planFinancingType) {
-        this.planFinancingType = planFinancingType == null ? null : planFinancingType.trim();
-    }
-
-    public Integer getPlanLoanAmount() {
-        return planLoanAmount;
-    }
-
-    public void setPlanLoanAmount(Integer planLoanAmount) {
-        this.planLoanAmount = planLoanAmount;
-    }
-
-    public String getRepaymentBankCode() {
-        return repaymentBankCode;
-    }
-
-    public void setRepaymentBankCode(String repaymentBankCode) {
-        this.repaymentBankCode = repaymentBankCode == null ? null : repaymentBankCode.trim();
-    }
-
-    public String getRepaymentBankName() {
-        return repaymentBankName;
-    }
-
-    public void setRepaymentBankName(String repaymentBankName) {
-        this.repaymentBankName = repaymentBankName == null ? null : repaymentBankName.trim();
-    }
-
-    public String getRepaymentCard() {
-        return repaymentCard;
-    }
-
-    public void setRepaymentCard(String repaymentCard) {
-        this.repaymentCard = repaymentCard == null ? null : repaymentCard.trim();
-    }
-
-    public Date getSignTime() {
-        return signTime;
-    }
-
-    public void setSignTime(Date signTime) {
-        this.signTime = signTime;
-    }
-
-    public String getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(String auditStatus) {
-        this.auditStatus = auditStatus == null ? null : auditStatus.trim();
-    }
-
-    public Date getAuditTime() {
-        return auditTime;
-    }
-
-    public void setAuditTime(Date auditTime) {
-        this.auditTime = auditTime;
-    }
-
-    public String getAuditName() {
-        return auditName;
-    }
-
-    public void setAuditName(String auditName) {
-        this.auditName = auditName == null ? null : auditName.trim();
-    }
-
-    public Date getLoanTime() {
-        return loanTime;
-    }
-
-    public void setLoanTime(Date loanTime) {
-        this.loanTime = loanTime;
-    }
-
-    public String getSubmitPerson() {
-        return submitPerson;
-    }
-
-    public void setSubmitPerson(String submitPerson) {
-        this.submitPerson = submitPerson == null ? null : submitPerson.trim();
     }
 
     public Date getCtime() {
