@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class CacheServiceImpl implements CacheService {
+
 	@Autowired
     protected RedisTemplate<String, Object> redisTemplate;
 	

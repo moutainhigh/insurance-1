@@ -19,7 +19,7 @@
             <includes>
 		        <include>**</include>
 		    </includes>
-		   
+
         </fileSet>
         <fileSet>
             <directory>src/main/scripts</directory>

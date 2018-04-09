@@ -2,50 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yundian.fss.dao.FssDealerUserModelMapper" >
   <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssDealerUserModel" >
-    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="dealer_id" property="dealerId" jdbcType="BIGINT" />
     <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="station" property="station" jdbcType="VARCHAR" />
     <result column="region" property="region" jdbcType="VARCHAR" />
-    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
-    <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="ctime" property="ctime" jdbcType="DATE" />
+    <result column="mtime" property="mtime" jdbcType="DATE" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, dealer_id, role_id, name, sex, tel, station, region, ctime, mtime, remark
-  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from fss_dealer_user
-    where id = #{id,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from fss_dealer_user
-    where id = #{id,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.yundian.fssapi.domain.FssDealerUserModel" >
-    insert into fss_dealer_user (id, user_id, dealer_id, 
-      role_id, name, sex, 
-      tel, station, region, 
-      ctime, mtime, remark
-      )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{dealerId,jdbcType=BIGINT}, 
-      #{roleId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=VARCHAR}, #{station,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+    insert into fss_dealer_user (user_id, dealer_id, role_id, 
+      user_name, user_pwd, name, 
+      sex, tel, station, 
+      region, status, ctime, 
+      mtime, remark)
+    values (#{userId,jdbcType=BIGINT}, #{dealerId,jdbcType=BIGINT}, #{roleId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{station,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssDealerUserModel" >
     insert into fss_dealer_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="userId != null" >
         user_id,
       </if>
@@ -54,6 +53,12 @@
       </if>
       <if test="roleId != null" >
         role_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
       </if>
       <if test="name != null" >
         name,
@@ -70,6 +75,9 @@
       <if test="region != null" >
         region,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
       <if test="ctime != null" >
         ctime,
       </if>
@@ -81,9 +89,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
       </if>
@@ -92,6 +97,12 @@
       </if>
       <if test="roleId != null" >
         #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -108,6 +119,9 @@
       <if test="region != null" >
         #{region,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
       </if>
@@ -119,58 +133,72 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssDealerUserModel" >
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssFundModel" >
     update fss_dealer_user
     <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
+      <if test="role_id != null" >
+        role_id = #{roleID,jdbcType=VARCHAR},
       </if>
-      <if test="dealerId != null" >
-        dealer_id = #{dealerId,jdbcType=BIGINT},
-      </if>
-      <if test="roleId != null" >
-        role_id = #{roleId,jdbcType=VARCHAR},
+      <if test="user_name != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=INTEGER},
       </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=VARCHAR},
-      </if>
-      <if test="tel != null" >
-        tel = #{tel,jdbcType=VARCHAR},
-      </if>
-      <if test="station != null" >
-        station = #{station,jdbcType=VARCHAR},
-      </if>
-      <if test="region != null" >
-        region = #{region,jdbcType=VARCHAR},
-      </if>
-      <if test="ctime != null" >
-        ctime = #{ctime,jdbcType=TIMESTAMP},
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="mtime != null" >
-        mtime = #{mtime,jdbcType=TIMESTAMP},
+        mtime = #{mtime,jdbcType=VARCHAR},
       </if>
+
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssDealerUserModel" >
+
+  <select id="getFssDealerUserByUserAndPwd" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from fss_dealer_user
+    where user_name =#{userName}
+    and user_pwd=#{userPwd}
+  </select>
+
+
+  <update id="resetPwd" parameterType="java.util.Map" >
     update fss_dealer_user
-    set user_id = #{userId,jdbcType=BIGINT},
-      dealer_id = #{dealerId,jdbcType=BIGINT},
-      role_id = #{roleId,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR},
-      tel = #{tel,jdbcType=VARCHAR},
-      station = #{station,jdbcType=VARCHAR},
-      region = #{region,jdbcType=VARCHAR},
-      ctime = #{ctime,jdbcType=TIMESTAMP},
-      mtime = #{mtime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    set user_pwd=#{userId,jdbcType=VARCHAR},
+    mtime=#{mtime,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
+
+  <sql id="getFssDealerUserPagingWhere">
+
+    <if test="dealerId != null and dealerId != ''">
+      and dealer_id =#{dealerId}
+    </if>
+
+    <if test="tel != null and tel != ''">
+      and tel like concat('%',#{tel},'%')
+    </if>
+
+    <if test="name != null and name != ''">
+      and name like concat('%',#{name},'%')
+    </if>
+
+  </sql>
+
+  <select id="getFssDealerUserPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_dealer_user
+    where 1=1
+    <include refid="getFssDealerUserPagingWhere"/>
+    limit #{_offset}, #{_limit}
+    order by user_id desc
+  </select>
+
 </mapper>

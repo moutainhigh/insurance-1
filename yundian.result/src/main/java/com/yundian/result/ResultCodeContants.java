@@ -8,6 +8,6 @@ package com.yundian.result;
  *
  */
 public class ResultCodeContants {
-	public static final int success=10000;
-	public static final int failed=20000;
+	public static final String SUCCESS="SUCCESS";
+	public static final String FAILED="FAILED";
 }

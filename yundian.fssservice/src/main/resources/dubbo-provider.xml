@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<dubbo:application name="fss_service" />
+	
+	<dubbo:registry address="${dubbo.yundian.address}" />
+	
+	<dubbo:protocol name="dubbo" port="${dubbo.yundian.port}" />
+	
+	<!-- <dubbo:monitor protocol="registry" /> -->	
+
+	<dubbo:service ref="fssCodeLibraryService" interface="com.yundian.fssapi.service.FssCodeLibraryService"  
+		group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
+	<!--<dubbo:service ref="fssSysAreaService" interface="com.yundian.fssapi.service.FssSysAreaService"  -->
+		<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>-->
+
+
+	<!--经销商用户服务 -->
+	<dubbo:service ref="fssDealerUserService" interface="com.yundian.fssapi.service.FssDealerUserService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
+</beans>

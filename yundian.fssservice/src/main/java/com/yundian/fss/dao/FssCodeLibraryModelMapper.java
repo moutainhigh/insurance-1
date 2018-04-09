@@ -1,6 +1,9 @@
 package com.yundian.fss.dao;
 
 import com.yundian.fssapi.domain.FssCodeLibraryModel;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface FssCodeLibraryModelMapper {
     int deleteByPrimaryKey(Integer id);
@@ -10,4 +13,7 @@ public interface FssCodeLibraryModelMapper {
     FssCodeLibraryModel selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKey(FssCodeLibraryModel record);
+
+    List<FssCodeLibraryModel> getCodes(@Param("codeType") String codeType);
+
 }

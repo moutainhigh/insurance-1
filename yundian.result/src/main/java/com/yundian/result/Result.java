@@ -13,7 +13,7 @@ public class Result<T> implements Serializable {
 	public Result() {
 	}
 
-	public Result(T data, int code, String message) {
+	public Result(T data, String code, String message) {
 		this.data = data;
 		this.code = code;
 		this.message = message;
@@ -28,7 +28,7 @@ public class Result<T> implements Serializable {
 	
 	private T data;
 	
-	private int code=ResultCodeContants.success;
+	private String code=ResultCodeContants.SUCCESS;
 	
 	private String message;
 
@@ -40,11 +40,11 @@ public class Result<T> implements Serializable {
 		this.data = data;
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 
@@ -57,7 +57,7 @@ public class Result<T> implements Serializable {
 	}
 	
 	public boolean isSuccess(){
-		return (ResultCodeContants.success==this.code);
+		return (ResultCodeContants.SUCCESS==this.code);
 	}
 
 }

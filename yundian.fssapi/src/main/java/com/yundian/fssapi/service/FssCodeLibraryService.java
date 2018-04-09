@@ -8,7 +8,7 @@ import com.yundian.result.Paginator;
 import com.yundian.result.Result;
 
 /**
- * 人脸识别服务
+ *
  * 
  * @author hehaibo
  * @version $Id: FssCodeLibraryService.java, v 0.1 2016年7月26日 下午8:59:44 hehaibo

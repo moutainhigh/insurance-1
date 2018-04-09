@@ -7,7 +7,6 @@
     <result column="code_name" jdbcType="VARCHAR" property="codeName" />
     <result column="code_type" jdbcType="VARCHAR" property="codeType" />
     <result column="sort_no" jdbcType="VARCHAR" property="sortNo" />
-    <result column="describe" jdbcType="VARCHAR" property="describe" />
     <result column="is_inuse" jdbcType="BIT" property="isInuse" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
@@ -17,8 +16,7 @@
     code_id, 
     code_name, 
     code_type, 
-    sort_no, 
-    describe, 
+    sort_no,
     is_inuse, 
     create_time,
     modify_time
@@ -72,4 +70,10 @@
       modify_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="getCodes" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+        from fss_code_library where code_type=#{codeType}
+    and is_inuse=1 order by sort_no
+    </select>
 </mapper>

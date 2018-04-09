@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author ningxia.jin
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)  
-@ContextConfiguration(locations = { "classpath*:application-context-test.xml" })  
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
 public abstract class AbstractJUnit {  
 } 

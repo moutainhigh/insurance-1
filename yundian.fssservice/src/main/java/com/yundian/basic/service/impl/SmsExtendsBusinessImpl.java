@@ -1,8 +1,8 @@
 package com.yundian.basic.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yundian.basic.dao.ISmsDao;
-import com.yundian.basic.dao.ISmsTemplateDao;
+import com.yundian.fss.dao.ISmsDao;
+import com.yundian.fss.dao.ISmsTemplateDao;
 import com.yundian.basic.domain.Sms;
 import com.yundian.basic.domain.SmsTemplate;
 import com.yundian.basic.domain.SmsTemplateValue;

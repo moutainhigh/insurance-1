@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yundian.basic.com.yundian.basic.dao.ISmsTemplateDao">
+<mapper namespace="com.yundian.fss.dao.ISmsTemplateDao">
 	<select id="getSmsTemplate" resultType="com.yundian.basic.domain.SmsTemplate">
 		SELECT id, templatetype,
 		template, status FROM sms_template

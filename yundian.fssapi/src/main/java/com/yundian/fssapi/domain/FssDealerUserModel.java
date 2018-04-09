@@ -3,13 +3,15 @@ package com.yundian.fssapi.domain;
 import java.util.Date;
 
 public class FssDealerUserModel {
-    private Long id;
-
     private Long userId;
 
     private Long dealerId;
 
     private String roleId;
+
+    private String userName;
+
+    private String userPwd;
 
     private String name;
 
@@ -21,19 +23,13 @@ public class FssDealerUserModel {
 
     private String region;
 
+    private String status;
+
     private Date ctime;
 
     private Date mtime;
 
     private String remark;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
@@ -57,6 +53,22 @@ public class FssDealerUserModel {
 
     public void setRoleId(String roleId) {
         this.roleId = roleId == null ? null : roleId.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getUserPwd() {
+        return userPwd;
+    }
+
+    public void setUserPwd(String userPwd) {
+        this.userPwd = userPwd == null ? null : userPwd.trim();
     }
 
     public String getName() {
@@ -97,6 +109,14 @@ public class FssDealerUserModel {
 
     public void setRegion(String region) {
         this.region = region == null ? null : region.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public Date getCtime() {

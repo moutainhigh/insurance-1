@@ -1,6 +1,6 @@
 package com.yundian.basic.service.impl;
 
-import com.yundian.basic.dao.ISysConfigDao;
+import com.yundian.fss.dao.ISysConfigDao;
 import com.yundian.basic.domain.SysConfigModel;
 import com.yundian.basic.service.SysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;

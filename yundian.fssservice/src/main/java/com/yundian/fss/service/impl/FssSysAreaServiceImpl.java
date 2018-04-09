@@ -1,6 +1,7 @@
 package com.yundian.fss.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
 import com.yundian.result.ResultCodeContants;
+import org.springframework.stereotype.Service;
 
 /**
  * 系统地区服务实现
@@ -22,13 +24,16 @@ import com.yundian.result.ResultCodeContants;
  * @author hehaibo
  * @version $Id: FssSysAreaServiceImpl.java, v 0.1 2016年7月26日 下午8:59:44 hehaibo Exp $
  */
+@Service("fssSysAreaService")
 public class FssSysAreaServiceImpl implements FssSysAreaService{
 	private static final Logger logger=LoggerFactory.getLogger(FssSysAreaServiceImpl.class);
 
 	@Autowired
 	private FssSysAreaManager fssSysAreaManager;
-	
+
+	@Override
 	public Result<Integer> insertFssSysArea (FssSysAreaModel fssSysAreaModel){
+
 		Result<Integer> result = new Result<Integer>();
 		try {
 			Integer row= this.fssSysAreaManager.insertFssSysArea(fssSysAreaModel);
@@ -49,7 +54,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		}
 		return result;
 	}
-	
+	@Override
 	public Result<Integer> updateFssSysArea(FssSysAreaModel fssSysAreaModel){
 		Result<Integer> result = new Result<Integer>();
 		try {
@@ -72,7 +77,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		return result;
 	}
 
-			
+	@Override
 	public Result<Integer> deleteFssSysAreaById ( Long id )
 	{
 		Result<Integer> result = new Result<Integer>();
@@ -94,7 +99,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		}
 		return result;
 	}
-																														
+	@Override
 	public Result<FssSysAreaModel> getFssSysAreaById(Long id){
 		Result<FssSysAreaModel> result = new Result<FssSysAreaModel>();
 		try {
@@ -115,7 +120,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		}
 		return result;
 	}
-
+@Override
 	public Result<List<FssSysAreaModel>> getFssSysAreaList(FssSysAreaModel fssSysAreaModel){
 		Result<List<FssSysAreaModel>> result = new Result<List<FssSysAreaModel>>();
 		try {
@@ -139,7 +144,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		return result;
 	}
 	
-
+@Override
 	public Result<PaginatedResult<FssSysAreaModel>> getPaginatorFssSysArea(
             Paginator<FssSysAreaModel> paginator){
 		Result<PaginatedResult<FssSysAreaModel>> result = new Result<PaginatedResult<FssSysAreaModel>>();
