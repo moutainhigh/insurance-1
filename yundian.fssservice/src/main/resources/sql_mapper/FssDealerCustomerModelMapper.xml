@@ -612,4 +612,52 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <sql id="getFssDealerCustomerPagingWhere">
+
+    <if test="dealerId != null and dealerId != ''">
+      and dealer_id =#{dealerId}
+    </if>
+
+    <if test="name != null and name != ''">
+      and name like concat('%',#{name},'%')
+    </if>
+
+    <if test="insuresIdCard != null and insuresIdCard != ''">
+      and insures_idcard like concat('%',#{insuresIdCard},'%')
+    </if>
+    <if test="policyBuyType != null and policyBuyType != ''">
+      and policyBuyType like concat('%',#{policyBuyType},'%')
+    </if>
+    <if test="insuresType != null and insuresType != ''">
+      and insures_type like concat('%',#{insuresType},'%')
+    </if>
+
+    <if test="phone != null and phone != ''">
+      and phone like concat('%',#{phone},'%')
+    </if>
+
+    <if test="policyExpireDate != null and policyExpireDate != ''">
+      and policy_expire_date BETWEEN #{policyExpireDate1} and #{policyExpireDate2}
+    </if>
+  </sql>
+
+  <select id="getFssDealerCustomerPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_dealer_customer
+    where 1=1
+    <include refid="getFssDealerCustomerPagingWhere"/>
+    limit #{_offset}, #{_limit}
+    order by id desc
+  </select>
+
+  <select id="getFssDealerCustomerPagingCount" resultType="java.lang.Integer" parameterType="map">
+    select
+    count(*)
+    from fss_dealer_customer
+    where 1=1
+    <include refid="getFssDealerCustomerPaging"/>
+  </select>
+
+
 </mapper>

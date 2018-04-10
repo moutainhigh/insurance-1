@@ -33,11 +33,11 @@ public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
 		try {
 			Integer row= this.fssCodeLibraryModelMapper.insert(fssCodeLibraryModel);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("添加代码配置字典项异常:%s",
 					ToStringBuilder.reflectionToString(fssCodeLibraryModel)),e);
-			result.setData(ResultCodeContants.failed);
+			result.setCode(ResultCodeContants.FAILED);
 		}
 		return result;
 		
@@ -48,11 +48,11 @@ public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
 		try {
 			Integer row= this.fssCodeLibraryModelMapper.updateByPrimaryKey(fssCodeLibraryModel);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("修改代码配置字典项异常:%s",
 					ToStringBuilder.reflectionToString(fssCodeLibraryModel)),e);
-			result.setData(ResultCodeContants.failed);
+			result.setCode(ResultCodeContants.FAILED);
 		}
 		return result;
 	}
@@ -64,11 +64,11 @@ public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
 		try {
 			Integer row= this.fssCodeLibraryModelMapper.deleteByPrimaryKey(id);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("删除代码配置字典项异常:%s",
 					id),e);
-			result.setCode(ResultCodeContants.failed);
+			result.setCode(ResultCodeContants.FAILED);
 		}
 		return result;
 	}
@@ -78,11 +78,11 @@ public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
 		try {
 			FssCodeLibraryModel row= this.fssCodeLibraryModelMapper.selectByPrimaryKey(id);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("删除代码配置字典项异常:%s",
 					id),e);
-			result.setCode(ResultCodeContants.failed);
+			result.setCode(ResultCodeContants.FAILED);
 		}
 		return result;
 		
@@ -93,11 +93,11 @@ public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
 		try {
 			List<FssCodeLibraryModel> data =fssCodeLibraryModelMapper.getCodes(fssCodeLibraryModel.getCodeType());
 			result.setData(data);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("查询列表代码配置字典项异常:%s",
 					ToStringBuilder.reflectionToString(fssCodeLibraryModel)),e);
-			result.setCode(ResultCodeContants.failed);
+			result.setCode(ResultCodeContants.FAILED);
 		}
 		return result;
 	}
@@ -109,11 +109,11 @@ public class FssCodeLibraryServiceImpl implements FssCodeLibraryService{
 		try {
 			PaginatedResult<FssCodeLibraryModel> data =null;//TODO
 			result.setData(data);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("分页查询列表代码配置字典项异常:%s",
 					ToStringBuilder.reflectionToString(paginator)),e);
-			result.setCode(ResultCodeContants.failed);
+			result.setCode(ResultCodeContants.FAILED);
 		}
 		return result;
     }

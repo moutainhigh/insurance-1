@@ -1,8 +1,9 @@
 package com.yundian.fssapi.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FssLoanRepaymentModel {
+public class FssLoanRepaymentModel implements Serializable {
     private Long id;
 
     private Long loanId;

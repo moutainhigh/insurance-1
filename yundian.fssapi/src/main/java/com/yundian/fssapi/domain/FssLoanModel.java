@@ -1,8 +1,9 @@
 package com.yundian.fssapi.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FssLoanModel {
+public class FssLoanModel implements Serializable {
     private Long loanId;
 
     private Integer fundId;
@@ -122,8 +123,17 @@ public class FssLoanModel {
     private String repaymentCard;
 
     private Date signTime;
-
+    /**
+     * 状态:INIT待提交、AUDITING审核中、APPLY_LOAN申请放款、WAITING_REVISED待资料修改、WAITING_LOAN待放款、HAVE_LOAN已放款、CLOSED已关闭
+     */
     private String auditStatus;
+
+    /**
+     * 上一个状态
+     */
+    private String auditStatusPre;
+
+    private  String closedReason;
 
     private Date auditTime;
 
@@ -138,6 +148,23 @@ public class FssLoanModel {
     private Date mtime;
 
     private String remark;
+
+
+    public String getAuditStatusPre() {
+        return this.auditStatusPre;
+    }
+
+    public void setAuditStatusPre(String auditStatusPre) {
+        this.auditStatusPre = auditStatusPre;
+    }
+
+    public String getClosedReason() {
+        return this.closedReason;
+    }
+
+    public void setClosedReason(String closedReason) {
+        this.closedReason = closedReason;
+    }
 
     public Long getLoanId() {
         return loanId;
@@ -682,4 +709,6 @@ public class FssLoanModel {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+
 }

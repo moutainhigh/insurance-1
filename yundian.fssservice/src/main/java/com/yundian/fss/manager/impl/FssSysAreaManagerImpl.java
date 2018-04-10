@@ -84,16 +84,6 @@ public class FssSysAreaManagerImpl implements FssSysAreaManager{
 	}
 	
 
-	public PaginatedResult<FssSysAreaModel> getPaginatorFssSysArea(
-            Paginator<FssSysAreaModel> paginator){
-		try {
-			PaginatedResult<FssSysAreaModel> data= null;//TODO
-			return data;
-		} catch (Exception e) {
-			logger.error(String.format("分页查询系统地区异常:%s",
-					ToStringBuilder.reflectionToString(paginator)),e);
-			throw new FssLoanBizException(ResultCodeContants.FAILED,"",e);
-		}
-    }
+
 
 }

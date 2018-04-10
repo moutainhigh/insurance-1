@@ -38,7 +38,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		try {
 			Integer row= this.fssSysAreaManager.insertFssSysArea(fssSysAreaModel);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("添加系统地区异常:%s",
 					ToStringBuilder.reflectionToString(fssSysAreaModel)),e);
@@ -48,7 +48,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 				result.setMessage(be.getErrorMsg());
 			}
 			else{
-				result.setCode(ResultCodeContants.failed);
+				result.setCode(ResultCodeContants.FAILED);
 				result.setMessage("系统异常");
 			}
 		}
@@ -60,7 +60,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		try {
 			Integer row= this.fssSysAreaManager.updateFssSysArea(fssSysAreaModel);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("修改系统地区异常:%s",
 					ToStringBuilder.reflectionToString(fssSysAreaModel)),e);
@@ -70,7 +70,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 				result.setMessage(be.getErrorMsg());
 			}
 			else{
-				result.setCode(ResultCodeContants.failed);
+				result.setCode(ResultCodeContants.FAILED);
 				result.setMessage("系统异常");
 			}
 		}
@@ -84,7 +84,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		try {
 			Integer row= this.fssSysAreaManager.deleteFssSysAreaById(id);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("删除系统地区异常:%d",id),e);
 			if(e instanceof FssLoanBizException){
@@ -93,7 +93,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 				result.setMessage(be.getErrorMsg());
 			}
 			else{
-				result.setCode(ResultCodeContants.failed);
+				result.setCode(ResultCodeContants.FAILED);
 				result.setMessage("系统异常");
 			}
 		}
@@ -105,7 +105,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 		try {
 			FssSysAreaModel row= this.fssSysAreaManager.getFssSysAreaById(id);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("查询单个系统地区异常:%d",id),e);
 			if(e instanceof FssLoanBizException){
@@ -114,7 +114,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 				result.setMessage(be.getErrorMsg());
 			}
 			else{
-				result.setCode(ResultCodeContants.failed);
+				result.setCode(ResultCodeContants.FAILED);
 				result.setMessage("系统异常");
 			}
 		}
@@ -127,7 +127,7 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 			List<FssSysAreaModel> row= this.fssSysAreaManager
 					.getFssSysAreaList(fssSysAreaModel);
 			result.setData(row);
-			result.setCode(ResultCodeContants.success);
+			result.setCode(ResultCodeContants.SUCCESS);
 		} catch (Exception e) {
 			logger.error(String.format("查询列表系统地区异常:%s",
 					ToStringBuilder.reflectionToString(fssSysAreaModel)),e);
@@ -137,35 +137,11 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 				result.setMessage(be.getErrorMsg());
 			}
 			else{
-				result.setCode(ResultCodeContants.failed);
+				result.setCode(ResultCodeContants.FAILED);
 				result.setMessage("系统异常");
 			}
 		}
 		return result;
 	}
-	
-@Override
-	public Result<PaginatedResult<FssSysAreaModel>> getPaginatorFssSysArea(
-            Paginator<FssSysAreaModel> paginator){
-		Result<PaginatedResult<FssSysAreaModel>> result = new Result<PaginatedResult<FssSysAreaModel>>();
-		try {
-			PaginatedResult<FssSysAreaModel> data= this.fssSysAreaManager.getPaginatorFssSysArea(paginator);
-			result.setData(data);
-			result.setCode(ResultCodeContants.success);
-		} catch (Exception e) {
-			logger.error(String.format("分页查询系统地区异常:%s",
-					ToStringBuilder.reflectionToString(paginator)),e);
-			if(e instanceof FssLoanBizException){
-				FssLoanBizException be=(FssLoanBizException)e;
-				result.setCode(be.getCode());
-				result.setMessage(be.getErrorMsg());
-			}
-			else{
-				result.setCode(ResultCodeContants.failed);
-				result.setMessage("系统异常");
-			}
-		}
-		return result;
-    }
 
 }

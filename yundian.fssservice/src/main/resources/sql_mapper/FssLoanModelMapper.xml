@@ -63,6 +63,8 @@
     <result column="repayment_card" property="repaymentCard" jdbcType="VARCHAR" />
     <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
     <result column="audit_status" property="auditStatus" jdbcType="VARCHAR" />
+    <result column="audit_status_pre" property="auditStatusPre" jdbcType="VARCHAR" />
+    <result column="closed_reason" property="closedReason" jdbcType="VARCHAR" />
     <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
     <result column="audit_name" property="auditName" jdbcType="VARCHAR" />
     <result column="loan_time" property="loanTime" jdbcType="TIMESTAMP" />
@@ -83,7 +85,7 @@
     policy_seat_passenger, policy_scratch, policy_glass_breakage, policy_disregard_contributing, 
     policy_seat_driver, policy_wading, plan_id, plan_name, plan_period, plan_financing_type, 
     plan_loan_amount, repayment_bank_code, repayment_bank_name, repayment_card, sign_time, 
-    audit_status, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark
+    audit_status,audit_status_pre,closed_reason, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -96,7 +98,7 @@
     where loan_id = #{loanId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
-    insert into fss_loan (loan_id, fund_id, fund_name, 
+    insert into fss_loan (fund_id, fund_name,
       dealer_id, customer_id, dealer_name, 
       dealer_user_id, dealer_user_name, loan_code, 
       loan_type, insures_name, insures_idcard, 
@@ -116,11 +118,11 @@
       policy_wading, plan_id, plan_name, 
       plan_period, plan_financing_type, plan_loan_amount, 
       repayment_bank_code, repayment_bank_name, repayment_card, 
-      sign_time, audit_status, audit_time, 
+      sign_time, audit_status, audit_status_pre,closed_reason,audit_time,
       audit_name, loan_time, submit_person, 
       ctime, mtime, remark
       )
-    values (#{loanId,jdbcType=BIGINT}, #{fundId,jdbcType=INTEGER}, #{fundName,jdbcType=VARCHAR}, 
+    values ( #{fundId,jdbcType=INTEGER}, #{fundName,jdbcType=VARCHAR},
       #{dealerId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{dealerName,jdbcType=VARCHAR}, 
       #{dealerUserId,jdbcType=BIGINT}, #{dealerUserName,jdbcType=VARCHAR}, #{loanCode,jdbcType=VARCHAR}, 
       #{loanType,jdbcType=VARCHAR}, #{insuresName,jdbcType=VARCHAR}, #{insuresIdcard,jdbcType=VARCHAR}, 
@@ -140,7 +142,7 @@
       #{policyWading,jdbcType=INTEGER}, #{planId,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, 
       #{planPeriod,jdbcType=INTEGER}, #{planFinancingType,jdbcType=VARCHAR}, #{planLoanAmount,jdbcType=INTEGER}, 
       #{repaymentBankCode,jdbcType=VARCHAR}, #{repaymentBankName,jdbcType=VARCHAR}, #{repaymentCard,jdbcType=VARCHAR}, 
-      #{signTime,jdbcType=TIMESTAMP}, #{auditStatus,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{signTime,jdbcType=TIMESTAMP}, #{auditStatus,jdbcType=VARCHAR},#{auditStatusPre,jdbcType=VARCHAR},#{closedReason,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP},
       #{auditName,jdbcType=VARCHAR}, #{loanTime,jdbcType=TIMESTAMP}, #{submitPerson,jdbcType=VARCHAR}, 
       #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
@@ -764,6 +766,9 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="auditStatusPre != null" >
+        audit_status_pre = #{auditStatusPre,jdbcType=VARCHAR},
+      </if>
     </set>
     where loan_id = #{loanId,jdbcType=BIGINT}
   </update>
@@ -829,6 +834,7 @@
       repayment_card = #{repaymentCard,jdbcType=VARCHAR},
       sign_time = #{signTime,jdbcType=TIMESTAMP},
       audit_status = #{auditStatus,jdbcType=VARCHAR},
+      audit_status_pre = #{auditStatusPre,jdbcType=VARCHAR},
       audit_time = #{auditTime,jdbcType=TIMESTAMP},
       audit_name = #{auditName,jdbcType=VARCHAR},
       loan_time = #{loanTime,jdbcType=TIMESTAMP},
@@ -838,4 +844,54 @@
       remark = #{remark,jdbcType=VARCHAR}
     where loan_id = #{loanId,jdbcType=BIGINT}
   </update>
+
+
+
+
+  <sql id="getFssLoanPagingWhere">
+
+    <if test="dealerId != null and dealerId != ''">
+      and dealer_id =#{dealerId}
+    </if>
+
+    <if test="insuresName != null and insuresName != ''">
+      and insures_name like concat('%',#{insuresName},'%')
+    </if>
+
+    <if test="insuresPhone != null and insuresPhone != ''">
+      and insures_phone like concat('%',#{insuresPhone},'%')
+    </if>
+    <if test="carPlateNumber != null and carPlateNumber != ''">
+      and car_plate_number like concat('%',#{carPlateNumber},'%')
+    </if>
+    <if test="carVin != null and carVin != ''">
+      and car_vin like concat('%',#{carVin},'%')
+    </if>
+
+    <if test="policyInsuranceCompany != null and policyInsuranceCompany != ''">
+      and policy_insurance_company like concat('%',#{policyInsuranceCompany},'%')
+    </if>
+
+    <if test="ctime != null and ctime != ''">
+      and ctime BETWEEN #{ctime1} and #{ctime2}
+    </if>
+  </sql>
+
+  <select id="getFssLoanPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_loan
+    where 1=1
+    <include refid="getFssLoanPagingWhere"/>
+    limit #{_offset}, #{_limit}
+    order by loan_id desc
+  </select>
+
+  <select id="getFssLoanPagingCount" resultType="java.lang.Integer" parameterType="map">
+    select
+    count(*)
+    from fss_loan
+    where 1=1
+    <include refid="getFssLoanPagingWhere"/>
+  </select>
+
 </mapper>

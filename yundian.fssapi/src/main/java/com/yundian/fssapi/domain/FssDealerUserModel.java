@@ -1,8 +1,9 @@
 package com.yundian.fssapi.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FssDealerUserModel {
+public class FssDealerUserModel implements Serializable {
     private Long userId;
 
     private Long dealerId;

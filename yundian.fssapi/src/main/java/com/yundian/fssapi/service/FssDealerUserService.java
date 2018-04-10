@@ -45,7 +45,7 @@ public interface FssDealerUserService {
 	 * @param paginator
 	 * @return
 	 */
-	PaginatedResult<FssDealerUserModel> getPaginatorFssOrganizationUser(
+	PaginatedResult<FssDealerUserModel> getPaginatorFssDealerUser(
 			Paginator<FssDealerUserModel> paginator);
 	/**
 	 * 经销商用户登录
@@ -53,6 +53,6 @@ public interface FssDealerUserService {
 	 * @param password
 	 * @return
 	 */
-	FssDealerUserModel fssOrganizationUserLogin(String userName,String password);
+	FssDealerUserModel fssFssDealerUserLogin(String userName,String password);
 
 }

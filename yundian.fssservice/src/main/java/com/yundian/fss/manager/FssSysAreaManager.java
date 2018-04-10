@@ -24,6 +24,4 @@ public interface FssSysAreaManager {
 
 	List<FssSysAreaModel> getFssSysAreaList(FssSysAreaModel fssSysAreaModel);
 
-	PaginatedResult<FssSysAreaModel> getPaginatorFssSysArea(
-			Paginator<FssSysAreaModel> paginator);
 }

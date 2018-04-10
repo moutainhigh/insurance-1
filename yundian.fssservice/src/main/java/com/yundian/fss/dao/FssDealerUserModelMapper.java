@@ -43,5 +43,6 @@ public interface FssDealerUserModelMapper {
     List<FssDealerUserModel> getFssDealerUserPaging(
             Map<String, Object> param);
 
+    Integer getFssDealerUserPagingCount(Map<String, Object> param);
 
 }

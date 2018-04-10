@@ -1,8 +1,9 @@
 package com.yundian.fssapi.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FssDealerCustomerModel {
+public class FssDealerCustomerModel implements Serializable{
     private Long id;
 
     private Long dealerId;
@@ -59,6 +60,10 @@ public class FssDealerCustomerModel {
 
     private Integer carImports;
 
+    /**
+     * 保险购买方式：分期，全款
+     */
+    private String policyBuyType;
     private String policyType;
 
     private String policyInsuranceCompany;
@@ -491,5 +496,13 @@ public class FssDealerCustomerModel {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getPolicyBuyType() {
+        return this.policyBuyType;
+    }
+
+    public void setPolicyBuyType(String policyBuyType) {
+        this.policyBuyType = policyBuyType;
     }
 }

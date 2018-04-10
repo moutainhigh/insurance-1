@@ -97,7 +97,7 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
 
 
     @Override
-    public PaginatedResult<FssDealerUserModel> getPaginatorFssOrganizationUser(
+    public PaginatedResult<FssDealerUserModel> getPaginatorFssDealerUser(
             Paginator<FssDealerUserModel> paginator) {
         try {
             HashMap<String, Object> param = new HashMap<String, Object>();
@@ -108,7 +108,7 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
 
             List<FssDealerUserModel> list = this.fssDealerUserModelMapper
                     .getFssDealerUserPaging(param);
-            int count=0;
+            Integer count = fssDealerUserModelMapper.getFssDealerUserPagingCount(param);
             PaginatedResult<FssDealerUserModel> paginatedResult = new PaginatedResult<FssDealerUserModel>();
             paginatedResult.setRows(list);
             paginatedResult.setTotal(count);
@@ -124,7 +124,7 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
     }
 
     @Override
-    public FssDealerUserModel fssOrganizationUserLogin(String userName,String password) {
+    public FssDealerUserModel fssFssDealerUserLogin(String userName,String password) {
         try {
             FssDealerUserModel userModel = this.fssDealerUserModelMapper
                     .getFssDealerUserByUserAndPwd(userName, password);

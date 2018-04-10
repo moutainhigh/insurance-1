@@ -116,18 +116,18 @@ public class CodeCache {
 					//清空验证码
 					cachService.delete(txtKey);
 					cachService.delete(soundKey);
-					result.put("code", ResultCodeContants.success);
+					result.put("code", ResultCodeContants.SUCCESS);
 					result.put("message", "success");
 				}else{
-					result.put("code", ResultCodeContants.failed);
+					result.put("code", ResultCodeContants.FAILED);
 					result.put("message", "验证码错误");
 				}
 			} else{
-				result.put("code", ResultCodeContants.failed);
+				result.put("code", ResultCodeContants.FAILED);
 				result.put("message", "验证码已过期");
 			}
 		}else{
-			result.put("code", ResultCodeContants.failed);
+			result.put("code", ResultCodeContants.FAILED);
 			result.put("message", "验证码已过期");
 		}
 		return result;
