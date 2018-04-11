@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssSysRoleModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssSysRoleModel">
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+    <result column="update_man" jdbcType="VARCHAR" property="updateMan" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_id, 
+    role_name, 
+    description, 
+    state, 
+    ctime, 
+    creator, 
+    mtime, 
+    update_man
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tp_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tp_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssSysRoleModel">
+    insert into tp_role (
+	    role_name, 
+	    description, 
+	    state, 
+	    ctime, 
+	    creator 
+    )
+    values (
+   		#{roleName,jdbcType=VARCHAR}, 
+   		#{description,jdbcType=VARCHAR}, 
+   		#{state,jdbcType=VARCHAR},
+   		now(), 
+      	#{creator,jdbcType=VARCHAR} 
+     )
+  </insert>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssSysRoleModel">
+    update tp_role
+    	set role_name = #{roleName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      mtime = now(),
+      update_man = #{updateMan,jdbcType=VARCHAR}
+      where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="getTpRolePagingWhere">
+  	 <if test="roleName != null and roleName != ''">
+        and role_name like concat('%', #{roleName},'%')
+      </if>
+      <if test="state != null and state != ''">
+        and state = #{state}
+      </if>
+  </sql>
+  
+  <select id="getTpRolePaging" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tp_role
+ 	where 1=1
+ 	<include refid="getTpRolePagingWhere"/>
+ 	limit  #{_offset} , #{_limit}
+  </select>
+  
+  <select id="getTpRolePagingCount" parameterType="map" resultType="int">
+    select 
+    count(*)
+    from tp_role
+ 	where 1=1
+ 	<include refid="getTpRolePagingWhere"/>
+  </select>
+  
+  <select id="getUsedRoleListByState" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tp_role
+  	where state = #{state}
+  </select>
+
+</mapper>

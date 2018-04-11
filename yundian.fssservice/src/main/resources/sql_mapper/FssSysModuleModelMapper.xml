@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssSysModuleModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssSysModuleModel">
+    <id column="module_id" jdbcType="INTEGER" property="moduleId" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="business_code" jdbcType="VARCHAR" property="businessCode" />
+    <result column="link_address" jdbcType="VARCHAR" property="linkAddress" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+    <result column="update_man" jdbcType="INTEGER" property="updateMan" />
+    <result column="sorting" jdbcType="INTEGER" property="sorting" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="operator_code" jdbcType="VARCHAR" property="operatorCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    module_id,
+    module_name, 
+    parent_id, 
+    state, 
+    business_code, 
+    link_address, 
+    description, 
+    ctime, 
+    creator, 
+    mtime, 
+    update_man, 
+    sorting, 
+    icon, 
+    operator_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tp_module
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tp_module
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssSysModuleModel">
+    <selectKey keyProperty="moduleId" order="AFTER" resultType="long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tp_module (
+	    module_name, 
+	    parent_id, 
+	    state, 
+	    business_code, 
+	    link_address, 
+	    description, 
+	    ctime, 
+	    creator, 
+	    sorting, 
+	    icon, 
+	    operator_code
+    )
+    values (
+    	#{moduleName,jdbcType=VARCHAR}, 
+    	#{parentId,jdbcType=INTEGER}, 
+    	#{state,jdbcType=INTEGER}, 
+      	#{businessCode,jdbcType=VARCHAR}, 
+      	#{linkAddress,jdbcType=VARCHAR}, 
+      	#{description,jdbcType=VARCHAR}, 
+      	now(),
+      	#{creator,jdbcType=INTEGER}, 
+      	#{sorting,jdbcType=INTEGER}, 
+      	#{icon,jdbcType=VARCHAR}, 
+      	#{operatorCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssSysModuleModel">
+    update tp_module
+    set module_name = #{moduleName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      business_code = #{businessCode,jdbcType=VARCHAR},
+      link_address = #{linkAddress,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      mtime = now(),
+      update_man = #{updateMan,jdbcType=INTEGER},
+      sorting = #{sorting,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      operator_code = #{operatorCode,jdbcType=VARCHAR}
+    where module_id = #{moduleId,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="getTpModulePagingWhere">
+  	  <if test="moduleName != null and moduleName != ''">
+        and module_name like concat('%',#{moduleName},'%')
+      </if>
+      <if test="state != null">
+       	and state = #{state}
+      </if>
+      <if test="businessCode != null and businessCode != ''">
+        and business_code like concat('%', #{businessCode},'%')
+      </if>
+  </sql>
+  
+  <select id="getTpModulePaging" parameterType="map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tp_module
+    where 1=1
+    <include refid="getTpModulePagingWhere"/>
+   	limit #{_offset},#{_limit}
+  </select>
+  
+   <select id="getTpModulePagingCount" parameterType="map" resultType="int">
+  	select 
+  	count(*)
+    from tp_module
+    where 1=1
+    <include refid="getTpModulePagingWhere"/>
+  </select>
+  
+   <select id="getAllTpModuleList" parameterType="map" resultMap="BaseResultMap">
+ 		select 
+   		<include refid="Base_Column_List" />
+    	from tp_module
+  	</select>
+  
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yundian.fss.dao.FssSysRoleModuleRelationModelMapper">
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssSysRoleModuleRelationModel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="module_id" jdbcType="INTEGER" property="moduleId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="permission_code" jdbcType="VARCHAR" property="permissionCode" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="mtime" jdbcType="TIMESTAMP" property="mtime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, module_id, role_id, permission_code, ctime, mtime, remark
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tp_role_module_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tp_role_module_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+   <delete id="deleteRoleModuleRelationByRoleId" parameterType="java.lang.Long">
+    delete from tp_role_module_relation
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssSysRoleModuleRelationModel">
+    insert into tp_role_module_relation 
+    (
+    	module_id, 
+    	role_id, 
+    	permission_code, 
+      	ctime, 
+      	remark
+    )
+    values 
+    (
+   		#{moduleId,jdbcType=INTEGER}, 
+   		#{roleId,jdbcType=INTEGER}, 
+   		#{permissionCode,jdbcType=VARCHAR},
+   		now(),
+   		#{remark,jdbcType=VARCHAR}
+    )
+  </insert>
+  
+  <insert id="batchInsert" parameterType="com.yundian.fssapi.domain.FssSysRoleModuleRelationModel"
+		useGeneratedKeys="false">
+	 	insert into tp_role_module_relation 
+	 	(
+	 		module_id, 
+	 		role_id, 
+	 		permission_code, 
+      		ctime, 
+      		remark
+     	)
+		values
+		<foreach collection="roleModuleRelationList" item="model" separator=",">
+			(
+				#{model.moduleId,jdbcType=INTEGER}, 
+				#{model.roleId,jdbcType=INTEGER}, 
+				#{model.permissionCode,jdbcType=VARCHAR}, 
+				now(),
+		        #{model.remark,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssSysRoleModuleRelationModel">
+    update tp_role_module_relation
+    set module_id = #{moduleId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      permission_code = #{permissionCode,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getRoleRelModuleIdList" parameterType="long" resultType="long">
+  	select module_id from tp_role_module_relation where role_id=#{roleId}
+  </select>
+</mapper>
