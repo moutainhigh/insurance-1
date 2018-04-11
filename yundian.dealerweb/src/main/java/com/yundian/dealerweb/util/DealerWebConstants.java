@@ -1,6 +1,6 @@
 package com.yundian.dealerweb.util;
 
-public class GuaranteeWebConstants {
+public class DealerWebConstants {
 
 	
 	/**
@@ -12,7 +12,7 @@ public class GuaranteeWebConstants {
     	public static final String SYS_ADMIN = "sysadmin";
     	
     	//用来保存当前登录用户信息的常量字符串
-    	public static final String WEB_USER_SESSION = "guaranteeSessionLoginObject";
+    	public static final String WEB_USER_SESSION = "dealerSessionLoginObject";
     	
     	//用来保存当前登录用户权限的常量字符串
     	public static final String WEB_USERALLRIGHTS_SESSION = "userPermissions";

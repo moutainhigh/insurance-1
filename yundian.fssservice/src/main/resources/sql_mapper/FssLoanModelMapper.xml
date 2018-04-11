@@ -97,7 +97,7 @@
     delete from fss_loan
     where loan_id = #{loanId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
+  <insert id="insert"  keyProperty="loanId" useGeneratedKeys="true" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
     insert into fss_loan (fund_id, fund_name,
       dealer_id, customer_id, dealer_name, 
       dealer_user_id, dealer_user_name, loan_code, 
@@ -147,7 +147,7 @@
       #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
+  <insert id="insertSelective" keyProperty="loanId" useGeneratedKeys="true" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
     insert into fss_loan
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="loanId != null" >

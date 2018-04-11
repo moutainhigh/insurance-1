@@ -65,7 +65,8 @@ public class FssLoanServiceImpl implements FssLoanService {
     public Long insertFssLoan(FssLoanModel fssLoanModel) {
 
         try {
-            return fssLoanModelMapper.insert(fssLoanModel);
+             fssLoanModelMapper.insert(fssLoanModel);
+            return fssLoanModel.getLoanId();
         } catch (Exception e) {
             log.error(String.format("新增保险分期失败:%s", JSON.toJSONString(fssLoanModel)), e);
             throw new FssLoanException(ResultCodeContants.FAILED, "新增保险分期失败", e);

@@ -1,18 +1,16 @@
 package com.yundian.dealerweb.interceptor;
 
-import java.util.Collections;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.yundian.dealerweb.util.GuaranteeWebConstants;
+import com.yundian.dealerweb.util.DealerWebConstants;
 import com.yundian.dealerweb.util.WebUtility;
 import com.yundian.result.DataTablesPaginatedResult;
 import com.yundian.toolkit.utils.WebUtil;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 
 public class CommonInterceptor extends HandlerInterceptorAdapter {
 
@@ -34,7 +32,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		String requestUri = request.getRequestURI();
 
 		Object userInfo = request.getSession().getAttribute(
-				GuaranteeWebConstants.SYS.WEB_USER_SESSION);
+				DealerWebConstants.SYS.WEB_USER_SESSION);
 		// 判断是否是异步请求
 		String header = request.getHeader("X-Requested-With");
 		response.setContentType("text/html;charset=utf-8");
