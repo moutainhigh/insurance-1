@@ -1,15 +1,8 @@
 package com.yundian.file.action;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSONObject;
+import com.yundian.file.service.UploadService;
+import com.yundian.file.utils.*;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -20,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.yundian.file.service.UploadService;
-import com.yundian.file.utils.AliOssFileUpload;
-import com.yundian.file.utils.BaiduMapProvider;
-import com.yundian.file.utils.Constants;
-import com.yundian.file.utils.Util;
-import com.yundian.file.utils.WaterMarksUtils;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @Controller
-@RequestMapping()
 public class UploadAction {
 	
 	Logger logger = Logger.getLogger(UploadAction.class);
@@ -50,8 +43,9 @@ public class UploadAction {
 			e.printStackTrace();
 			pw.write(getFailedResult("文件上传失败"));
 		}finally{
-			if(pw != null)
+			if(pw != null) {
 				pw.close();
+			}
 		}
 	}
 	
@@ -192,8 +186,9 @@ public class UploadAction {
 			logger.error(e.getMessage(),e);
 			pw.write(getFailedResult("文件上传失败"));
 		}finally{
-			if(pw != null)
+			if(pw != null) {
 				pw.close();
+			}
 		}
 	}
 	

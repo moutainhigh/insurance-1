@@ -11,7 +11,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<springframework>3.2.2.RELEASE</springframework>
+		<springframework>4.1.6.RELEASE</springframework>
 		<jstl>1.1.0</jstl>
 		<taglibs.standard>1.1.2</taglibs.standard>
 		<geronimo-annotation_1.0_spec>1.1.1</geronimo-annotation_1.0_spec>
