@@ -25,7 +25,7 @@ import java.util.List;
  * @create 2018/4/10
  */
 @Slf4j
-@Service
+@Service("fssDealerCustomerService")
 public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
 
     @Autowired

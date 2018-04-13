@@ -882,8 +882,9 @@
     select * from fss_loan
     where 1=1
     <include refid="getFssLoanPagingWhere"/>
-    limit #{_offset}, #{_limit}
     order by loan_id desc
+    limit #{_offset}, #{_limit}
+
   </select>
 
   <select id="getFssLoanPagingCount" resultType="java.lang.Integer" parameterType="map">

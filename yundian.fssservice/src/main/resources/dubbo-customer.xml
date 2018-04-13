@@ -7,10 +7,6 @@
         http://code.alibabatech.com/schema/dubbo
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-<!-- 调用征信系统的接口，注册中心可能不同 -->
- <!--<dubbo:registry id="fss_credit" protocol="dubbo" register="false" address="${dubbo.credit.address}" />-->
- <!--<dubbo:reference id="pyService" registry="fss_credit"   interface="com.cheguo.credit.py.service.IPyService" group="${dubbo.credit.group}" version="${dubbo.credit.version}" retries="${dubbo.credit.retries}" timeout="${dubbo.credit.timeout}" check="${dubbo.credit.check}"/>-->
- <!--<dubbo:reference id="preLoanService" registry="fss_credit"   interface="com.cheguo.credit.service.IPreLoanService" group="${dubbo.credit.group}" version="${dubbo.credit.version}" retries="${dubbo.credit.retries}" timeout="${dubbo.credit.timeout}" check="${dubbo.credit.check}"/>-->
 
 
 </beans>

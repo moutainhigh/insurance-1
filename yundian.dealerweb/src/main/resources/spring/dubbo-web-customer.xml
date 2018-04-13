@@ -17,7 +17,14 @@
 	<!-- 声明需要引用的服务接口  -->
 	<dubbo:reference id="fssCodeLibraryService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCodeLibraryService"
                      group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
-  
 
-                     
+	<dubbo:reference id="fssDealerUserService" registry="yundian_center" interface="com.yundian.fssapi.service.FssDealerUserService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+	<dubbo:reference id="fssDealerCustomerService" registry="yundian_center" interface="com.yundian.fssapi.service.FssDealerCustomerService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+	<dubbo:reference id="fssLoanService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
+
+
 </beans>

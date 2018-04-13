@@ -26,4 +26,10 @@
 	<dubbo:service ref="fssDealerUserService" interface="com.yundian.fssapi.service.FssDealerUserService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 
+	<dubbo:service ref="fssDealerCustomerService" interface="com.yundian.fssapi.service.FssDealerCustomerService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
+	<dubbo:service ref="fssLoanService" interface="com.yundian.fssapi.service.FssLoanService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
 </beans>

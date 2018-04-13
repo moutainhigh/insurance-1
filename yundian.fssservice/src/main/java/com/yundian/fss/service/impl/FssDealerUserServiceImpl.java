@@ -16,6 +16,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * @create 2018/4/8
  */
 @Slf4j
-@Service
+@Service("fssDealerUserService")
 public class FssDealerUserServiceImpl implements FssDealerUserService{
 
 
@@ -36,13 +37,20 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
     /**
      * 密码默认手机号码后6位
      */
-    private Integer PWD_PHONE_R_6=6;
+    private int PWD_PHONE_R_6=6;
 
     @Override
     public Boolean resetPwd(Long userId, String userLoginName) {
 
         try {
-            String newPwd = StringUtil.subString(userLoginName,PWD_PHONE_R_6);
+
+            String newPwd = "";
+            if(userLoginName.length()<=PWD_PHONE_R_6) {
+                newPwd = userLoginName;
+            }
+            else {
+                newPwd = userLoginName.substring(userLoginName.length() - PWD_PHONE_R_6, userLoginName.length());
+            }
             Integer resetCount = fssDealerUserModelMapper
                     .resetPwd(userId, MD5.encodePassword(newPwd));
 
@@ -71,6 +79,9 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
     @Override
     public Integer insertFssDealerUser(FssDealerUserModel fssDealerUserModel) {
         try {
+            fssDealerUserModel.setUserPwd(MD5.encodePassword(fssDealerUserModel.getUserPwd()));
+            fssDealerUserModel.setCtime(new Date());
+            fssDealerUserModel.setMtime(new Date());
             return fssDealerUserModelMapper.insert(fssDealerUserModel);
         } catch (Exception e) {
             log.error(String.format("新增经销商用户失败:%s", JSON.toJSONString(fssDealerUserModel)), e);
@@ -125,18 +136,15 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
 
     @Override
     public FssDealerUserModel fssFssDealerUserLogin(String userName,String password) {
-        try {
+        String md5Password = MD5.encodePassword(password);
+        log.info("md5:"+md5Password);
             FssDealerUserModel userModel = this.fssDealerUserModelMapper
-                    .getFssDealerUserByUserAndPwd(userName, password);
+                    .getFssDealerUserByUserAndPwd(userName, md5Password);
             if(userModel==null){
                 throw new FssDealerException(ResultCodeContants.FAILED, "用户名或密码错误");
             }
             return userModel;
-        } catch (Exception e) {
-            log.error(String.format("校验用户名密码:%s", userName), e);
-            throw new FssDealerException(ResultCodeContants.FAILED, "系统错误", e);
 
-        }
     }
 
 }

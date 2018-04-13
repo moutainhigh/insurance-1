@@ -38,7 +38,7 @@ public class DubboServiceInit extends HttpServlet {
 	 */
 	public static ApplicationContext startApplicationContext() {
 		if (applicationContext == null) {
-			applicationContext = new ClassPathXmlApplicationContext("classpath*:conf/applicationContext*.xml");
+			applicationContext = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
 		}
 		return applicationContext;
 	};

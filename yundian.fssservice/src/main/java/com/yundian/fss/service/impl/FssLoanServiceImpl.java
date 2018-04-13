@@ -30,7 +30,7 @@ import java.util.List;
  * @create 2018/4/9
  */
 @Slf4j
-@Service
+@Service("fssLoanService")
 public class FssLoanServiceImpl implements FssLoanService {
 
     @Autowired

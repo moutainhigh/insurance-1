@@ -18,6 +18,12 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
 
+  <sql id="Base_Column_List" >user_id, dealer_id, role_id,
+      user_name, user_pwd, name,
+      sex, tel, station,
+      region, status, ctime,
+      mtime, remark
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
@@ -134,13 +140,13 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssFundModel" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssDealerUserModel" >
     update fss_dealer_user
     <set >
-      <if test="role_id != null" >
-        role_id = #{roleID,jdbcType=VARCHAR},
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=VARCHAR},
       </if>
-      <if test="user_name != null" >
+      <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
@@ -169,10 +175,10 @@
   </select>
 
 
-  <update id="resetPwd" parameterType="java.util.Map" >
+  <update id="resetPwd" parameterType="map" >
     update fss_dealer_user
-    set user_pwd=#{userId,jdbcType=VARCHAR},
-    mtime=#{mtime,jdbcType=VARCHAR}
+    set user_pwd=#{userPwd,jdbcType=VARCHAR},
+    mtime=now()
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 
@@ -197,10 +203,11 @@
     select * from fss_dealer_user
     where 1=1
     <include refid="getFssDealerUserPagingWhere"/>
-    limit #{_offset}, #{_limit}
     order by user_id desc
+    limit #{_offset}, #{_limit}
+
   </select>
-  <select id="getFssDealerUserPaging" resultType="java.lang.Integer" parameterType="map">
+  <select id="getFssDealerUserPagingCount" resultType="java.lang.Integer" parameterType="map">
     select
     count(*)
     from fss_dealer_user
