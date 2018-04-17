@@ -2,12 +2,11 @@ package com.yundian.fss.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.yundian.fss.dao.FssDealerUserModelMapper;
+import com.yundian.fssapi.domain.FssDealerModel;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.exception.FssDealerException;
 import com.yundian.fssapi.service.FssDealerUserService;
-import com.yundian.result.PaginatedResult;
-import com.yundian.result.Paginator;
-import com.yundian.result.ResultCodeContants;
+import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
 import com.yundian.toolkit.utils.MD5;
 import com.yundian.toolkit.utils.StringUtil;
@@ -108,7 +107,7 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
 
 
     @Override
-    public PaginatedResult<FssDealerUserModel> getPaginatorFssDealerUser(
+    public Page<FssDealerUserModel> getPaginatorFssDealerUser(
             Paginator<FssDealerUserModel> paginator) {
         try {
             HashMap<String, Object> param = new HashMap<String, Object>();
@@ -120,10 +119,7 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
             List<FssDealerUserModel> list = this.fssDealerUserModelMapper
                     .getFssDealerUserPaging(param);
             Integer count = fssDealerUserModelMapper.getFssDealerUserPagingCount(param);
-            PaginatedResult<FssDealerUserModel> paginatedResult = new PaginatedResult<FssDealerUserModel>();
-            paginatedResult.setRows(list);
-            paginatedResult.setTotal(count);
-            return paginatedResult;
+            return PageProvider.getPage(paginator,count,list,FssDealerUserModel.class);
         } catch (Exception e) {
             log.error(
                     String.format("分页查询经销商用户异常:%s",

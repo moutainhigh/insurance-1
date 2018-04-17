@@ -45,11 +45,11 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 			if(e instanceof FssLoanBizException){
 				FssLoanBizException be=(FssLoanBizException)e;
 				result.setCode(be.getCode());
-				result.setMessage(be.getErrorMsg());
+				result.setMsg(be.getErrorMsg());
 			}
 			else{
 				result.setCode(ResultCodeContants.FAILED);
-				result.setMessage("系统异常");
+				result.setMsg("系统异常");
 			}
 		}
 		return result;
@@ -67,11 +67,11 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 			if(e instanceof FssLoanBizException){
 				FssLoanBizException be=(FssLoanBizException)e;
 				result.setCode(be.getCode());
-				result.setMessage(be.getErrorMsg());
+				result.setMsg(be.getErrorMsg());
 			}
 			else{
 				result.setCode(ResultCodeContants.FAILED);
-				result.setMessage("系统异常");
+				result.setMsg("系统异常");
 			}
 		}
 		return result;
@@ -90,11 +90,11 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 			if(e instanceof FssLoanBizException){
 				FssLoanBizException be=(FssLoanBizException)e;
 				result.setCode(be.getCode());
-				result.setMessage(be.getErrorMsg());
+				result.setMsg(be.getErrorMsg());
 			}
 			else{
 				result.setCode(ResultCodeContants.FAILED);
-				result.setMessage("系统异常");
+				result.setMsg("系统异常");
 			}
 		}
 		return result;
@@ -111,11 +111,11 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 			if(e instanceof FssLoanBizException){
 				FssLoanBizException be=(FssLoanBizException)e;
 				result.setCode(be.getCode());
-				result.setMessage(be.getErrorMsg());
+				result.setMsg(be.getErrorMsg());
 			}
 			else{
 				result.setCode(ResultCodeContants.FAILED);
-				result.setMessage("系统异常");
+				result.setMsg("系统异常");
 			}
 		}
 		return result;
@@ -134,11 +134,11 @@ public class FssSysAreaServiceImpl implements FssSysAreaService{
 			if(e instanceof FssLoanBizException){
 				FssLoanBizException be=(FssLoanBizException)e;
 				result.setCode(be.getCode());
-				result.setMessage(be.getErrorMsg());
+				result.setMsg(be.getErrorMsg());
 			}
 			else{
 				result.setCode(ResultCodeContants.FAILED);
-				result.setMessage("系统异常");
+				result.setMsg("系统异常");
 			}
 		}
 		return result;

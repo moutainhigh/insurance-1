@@ -9,7 +9,7 @@ import java.util.Map;
 public interface FssLoanModelMapper {
     int deleteByPrimaryKey(Long loanId);
 
-    Long insert(FssLoanModel record);
+    int insert(FssLoanModel record);
 
     int insertSelective(FssLoanModel record);
 

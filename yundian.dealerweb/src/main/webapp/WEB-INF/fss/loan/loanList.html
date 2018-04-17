@@ -44,11 +44,8 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							见证信息管理
+							保险分期管理
 							<i class="fa fa-angle-right"></i>
-						</li>
-						<li>
-							<a href="#">见证信息列表</a>
 						</li>
 					</ul>
 					
@@ -56,63 +53,48 @@
 				<!-- END PAGE HEADER-->
 				<!-- BEGIN PAGE CONTENT-->
 				<div class="portlet box blue-madison">
-					<div class="portlet-title">
-						<div class="caption">
-							<i class="fa fa-gift"></i>查询条件
-						</div>
-					</div>
 					<div class="portlet-body form">
 						<form class="form-horizontal" role="form" id="query_form">
 							<div class="form-body">
 								<div class="row">
 									<div class="col-md-2">
-										<label>编号：</label>
-										<input type="text" name="loanCode" placeholder="" class="form-control input-sm">
+										<label>VIN码：</label>
+										<input type="text" name="carVin" placeholder="" class="form-control input-sm">
 									</div>
 									<div class="col-md-2">
-										<label>借款人姓名：</label>
-										<input type="text" name="name" placeholder="" class="form-control input-sm">
+										<label>姓名：</label>
+										<input type="text" name="insuresName" placeholder="" class="form-control input-sm">
 									</div>
 									<div class="col-md-3">
-										<label>借款人身份证：</label>
-										<input type="text" name="idcard" placeholder="" class="form-control input-sm">
+										<label>手机号码：</label>
+										<input type="text" name="insurePhone" placeholder="" class="form-control input-sm">
 									</div>
 									<div class="col-md-3">
-										<label>合作机构：</label>
-										<select name="guaranteeId" class="form-control input-sm">
-											<#list guaranteeSessionLoginObject.guaranteeUserQueryList as guarantee>
-											    <option value="${guarantee.guaranteeId}">${guarantee.guaranteeName}</option>
-											</#list>
-						                </select>
+										<label>车牌号码：</label>
+										<input type="text" name="carPlateNumber" placeholder="" class="form-control input-sm">
 									</div>
-								</div>
-								<div class="row">
+
+									<div class="col-md-3">
+										<label>保险公司：</label>
+
+									</div>
+									<div class="col-md-4">
+										<label>创建时间：</label>
+										<div class="input-group input-large date-picker input-daterange">
+											<input type="text" class="form-control input-sm" name="signTimeStart" id="signTimeStart">
+											<span class="input-group-addon"> to </span>
+											<input type="text" class="form-control input-sm" name="signTimeEnd" id="signTimeEnd"> </div>
+									</div>
 									<div class="col-md-2">
 										<label>审核状态：</label>
 										<select name="auditStatus" class="form-control input-sm">
-						                    <option value="" selected>--请选择--</option>
-						                    <option value="UNSUBMIT">未提交</option>
-						                    <option value="WAIT_ADUIT">待审核</option>
-						               		<option value="ADUIT_PASS">审核通过</option>
-						                    <option value="AUDIT_NOT_PASS">审核不通过</option>
-						                </select>
+											<option value="" selected>--请选择--</option>
+											<option value="UNSUBMIT">未提交</option>
+											<option value="WAIT_ADUIT">待审核</option>
+											<option value="ADUIT_PASS">审核通过</option>
+											<option value="AUDIT_NOT_PASS">审核不通过</option>
+										</select>
 									</div>
-									<div class="col-md-2">
-										<label>待办状态：</label>
-										 <select name="dealwithStatus" class="form-control input-sm">
-						                    <option value="" selected>--请选择--</option>
-						                    <option value="HAVE_TODO">已办</option>
-						                    <option value="UN_TODO">未办</option>
-						                </select>
-									</div>
-									<div class="col-md-4">
-										<label>签约时间：</label>
-											<div class="input-group input-large date-picker input-daterange">
-                                             <input type="text" class="form-control input-sm" name="signTimeStart" id="signTimeStart">
-                                             <span class="input-group-addon"> to </span>
-                                             <input type="text" class="form-control input-sm" name="signTimeEnd" id="signTimeEnd"> </div>
-									</div>
-									
 									<div class="col-md-2">
 										<div class="col-md-2 right1">
 											<label>&nbsp;</label>
@@ -128,30 +110,6 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="portlet box blue-madison">
-							<div class="portlet-title">
-								<div class="caption">
-									<i class="fa fa-globe"></i>见证信息列表
-								</div>
-								<!-- <div class="tools">
-									<a href="javascript:;" class="reload">
-									</a>
-								</div> -->
-								<!-- <div class="actions">
-									<div class="btn-group">
-										<a class="btn default" href="javascript:;" data-toggle="dropdown">
-										显示隐藏列 <i class="fa fa-angle-down"></i>
-										</a>
-										<div id="sample_3_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-											<label><input type="checkbox" checked data-column="0">Rendering engine</label>
-											<label><input type="checkbox" checked data-column="1">Browser</label>
-											<label><input type="checkbox" checked data-column="2">Platform(s)</label>
-											<label><input type="checkbox" checked data-column="3">Engine version</label>
-											<label><input type="checkbox" checked data-column="4">CSS grade</label>
-										</div>
-									</div>
-								</div> -->
-							</div>
-							
 							<div class="portlet-body" >
 								<!-- <div class="table-toolbar">
 									<div class="row">
@@ -165,30 +123,22 @@
 									</div>
 								</div> -->
 								
-								<table class="table table-striped table-bordered table-hover" cellspacing="0" style="width: 100%;" id="sample_3">
+								<table class="table table-striped table-bordered table-hover" cellspacing="0" style="width: 100%;" id="loanDatatable">
 								<thead>
 				                	<tr>
 				                		<th></th>
-		                            	<th data-field="loanId">贷款ID</th>
-		                            	<th data-field="loanCode">贷款编号</th>
-		                            	<th data-field="loanType" data-formatter="handle_loanType">贷款类型</th>
-		                       	        <th data-field="name">贷款人</th>
-		                        	    <th data-field="idcard">贷款人身份证</th>
-		                        	    <th data-field="phone">贷款人手机</th>
-		                    	        <th data-field="sex" data-formatter="handle_sex">性别</th>
-		                    	        <th data-field="commonRepaymentCount">共同还<br>款人数</th>
-		                    	        <th data-field="guaranteeCount">担保<br>人数</th>
-			                            <th data-field="signTime" >签约时间</th>
-			                            <th data-field="auditStatus" data-formatter="handle_auditStatus" >审核状态</th>
-			                            <th data-field="auditTime" >审核时间</th>
-			                            <th data-field="dealwithStatus" data-formatter="handle_dealwithStatus">办理状态</th>
-		                                <th data-field="guaranteeName">担保机构</th>
-		                               	<th data-field="guaranteeUserName">担保<br>业务员</th>
-		                                <th data-field="bankName">所属银行</th>
-		   	                            <th data-field="ctime" >创建时间</th>
+		                            	<th data-field="loanCode">订单号</th>
+		                            	<th data-field="insuresName">被保险人信息</th>
+		                            	<th data-field="carModelName">车型</th>
+		                       	        <th data-field="carPlateNumber">车牌号码</th>
+		                        	    <th data-field="policyInsuranceCompany">保险公司</th>
+		                        	    <th data-field="policyEffectDate">生效日</th>
+		                    	        <th data-field="policyExpireDate">到期日</th>
+			                            <th data-field="ctime" >提报时间</th>
+			                            <th data-field="submitPerson">提报人</th>
+										<th data-field="auditStatus" data-formatter="handle_auditStatus" >审核状态</th>
 		                                <th data-field="operation" data-switchable="false" 
-		                                data-formatter="handle_1" data-events="tableEvent_1">
-		                                                                                               操作
+		                                data-formatter="handle_1" data-events="tableEvent_1">操作
 		                                </th>
 		                            </tr>
 							         
@@ -208,7 +158,7 @@
 		<!-- BEGIN QUICK SIDEBAR -->
 		<!--Cooming Soon...-->
 		<!-- END QUICK SIDEBAR -->
-	</div>
+
 	<!-- Dialog_about_bank -->
 <div id="Dialog_about_bank" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg">
@@ -374,11 +324,11 @@
 
 <script>
 jQuery(document).ready(function() {   
-	  loanListAjaxUrl="${rc.contextPath}/fss/loan/listAjax";
-	  loanDetailUrl="${rc.contextPath}/fss/loan/loanDetail.html";
-	  loanApproveUrl="${rc.contextPath}/fss/loan/loanApprove.html";
-	  loanDocumentUrl="${rc.contextPath}/fss/loan/document/loanDocument.html";
-	  submitLoanUrl="${rc.contextPath}/fss/loan/process/submit"
+	  loanListAjaxUrl="${rc.contextPath}/loan/getList";
+//	  loanDetailUrl="${rc.contextPath}/fss/loan/loanDetail.html";
+//	  loanApproveUrl="${rc.contextPath}/fss/loan/loanApprove.html";
+//	  loanDocumentUrl="${rc.contextPath}/fss/loan/document/loanDocument.html";
+//	  submitLoanUrl="${rc.contextPath}/fss/loan/process/submit"
 	
 	  $("#draggable").draggable({
 	      handle: ".modal-header"

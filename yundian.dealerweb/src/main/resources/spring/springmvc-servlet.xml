@@ -6,9 +6,37 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd
         http://www.springframework.org/schema/mvc 
-        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
-	
-	<mvc:annotation-driven />
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd" >
+
+	<mvc:annotation-driven>
+
+	<mvc:message-converters>
+		<!-- 如果不使用jackson可使用fastjson版本JSON转换器 -->
+		<bean id="mappingJacksonHttpMessageConverter"
+			  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			<property name="objectMapper">
+				<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+					<property name="dateFormat">
+						<bean class="java.text.SimpleDateFormat">
+							<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+						</bean>
+					</property>
+					<property name="serializationInclusion">
+						<!-- 注入枚举类型,过滤不输出null -->
+						<value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+					</property>
+				</bean>
+			</property>
+			<property name="supportedMediaTypes">
+				<list>
+					<!-- 这里顺序不能反，一定先写text/html,不然ie下出现下载提示 -->
+					<value>text/html;charset=UTF-8</value>
+					<value>application/json;charset=UTF-8</value>
+				</list>
+			</property>
+		</bean>
+	</mvc:message-converters>
+	</mvc:annotation-driven>
 	<context:component-scan base-package="com.yundian.dealerweb.controller" />
 
 	<!-- FreeMarker ViewResolver Configuration -->
@@ -43,7 +71,7 @@
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="templateLoaderPath">
-            <value>/WEB-INF/fss/</value>
+            <value>/WEB-INF/freemark/</value>
         </property>
         <property name="freemarkerVariables">
 			<map>
@@ -86,26 +114,28 @@
 
 
 	<!-- 拦截器 -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/"/>
-			<mvc:exclude-mapping path="/common/**"/>
-			<mvc:exclude-mapping path="/js/**"/>
-			<mvc:exclude-mapping path="/css/**"/>
-			<mvc:exclude-mapping path="/images/**"/>
-			<mvc:exclude-mapping path="/theme/assets/**"/>
-			<mvc:exclude-mapping path="/assets/**"/>
-			<mvc:exclude-mapping path="/global/**"/>
-			<mvc:exclude-mapping path="/favicon.ico"/>
-			
-			<!-- 登录 -->
-			<mvc:exclude-mapping path="/login.html"/>
-			<mvc:exclude-mapping path="/doLogin"/>
-			<bean
-				class="com.yundian.dealerweb.interceptor.CommonInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
+	<!--<mvc:interceptors>-->
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/**" />-->
+			<!--<mvc:exclude-mapping path="/"/>-->
+			<!--<mvc:exclude-mapping path="/common/**"/>-->
+			<!--<mvc:exclude-mapping path="/resources/1.0.0/**"/>-->
+			<!--<mvc:exclude-mapping path="/js/**"/>-->
+			<!--<mvc:exclude-mapping path="/css/**"/>-->
+			<!--<mvc:exclude-mapping path="/images/**"/>-->
+			<!--<mvc:exclude-mapping path="/theme/assets/**"/>-->
+			<!--<mvc:exclude-mapping path="/assets/**"/>-->
+			<!--<mvc:exclude-mapping path="/global/**"/>-->
+			<!--<mvc:exclude-mapping path="/favicon.ico"/>-->
+			<!---->
+			<!--&lt;!&ndash; 登录 &ndash;&gt;-->
+			<!--<mvc:exclude-mapping path="/index.html"/>-->
+			<!--<mvc:exclude-mapping path="/login.html"/>-->
+			<!--<mvc:exclude-mapping path="/doLogin"/>-->
+			<!--<bean-->
+				<!--class="com.yundian.dealerweb.interceptor.CommonInterceptor"/>-->
+		<!--</mvc:interceptor>-->
+	<!--</mvc:interceptors>-->
 	
 	<mvc:view-controller path="/" view-name="redirect:/login.html" />
 
@@ -117,8 +147,10 @@
 	<mvc:resources location="/theme/assets/" mapping="/theme/assets/**" />
 	<mvc:resources location="/theme/assets/" mapping="/assets/**" />
 	<mvc:resources location="/theme/assets/" mapping="/global/**" />
-	
-	
+
+
+	<mvc:resources location="/resources/1.0.0/" mapping="/resources/1.0.0/**" />
+
 	<mvc:default-servlet-handler />
 	
 </beans> 

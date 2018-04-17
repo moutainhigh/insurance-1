@@ -27,14 +27,14 @@ public class  ResultProvider {
 	{
 		Result result = new Result();
 		result.setCode(ResultCodeContants.SUCCESS);
-		result.setMessage(message);
+		result.setMsg(message);
 		return result;
 	}
 	public static Result<Object> getsFailedResult(String message)
 	{
 		Result<Object> result = new Result<Object>();
 		result.setCode(ResultCodeContants.FAILED);
-		result.setMessage(message);
+		result.setMsg(message);
 		return result;
 	}
  

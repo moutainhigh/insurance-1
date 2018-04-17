@@ -1,6 +1,7 @@
 package com.yundian.fssapi.service;
 
 import com.yundian.fssapi.domain.FssDealerUserModel;
+import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
@@ -45,7 +46,7 @@ public interface FssDealerUserService {
 	 * @param paginator
 	 * @return
 	 */
-	PaginatedResult<FssDealerUserModel> getPaginatorFssDealerUser(
+	Page<FssDealerUserModel> getPaginatorFssDealerUser(
 			Paginator<FssDealerUserModel> paginator);
 	/**
 	 * 经销商用户登录

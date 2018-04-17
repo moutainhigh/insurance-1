@@ -68,7 +68,7 @@ public class LoginDealerController {
 //			// 判断是否存在该用户
 			FssDealerUserModel fssDealerUserModel = fssDealerUserService
 					.fssFssDealerUserLogin(loginName,
-							MD5.encodePassword(loginPassword));
+							loginPassword);
 
 			// fssDealerUserModel，空值表示不存在该用户
 			if (null != fssDealerUserModel) {
@@ -76,6 +76,7 @@ public class LoginDealerController {
 				  if (fssDealerUserModel.getStatus() == FssDealerUserStatusEnum.DISABLE.code()){
 				  	return WebUtil.getFailureJson("账号无效") .toString();
 				  }
+				fssDealerUserModel.setUserPwd("");
 
 				// 将用户登录信息放入session中
 				session.setAttribute(

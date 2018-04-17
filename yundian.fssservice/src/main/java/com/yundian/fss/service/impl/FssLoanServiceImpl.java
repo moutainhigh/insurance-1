@@ -11,9 +11,7 @@ import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.exception.FssLoanException;
 import com.yundian.fssapi.service.FssLoanService;
-import com.yundian.result.PaginatedResult;
-import com.yundian.result.Paginator;
-import com.yundian.result.ResultCodeContants;
+import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -90,21 +88,18 @@ public class FssLoanServiceImpl implements FssLoanService {
 
 
     @Override
-    public PaginatedResult<FssLoanModel> getPaginatorFssLoan(Paginator<FssLoanModel> paginator) {
+    public Page<FssLoanModel> getPaginatorFssLoan(Paginator<FssLoanModel> paginator) {
         try {
             HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("_limit", paginator.getPageSize());
             param.put("_offset",
                     (paginator.getCurrentPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
-
             List<FssLoanModel> list = this.fssLoanModelMapper.
                     getFssLoanPaging(param);
             Integer count = fssLoanModelMapper.getFssLoanPagingCount(param);
-            PaginatedResult<FssLoanModel> paginatedResult = new PaginatedResult<FssLoanModel>();
-            paginatedResult.setRows(list);
-            paginatedResult.setTotal(count);
-            return paginatedResult;
+            return PageProvider.getPage(paginator,count,list,FssLoanModel.class);
+
         } catch (Exception e) {
             log.error(
                     String.format("分页查询分期数据异常:%s",

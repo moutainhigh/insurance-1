@@ -7,6 +7,7 @@ import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.enums.FssDealerUserStatusEnum;
 import com.yundian.fssapi.service.FssCodeLibraryService;
 import com.yundian.fssapi.service.FssDealerUserService;
+import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
@@ -99,7 +100,7 @@ public class FssDealerUserServiceTest extends AbstractJUnit{
         fssDealerUserModel.setUserName("13758298275");
         paginator.setParam(fssDealerUserModel);
 
-        PaginatedResult<FssDealerUserModel> paginatorFssDealerUser =
+        Page<FssDealerUserModel> paginatorFssDealerUser =
                 fssDealerUserService.getPaginatorFssDealerUser(paginator);
         System.out.printf("列表："+JSON.toJSONString(paginatorFssDealerUser));
         Assert.assertTrue(true);

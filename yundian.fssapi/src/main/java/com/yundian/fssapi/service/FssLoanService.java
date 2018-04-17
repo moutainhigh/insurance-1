@@ -4,6 +4,7 @@ import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanDocumentModel;
 import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
+import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
 
@@ -46,7 +47,7 @@ public interface FssLoanService {
 	 * @param paginator
 	 * @return
 	 */
-	PaginatedResult<FssLoanModel> getPaginatorFssLoan(
+	Page<FssLoanModel> getPaginatorFssLoan(
             Paginator<FssLoanModel> paginator);
 
 	/**

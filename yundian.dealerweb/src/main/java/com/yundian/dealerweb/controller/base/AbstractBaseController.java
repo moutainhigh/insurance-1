@@ -85,7 +85,7 @@ public abstract class AbstractBaseController {
     protected <T> void response(HttpServletResponse response, Result<T> result, Boolean isContainNull) throws Exception {
         Map resultMap = new HashMap();
         resultMap.put(RESULT_STATUS, result.getCode());
-        resultMap.put(RESULT_MESSAGE, result.getMessage());
+        resultMap.put(RESULT_MESSAGE, result.getMsg());
         T body = result.getData();
         if (body != null) {
             resultMap.put(RESULT_DATA, body);

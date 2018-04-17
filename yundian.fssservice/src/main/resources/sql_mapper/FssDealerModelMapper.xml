@@ -316,4 +316,39 @@
       remark = #{remark,jdbcType=VARCHAR}
     where dealer_id = #{dealerId,jdbcType=BIGINT}
   </update>
+
+  <sql id="getFssDealerPagingWhere">
+
+    <if test="dealerName != null and dealerName != ''">
+      and dealer_name =#{dealerName}
+    </if>
+
+    <if test="provinceName != null and provinceName != ''">
+      and province_name like concat('%',#{provinceName},'%')
+    </if>
+
+    <if test="city != null and city != ''">
+      and city like concat('%',#{city},'%')
+    </if>
+  </sql>
+
+  <select id="getFssDealerPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_dealer
+    where 1=1
+    <include refid="getFssDealerPagingWhere"/>
+    order by dealer_id desc
+    limit #{_offset}, #{_limit}
+
+  </select>
+  <select id="getFssDealerPagingCount" resultType="java.lang.Integer" parameterType="map">
+    select
+    count(*)
+    from fss_dealer
+    where 1=1
+    <include refid="getFssDealerPagingWhere"/>
+  </select>
+
+
+
 </mapper>

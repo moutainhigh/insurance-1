@@ -4,17 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.yundian.fss.dao.FssDealerCustomerModelMapper;
 import com.yundian.fssapi.domain.FssDealerCustomerModel;
 import com.yundian.fssapi.domain.FssDealerUserModel;
+import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.exception.FssDealerException;
 import com.yundian.fssapi.service.FssDealerCustomerService;
-import com.yundian.result.PaginatedResult;
-import com.yundian.result.Paginator;
-import com.yundian.result.ResultCodeContants;
+import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.util.resources.et.CalendarData_et;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
     @Override
     public Integer insertFssDealerCustomer(FssDealerCustomerModel fssDealerCustomerModel) {
         try {
+            fssDealerCustomerModel.setCtime(new Date());
+            fssDealerCustomerModel.setMtime(new Date());
 
             return fssDealerCustomerModelMapper.insert(fssDealerCustomerModel);
 
@@ -59,7 +62,7 @@ public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
     @Override
     public Integer updateFssDealerCustomer(FssDealerCustomerModel fssDealerCustomerModel) {
         try {
-
+            fssDealerCustomerModel.setMtime(new Date());
             return fssDealerCustomerModelMapper.updateByPrimaryKey(fssDealerCustomerModel);
 
         } catch (Exception e) {
@@ -70,22 +73,18 @@ public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
     }
 
     @Override
-    public PaginatedResult<FssDealerCustomerModel> getPaginatorFssDealerCustomer(Paginator<FssDealerCustomerModel> paginator) {
+    public Page<FssDealerCustomerModel> getPaginatorFssDealerCustomer(Paginator<FssDealerCustomerModel> paginator) {
         try {
             HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("_limit", paginator.getPageSize());
             param.put("_offset",
                     (paginator.getCurrentPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
-
             List<FssDealerCustomerModel> list = this.fssDealerCustomerModelMapper
                     .getFssDealerCustomerPaging(param);
-
             Integer count = fssDealerCustomerModelMapper.getFssDealerCustomerPagingCount(param);
-            PaginatedResult<FssDealerCustomerModel> paginatedResult = new PaginatedResult<FssDealerCustomerModel>();
-            paginatedResult.setRows(list);
-            paginatedResult.setTotal(count);
-            return paginatedResult;
+            return PageProvider.getPage(paginator,count,list,FssDealerCustomerModel.class);
+
         } catch (Exception e) {
             log.error(
                     String.format("分页查询经销商客户异常:%s",

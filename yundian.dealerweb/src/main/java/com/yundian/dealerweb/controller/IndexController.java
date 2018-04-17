@@ -19,11 +19,11 @@ public class IndexController {
 	
 	@RequestMapping(value = { "/index.html" }, method = RequestMethod.GET)
 	public String index(ModelMap context,HttpSession session) {
-		
+
+
 //			Long bankId=0L;
-//			Result<Map<String,Object>> result =new Result<Map<String,Object>>();
 //			Map<String,Object> map = new HashMap<String, Object>();
-//			FssUserModel userinfo = (FssUserModel)session.getAttribute(GuaranteeWebConstants.SYS.WEB_USER_SESSION);
+//			FssDealerCustomerModel userinfo = (FssDealerCustomerModel)session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
 //			List<FssGuaranteeUserQueryModel>  listGuarantee= userinfo.getGuaranteeUserQueryList();
 //			if(listGuarantee!=null&&listGuarantee.size()>0)
 //			{
