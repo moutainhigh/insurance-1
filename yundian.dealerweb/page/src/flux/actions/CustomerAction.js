@@ -1,7 +1,7 @@
 
 import alt from 'bases/Alt.js';
 
-class LoanListAction {
+class CustomerAction {
   /**
    * 初始化列表
    * @param data

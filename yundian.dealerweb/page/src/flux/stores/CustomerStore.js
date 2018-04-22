@@ -1,7 +1,7 @@
 import alt from 'bases/Alt.js';
 import querystring from "querystring";
 import jsonp from "jsonp";
-import LoanListAction from '../actions/LoanListAction';
+import CustomerAction from '../actions/CustomerAction';
 import {Notify} from "components/common/Common";
 import {xFetch,xPostFetch} from "../../services/xFetch";
 
@@ -23,18 +23,17 @@ const momentTansfer = (data)=>{
   return data;
 }
 //****************************************************************
-class LoanListStore {
+class CustomerStore {
   constructor() {
     this.bindListeners({
-      handleInitDataList: LoanListAction.initDataListInfo,
-      handleQuerySubmit: LoanListAction.querySubmit,
-      handlePagination: LoanListAction.setPagination,
-      handleOpenAddModal: LoanListAction.openAddModal,
-      handleOpenUpdateModal: LoanListAction.openUpdateModal,
+      handleInitDataList: CustomerAction.initDataListInfo,
+      handleQuerySubmit: CustomerAction.querySubmit,
+      handlePagination: CustomerAction.setPagination,
+      handleOpenAddModal: CustomerAction.openAddModal,
+      handleOpenUpdateModal: CustomerAction.openUpdateModal,
 
-      handleAddLoan: LoanListAction.addLoan,
-      handleUpdateLoan: LoanListAction.updateLoan,
-      handleSubmitLoan: LoanListAction.submitLoan,
+      handleAddLoan: CustomerAction.addLoan,
+      handleUpdateLoan: CustomerAction.updateLoan
 
 
     });
@@ -43,8 +42,8 @@ class LoanListStore {
       loading: true,
       typeList : [],
       addModalVisible : false,
-      loanInfo:{},
-      loanId:null,
+      customerInfo:{},
+      id:null,
       pagination: {
         pageSize: 20,
         showSizeChanger: true,
@@ -67,7 +66,7 @@ class LoanListStore {
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("add:"+param)
-    xPostFetch(SERVER_URL + '/loan/addLoan?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/customer/addCustomer?'+param).then(result => {
       if (result && result.success) {
         Notify('添加成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -81,7 +80,7 @@ class LoanListStore {
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("update:"+param);
-    xPostFetch(SERVER_URL + '/loan/updateLoan?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/customer/updateCustomer?'+param).then(result => {
       if (result && result.success) {
         Notify('修改成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -90,23 +89,6 @@ class LoanListStore {
         Notify('添加发生异常', result.msg, 'error');
       }})
   };
-
-  handleSubmitLoan = (data) =>{
-    data = momentTansfer(data);
-    data.loanId=this.state.loanId;
-    let param = querystring.encode(data);
-    console.log("submit:"+param);
-    xPostFetch(SERVER_URL + '/loan/submitLoan?'+param).then(result => {
-      if (result && result.success) {
-        Notify('修改成功', result.msg, 'success');
-        this.handleOpenAddModal();
-        this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
-      } else{
-        Notify('添加发生异常', result.msg, 'error');
-      }})
-  };
-
-
 
   handleOpenAddModal =() =>{
     console.log("进入store");
@@ -114,8 +96,8 @@ class LoanListStore {
     console.log(visible);
     this.setState({
       addModalVisible : visible,
-      loanInfo:{},
-      loanId:null
+      customerInfo:{},
+      id:null
     });
   };
   //打开修改窗口
@@ -125,12 +107,12 @@ class LoanListStore {
     let visible = !this.state.addModalVisible;
     console.log(visible);
     this.setState({addModalVisible : visible});
-    xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
+    xFetch(SERVER_URL + '/customer/getInfo?id='+data.id).then(result => {
       if (result && result.data) {
         show("get Info OK");
-        this.setState({loanInfo: result.data,loanId:data.loanId});
+        this.setState({customerInfo: result.data,id:data.id});
       } else{
-        Notify('请求贷款明细数据发生异常', result.msg, 'error');
+        Notify('请求明细数据发生异常', result.msg, 'error');
       }})
 
   };
@@ -139,8 +121,8 @@ class LoanListStore {
   handleQuerySubmit = (data) => {
     this.setState({loading:true});
     let queryParam = querystring.encode(data.data) + "&" + querystring.encode(data.pager);
-    show(SERVER_URL + '/loan/getList?'+queryParam)
-    xFetch(SERVER_URL + '/loan/getList?'+queryParam).then(result => {
+    show(SERVER_URL + '/customer/getList?'+queryParam)
+    xFetch(SERVER_URL + '/customer/getList?'+queryParam).then(result => {
       if (result && result.data) {
         show("OK");
         this.state.pagination.total = result.data.totalNumber;
@@ -163,4 +145,4 @@ class LoanListStore {
 
 }
 
-export default alt.createStore(LoanListStore, 'LoanListStore');
+export default alt.createStore(CustomerStore, 'CustomerStore');

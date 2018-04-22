@@ -72,6 +72,17 @@ public class FssLoanServiceImpl implements FssLoanService {
     }
 
     @Override
+    public void updateFssLoan(FssLoanModel fssLoanModel) {
+
+        try {
+            fssLoanModelMapper.updateByPrimaryKeySelective(fssLoanModel);
+        } catch (Exception e) {
+            log.error(String.format("修改保险分期失败:%s", JSON.toJSONString(fssLoanModel)), e);
+            throw new FssLoanException(ResultCodeContants.FAILED, "新增保险分期失败", e);
+        }
+    }
+
+    @Override
     public Integer insertFssLoanDocument(List<FssLoanDocumentModel> fssLoanDocumentModels) {
 
         try {
@@ -111,6 +122,7 @@ public class FssLoanServiceImpl implements FssLoanService {
     }
 
 
+
     @Override
     public Long saveLoan(LoanInfoModel loanInfoModel) {
         Long loanId = loanInfoModel.getLoanId();
@@ -126,10 +138,11 @@ public class FssLoanServiceImpl implements FssLoanService {
                 }
 
             } else {
-                fssLoanModelMapper.updateByPrimaryKey(loanInfoModel.getFssLoanModel());
-                loanInfoModel.getFssLoanDocumentModels().stream().forEach(
-                        e -> fssLoanDocumentModelMapper.updateByPrimaryKey(e));
-
+                fssLoanModelMapper.updateByPrimaryKeySelective(loanInfoModel.getFssLoanModel());
+                if(loanInfoModel.getFssLoanDocumentModels()!=null) {
+                    loanInfoModel.getFssLoanDocumentModels().stream().forEach(
+                            e -> fssLoanDocumentModelMapper.updateByPrimaryKeySelective(e));
+                }
             }
         } catch (Exception e) {
             log.error(
@@ -148,6 +161,7 @@ public class FssLoanServiceImpl implements FssLoanService {
         FlowDataModel flowDataModel = new FlowDataModel();
         flowDataModel.setLoanId(loanId);
         flowDataModel.setFlowToStatus(FssLoanStatusEnum.AUDITING);
+        flowDataModel.setFlowPreStatus(FssLoanStatusEnum.INIT);
         flowDataModel.setOperater(operater);
         flowDataModel.setContent(FssLoanStatusEnum.AUDITING.desc());
         fssFlowManage.flow(flowDataModel);

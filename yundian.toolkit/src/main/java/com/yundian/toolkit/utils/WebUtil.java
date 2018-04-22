@@ -58,6 +58,12 @@ public class WebUtil {
         resultJson.put(JSON_RESULT_STATUS_CODE, OK);
         return resultJson.toJSONString();
     }
+    public static JSONObject getSuccessJsonObject() {
+        JSONObject resultJson = new JSONObject();
+        resultJson.put(JSON_RESULT_MESSAGE, "");
+        resultJson.put(JSON_RESULT_STATUS_CODE, OK);
+        return resultJson;
+    }
     /**
      * 生成一个失败的JSON对象
      *

@@ -1,5 +1,6 @@
 package com.yundian.fss.manager.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.yundian.fss.dao.FssLoanLogModelMapper;
 import com.yundian.fss.dao.FssLoanModelMapper;
 import com.yundian.fss.manager.FssFlowManage;
@@ -25,14 +26,17 @@ public class FssFlowManageImpl implements FssFlowManage {
     @Autowired
     FssLoanModelMapper fssLoanModelMapper;
 
+    @Autowired
     FssLoanLogModelMapper fssLoanLogModelMapper;
     @Override
     public void flow(FlowDataModel flowDataModel) {
-
+        log.info("流程变动："+ JSON.toJSONString(flowDataModel));
         FssLoanModel fssLoanModel = new FssLoanModel();
         fssLoanModel.setLoanId(flowDataModel.getLoanId());
         fssLoanModel.setAuditStatus(flowDataModel.getFlowToStatus().code());
-        fssLoanModel.setAuditStatusPre(flowDataModel.getFlowPreStatus().code());
+        if(flowDataModel.getFlowPreStatus()!=null) {
+            fssLoanModel.setAuditStatusPre(flowDataModel.getFlowPreStatus().code());
+        }
         fssLoanModel.setMtime(new Date());
         fssLoanModelMapper.updateByPrimaryKeySelective(fssLoanModel);
 
@@ -42,6 +46,8 @@ public class FssFlowManageImpl implements FssFlowManage {
         fssLoanLogModel.setNode(flowDataModel.getFlowToStatus().code());
         fssLoanLogModel.setNodeName(flowDataModel.getFlowToStatus().desc());
         fssLoanLogModel.setContent(flowDataModel.getContent());
+        fssLoanLogModel.setCtime(new  Date());
+        fssLoanLogModel.setMtime(new Date());
         fssLoanLogModelMapper.insert(fssLoanLogModel);
 
 

@@ -31,6 +31,8 @@ public interface FssLoanService {
      */
 	Long insertFssLoan(FssLoanModel fssLoanModel);
 
+	void updateFssLoan(FssLoanModel fssLoanModel);
+
 
 	/**
 	 * 新增分期资料附件

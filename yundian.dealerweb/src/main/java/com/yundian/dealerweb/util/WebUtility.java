@@ -1,5 +1,8 @@
 package com.yundian.dealerweb.util;
 
+import com.alibaba.fastjson.JSONObject;
+import com.yundian.fssapi.domain.FssLoanModel;
+import com.yundian.toolkit.utils.BeanPropFieldUtil;
 import com.yundian.toolkit.utils.PropertiesUtil;
 
 public class WebUtility {
@@ -34,4 +37,16 @@ public class WebUtility {
 //		}
 //		return "";
 //	}
+
+	public static void main(String[] arg)
+	{
+		FssLoanModel fssLoanModel = new FssLoanModel();
+		fssLoanModel.setInsuresName("金宁夏");
+		fssLoanModel.setInsuresPhone("1378891002");
+		fssLoanModel.setInsuresIdcard("330327198312251714");
+
+		JSONObject jsonObject =    BeanPropFieldUtil.toPropField(fssLoanModel);
+
+		System.out.printf(jsonObject.toString());
+	}
 }

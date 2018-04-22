@@ -67,6 +67,7 @@ var Login = function() {
                    dataType: "json",
                    data: $(".login-form").values(),
                    success: function(res) {
+                       alert(res)
                     if (res && res.code === 10000) {
                      	return location.href = indexUrl;
                      } else {

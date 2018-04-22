@@ -1,7 +1,7 @@
 
 import alt from 'bases/Alt.js';
 
-class LoanListAction {
+class DealerUserAction {
   /**
    * 初始化列表
    * @param data
@@ -54,15 +54,10 @@ class LoanListAction {
  updateLoan =(data)=> {
     return data;
   };
-  /**
-   * 提交审核
-   * @param data
-   * @returns {*}
-   */
-  submitLoan =(data)=> {
-    return data;
-  };
 
+  resetPwd = (data)=>{
+    return data;
+  }
   /**
    * 删除记录
    * @param data
@@ -80,4 +75,4 @@ class LoanListAction {
   };
 }
 
-export default alt.createActions(LoanListAction);
+export default alt.createActions(DealerUserAction);

@@ -1,5 +1,6 @@
 package com.yundian.dealerweb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yundian.dealerweb.util.DealerWebConstants;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.enums.FssDealerUserStatusEnum;
@@ -61,9 +62,9 @@ public class LoginDealerController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-	public String doLogin(@RequestParam("username") String loginName,
-			@RequestParam("password") String loginPassword,
-			HttpSession session, HttpServletResponse httpResponse) {
+	public JSONObject doLogin(@RequestParam("username") String loginName,
+							  @RequestParam("password") String loginPassword,
+							  HttpSession session, HttpServletResponse httpResponse) {
 		try {
 //			// 判断是否存在该用户
 			FssDealerUserModel fssDealerUserModel = fssDealerUserService
@@ -74,7 +75,7 @@ public class LoginDealerController {
 			if (null != fssDealerUserModel) {
 				// 判断该用户是否被停用
 				  if (fssDealerUserModel.getStatus() == FssDealerUserStatusEnum.DISABLE.code()){
-				  	return WebUtil.getFailureJson("账号无效") .toString();
+				  	return WebUtil.getFailureJsonObject("账号无效");
 				  }
 				fssDealerUserModel.setUserPwd("");
 
@@ -82,14 +83,14 @@ public class LoginDealerController {
 				session.setAttribute(
 						DealerWebConstants.SYS.WEB_USER_SESSION, fssDealerUserModel);
 				 // 记录本次登陆的时间
-				return WebUtil.getSuccessJson().toString();
+				return WebUtil.getSuccessJsonObject();
 			} else {
-				return WebUtil.getFailureJson("用户名或密码错误").toString();
+				return WebUtil.getFailureJsonObject("用户名或密码错误");
 			}
 		} catch (Exception ex) {
 			logger.error("登录出错" + ExceptionUtils.getFullStackTrace(ex));
 			ex.printStackTrace();
-			return WebUtil.getFailureJson("登录出错" + ex.getMessage()).toString();
+			return WebUtil.getFailureJsonObject("登录出错" + ex.getMessage());
 		}
 	}
 
