@@ -31,6 +31,7 @@
     <result column="car_displacement" property="carDisplacement" jdbcType="VARCHAR" />
     <result column="car_imports" property="carImports" jdbcType="INTEGER" />
     <result column="policy_type" property="policyType" jdbcType="VARCHAR" />
+    <result column="policy_buy_type" property="policyBuyType" jdbcType="VARCHAR" />
     <result column="policy_insurance_company" property="policyInsuranceCompany" jdbcType="VARCHAR" />
     <result column="policy_total_amount" property="policyTotalAmount" jdbcType="INTEGER" />
     <result column="policy_effect_date" property="policyEffectDate" jdbcType="VARCHAR" />
@@ -90,7 +91,7 @@
       policy_lost, policy_auto_ignition, policy_seat_passenger, 
       policy_scratch, policy_glass_breakage, policy_disregard_contributing, 
       policy_seat_driver, policy_wading, ctime, 
-      mtime, remark)
+      mtime, remark,policy_buy_type)
     values (#{id,jdbcType=BIGINT}, #{dealerId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
       #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{insuresName,jdbcType=VARCHAR}, 
       #{insuresIdcard,jdbcType=VARCHAR}, #{insuresPhone,jdbcType=VARCHAR}, #{insuresAddress,jdbcType=VARCHAR}, 
@@ -107,7 +108,7 @@
       #{policyLost,jdbcType=INTEGER}, #{policyAutoIgnition,jdbcType=INTEGER}, #{policySeatPassenger,jdbcType=INTEGER}, 
       #{policyScratch,jdbcType=INTEGER}, #{policyGlassBreakage,jdbcType=INTEGER}, #{policyDisregardContributing,jdbcType=INTEGER}, 
       #{policySeatDriver,jdbcType=INTEGER}, #{policyWading,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, 
-      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},#{policyBuyType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssDealerCustomerModel" >
     insert into fss_dealer_customer
@@ -198,6 +199,9 @@
       </if>
       <if test="policyType != null" >
         policy_type,
+      </if>
+      <if test="policyBuyType != null" >
+        policy_buy_type,
       </if>
       <if test="policyInsuranceCompany != null" >
         policy_insurance_company,
@@ -348,6 +352,9 @@
       <if test="policyType != null" >
         #{policyType,jdbcType=VARCHAR},
       </if>
+      <if test="policyBuyType != null" >
+        #{policy_buy_type,jdbcType=VARCHAR},
+      </if>
       <if test="policyInsuranceCompany != null" >
         #{policyInsuranceCompany,jdbcType=VARCHAR},
       </if>
@@ -497,6 +504,10 @@
       <if test="policyType != null" >
         policy_type = #{policyType,jdbcType=VARCHAR},
       </if>
+      <if test="policyBuyType != null" >
+        policy_buy_type = #{policyBuyType,jdbcType=VARCHAR},
+      </if>
+
       <if test="policyInsuranceCompany != null" >
         policy_insurance_company = #{policyInsuranceCompany,jdbcType=VARCHAR},
       </if>
@@ -590,6 +601,7 @@
       car_displacement = #{carDisplacement,jdbcType=VARCHAR},
       car_imports = #{carImports,jdbcType=INTEGER},
       policy_type = #{policyType,jdbcType=VARCHAR},
+      policyBuyType = #{policyBuyType,jdbcType=VARCHAR},
       policy_insurance_company = #{policyInsuranceCompany,jdbcType=VARCHAR},
       policy_total_amount = #{policyTotalAmount,jdbcType=INTEGER},
       policy_effect_date = #{policyEffectDate,jdbcType=VARCHAR},

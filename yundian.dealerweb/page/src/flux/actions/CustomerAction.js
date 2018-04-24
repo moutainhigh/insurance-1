@@ -80,4 +80,4 @@ class CustomerAction {
   };
 }
 
-export default alt.createActions(LoanListAction);
+export default alt.createActions(CustomerAction);

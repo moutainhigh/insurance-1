@@ -46,9 +46,11 @@ public class DealerUserController {
 
     @ResponseBody
     @RequestMapping(value="/dealerUser/addUser",method= RequestMethod.POST)
-    public Result addLoan(@ModelAttribute("fssDealerUserModel") FssDealerUserModel fssDealerUserModel) {
+    public Result addLoan(@ModelAttribute("fssDealerUserModel") FssDealerUserModel fssDealerUserModel,HttpSession session) {
 
         try {
+            FssDealerUserModel fssDealerUserModelManage =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
+            fssDealerUserModelManage.setDealerId(fssDealerUserModel.getDealerId());
 
             fssDealerUserService.insertFssDealerUser(fssDealerUserModel);
             return Result.success("");

@@ -50,10 +50,11 @@ public class CustomController {
 
     @ResponseBody
     @RequestMapping(value="/customer/addCustomer",method= RequestMethod.POST)
-    public Result addLoan(@ModelAttribute("fssDealerCustomerModel") FssDealerCustomerModel fssDealerCustomerModel) {
+    public Result addLoan(@ModelAttribute("fssDealerCustomerModel") FssDealerCustomerModel fssDealerCustomerModel,HttpSession session) {
 
         try {
-
+            FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
+            fssDealerCustomerModel.setDealerId(fssDealerUserModel.getDealerId());
             fssDealerCustomerService.insertFssDealerCustomer(fssDealerCustomerModel);
             return Result.success("");
         } catch (Exception ex) {

@@ -111,8 +111,8 @@ class DealerUserStore {
     console.log(visible);
     this.setState({
       addModalVisible : visible,
-      loanInfo:{},
-      loanId:null
+      dealerUserInfo:{},
+      userId:null
     });
   };
   //打开修改窗口

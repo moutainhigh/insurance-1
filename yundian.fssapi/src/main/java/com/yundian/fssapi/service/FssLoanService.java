@@ -35,14 +35,15 @@ public interface FssLoanService {
 
 
 	/**
-	 * 新增分期资料附件
+	 * 新增分期资料附件,会按照documentType删除原来有的文档
 	 * @param fssLoanDocumentModels
 	 * @return
 	 */
-	Integer insertFssLoanDocument(List<FssLoanDocumentModel> fssLoanDocumentModels);
+	Integer insertFssLoanDocument(Long loanId,List<FssLoanDocumentModel> fssLoanDocumentModels);
 
 
 
+	Integer updateFssLoanDocment(Long loanId,List<FssLoanDocumentModel> fssLoanDocumentModels);
 
 	/**
 	 * 分页查询分期列表

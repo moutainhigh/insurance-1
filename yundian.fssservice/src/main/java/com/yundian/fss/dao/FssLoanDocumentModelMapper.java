@@ -7,6 +7,8 @@ import java.util.List;
 public interface FssLoanDocumentModelMapper {
     int deleteByPrimaryKey(Long id);
 
+    int deleteByDocmentType(Long loanId,String  documentType);
+
     int insert(FssLoanDocumentModel record);
 
     int insertSelective(FssLoanDocumentModel record);

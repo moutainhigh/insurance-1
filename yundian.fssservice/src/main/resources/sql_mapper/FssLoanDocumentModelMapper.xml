@@ -34,6 +34,13 @@
     delete from fss_loan_document
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+  <delete id="deleteByDocmentType" parameterType="java.util.Map" >
+    delete from fss_loan_document
+    where loan_id = #{loanId,jdbcType=BIGINT} and document_type={documentType,jdbcType=VARCHAR}
+  </delete>
+
+
   <insert id="insert" parameterType="com.yundian.fssapi.domain.FssLoanDocumentModel" >
     insert into fss_loan_document (id, loan_id, document_type, 
       file_name, file_type, file_url, 

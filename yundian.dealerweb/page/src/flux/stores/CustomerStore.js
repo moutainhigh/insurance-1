@@ -76,7 +76,7 @@ class CustomerStore {
       }})
   };
   handleUpdateLoan = (data) =>{
-    data.loanId=this.state.loanId;
+    data.id=this.state.id;
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("update:"+param);

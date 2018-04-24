@@ -62,8 +62,9 @@ public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
     @Override
     public Integer updateFssDealerCustomer(FssDealerCustomerModel fssDealerCustomerModel) {
         try {
+            log.info("修改客户信息："+JSON.toJSONString(fssDealerCustomerModel));
             fssDealerCustomerModel.setMtime(new Date());
-            return fssDealerCustomerModelMapper.updateByPrimaryKey(fssDealerCustomerModel);
+            return fssDealerCustomerModelMapper.updateByPrimaryKeySelective(fssDealerCustomerModel);
 
         } catch (Exception e) {
             log.error(String.format("修改经销商客户信息失败:%s", JSON.toJSONString(fssDealerCustomerModel)), e);

@@ -4,18 +4,27 @@ import com.alibaba.fastjson.JSON;
 import com.yundian.dealerweb.controller.vo.FssLoanModelVo;
 import com.yundian.dealerweb.util.DealerWebConstants;
 import com.yundian.fssapi.domain.FssDealerUserModel;
+import com.yundian.fssapi.domain.FssLoanDocumentModel;
 import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
+import com.yundian.fssapi.domain.vo.LoanDocumentVo;
+import com.yundian.fssapi.domain.vo.LoanInfoVo;
+import com.yundian.fssapi.domain.vo.match.LoanDocumentVoMatch;
 import com.yundian.fssapi.service.FssLoanService;
 import com.yundian.result.Page;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
+import com.yundian.toolkit.utils.MapUtil;
+import com.yundian.toolkit.utils.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 保险分期
@@ -39,6 +48,27 @@ public class LoanController {
     }
 
     @ResponseBody
+    @RequestMapping(value="/loan/applyLoan",method= RequestMethod.POST)
+    public Result applyLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
+
+        try {
+
+            List<LoanDocumentVo> loanDocumentVoList = MapUtil.mergeObj(LoanDocumentVo.class,
+                    fssLoanModel.getLoanContractPic(),
+                    fssLoanModel.getWithholdingAgreementPic());
+            List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
+
+            fssLoanService.applyLoan(fssLoanModel.getLoanId(),fssLoanDocumentModelList,"operater");
+            return Result.success("");
+        } catch (Exception ex) {
+            log.error(String.format("申请放款信息异常："), ex);
+            System.out.printf(ex.getMessage());
+            return Result.fail("", "申请放款信息异常，请重试");
+        }
+    }
+
+
+    @ResponseBody
     @RequestMapping(value="/loan/submitLoan",method= RequestMethod.POST)
     public Result submitLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
 
@@ -60,6 +90,15 @@ public class LoanController {
     public Result updateLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
 
         try {
+            List<LoanDocumentVo> loanDocumentVoList = MapUtil.mergeObj(LoanDocumentVo.class,
+                    fssLoanModel.getIdcardFrontPic(),
+                    fssLoanModel.getIdcardBackPic(),
+                    fssLoanModel.getCommercialInsurancePic(),
+                    fssLoanModel.getCompulsoryInsurancePic());
+            List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
+
+            //
+            fssLoanService.insertFssLoanDocument(fssLoanModel.getLoanId(),fssLoanDocumentModelList);
             fssLoanService.updateFssLoan(fssLoanModel);
             return Result.success("");
         } catch (Exception ex) {
@@ -71,13 +110,23 @@ public class LoanController {
 
     @ResponseBody
     @RequestMapping(value="/loan/addLoan",method= RequestMethod.POST)
-    public Result addLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
+    public Result addLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel,HttpSession session) {
 
         try {
+            FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
+            fssLoanModel.setDealerId(fssDealerUserModel.getDealerId());
+
+            List<LoanDocumentVo> loanDocumentVoList = MapUtil.mergeObj(LoanDocumentVo.class,
+                    fssLoanModel.getIdcardFrontPic(),
+                    fssLoanModel.getIdcardBackPic(),
+                    fssLoanModel.getCommercialInsurancePic(),
+                    fssLoanModel.getCompulsoryInsurancePic());
+
+            List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
             LoanInfoModel loanInfoModel = new LoanInfoModel();
             loanInfoModel.setFssLoanModel(fssLoanModel);
             loanInfoModel.setLoanId(fssLoanModel.getLoanId());
-
+            loanInfoModel.setFssLoanDocumentModels(fssLoanDocumentModelList);
             fssLoanService.saveLoan(loanInfoModel);
             return Result.success("");
         } catch (Exception ex) {
@@ -98,10 +147,15 @@ public class LoanController {
                 return Result.fail("", "参数错误，请重试");
             }
             LoanInfoModel loanInfoModel= fssLoanService.getFssLoan(loanId);
-//            JSONObject resultJson = new JSONObject();
-//            resultJson.put("fssLoanModel", BeanPropFieldUtil.toPropField(loanInfoModel.getFssLoanModel()));
-//            resultJson.put("fssLoanDocumentModels",loanInfoModel.getFssLoanDocumentModels());
-            return Result.success(loanInfoModel);
+
+            LoanInfoVo loanInfoVo= new LoanInfoVo();
+            loanInfoVo.setFssLoanModel(loanInfoModel.getFssLoanModel());
+            List<LoanDocumentVo> loanDocumentVoList = LoanDocumentVoMatch.matchList(loanInfoModel.getFssLoanDocumentModels());
+            Map<String,List<LoanDocumentVo>> listMap = loanDocumentVoList.stream()
+                        .collect(Collectors.groupingBy(LoanDocumentVo::getDocumentType));
+            loanInfoVo.setFssLoanDocs(listMap);
+
+            return Result.success(loanInfoVo);
         } catch (Exception ex) {
             log.error(String.format("增加贷款信息异常："), ex);
             System.out.printf(ex.getMessage());

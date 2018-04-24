@@ -13,6 +13,7 @@ import com.yundian.fssapi.exception.FssLoanException;
 import com.yundian.fssapi.service.FssLoanService;
 import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
+import com.yundian.toolkit.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 保险分期
@@ -83,11 +86,23 @@ public class FssLoanServiceImpl implements FssLoanService {
     }
 
     @Override
-    public Integer insertFssLoanDocument(List<FssLoanDocumentModel> fssLoanDocumentModels) {
+    public Integer insertFssLoanDocument(Long loanId,List<FssLoanDocumentModel> fssLoanDocumentModels) {
 
         try {
+
+            //按照文档类型删除图谱
+            Map<String,List<FssLoanDocumentModel>> mapGroupby =  fssLoanDocumentModels.stream().collect(Collectors.groupingBy(FssLoanDocumentModel::getDocumentType));
+            for(String key:mapGroupby.keySet()) {
+                if(StringUtil.isNotBlank(key)) {
+                    fssLoanDocumentModelMapper.deleteByDocmentType(loanId, key);
+                }
+            }
+            //新增文档
             fssLoanDocumentModels.stream().forEach(
-                    e -> fssLoanDocumentModelMapper.insert(e)
+                    e ->{
+                        e.setLoanId(loanId);
+                        fssLoanDocumentModelMapper.insert(e);
+                    }
             );
         } catch (Exception e) {
             log.error(String.format("新增保险分期失败:%s", JSON.toJSONString(fssLoanDocumentModels)), e);
@@ -97,6 +112,12 @@ public class FssLoanServiceImpl implements FssLoanService {
         return null;
     }
 
+    @Override
+    public Integer updateFssLoanDocment(Long loanId,List<FssLoanDocumentModel> fssLoanDocumentModels) {
+
+
+        return null;
+    }
 
     @Override
     public Page<FssLoanModel> getPaginatorFssLoan(Paginator<FssLoanModel> paginator) {
@@ -134,7 +155,7 @@ public class FssLoanServiceImpl implements FssLoanService {
                 if(loanInfoModel.getFssLoanDocumentModels()!=null) {
                     loanInfoModel.getFssLoanDocumentModels().stream().forEach(
                             e -> e.setLoanId(loanInfoModel.getLoanId()));
-                    insertFssLoanDocument(loanInfoModel.getFssLoanDocumentModels());
+                    insertFssLoanDocument(loanId,loanInfoModel.getFssLoanDocumentModels());
                 }
 
             } else {
@@ -180,7 +201,7 @@ public class FssLoanServiceImpl implements FssLoanService {
     @Override
     public void applyLoan(Long loanId,List<FssLoanDocumentModel> fssLoanDocumentModelList,String operater) {
         if(fssLoanDocumentModelList!=null&&fssLoanDocumentModelList.size()>0) {
-            insertFssLoanDocument(fssLoanDocumentModelList);
+            insertFssLoanDocument(loanId,fssLoanDocumentModelList);
         }
         FlowDataModel flowDataModel = new FlowDataModel();
         flowDataModel.setLoanId(loanId);
