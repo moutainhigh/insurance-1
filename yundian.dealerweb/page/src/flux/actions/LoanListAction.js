@@ -39,6 +39,12 @@ class LoanListAction {
   };
 
   /**
+   * 打开申请放款模态框
+   */
+  openLoanApplyModal=(data)=>{
+    return data;
+  }
+  /**
    * 打开修改模态框
    * @param data
    * @returns {*}
@@ -46,7 +52,14 @@ class LoanListAction {
   openUpdateModal =(data)=> {
     return data;
   };
-
+  /**
+   * 申请放款
+   * @param data
+   * @returns {*}
+   */
+  applyLoan =(data)=>{
+    return data;
+  }
   addLoan =(data)=> {
     return data;
   };

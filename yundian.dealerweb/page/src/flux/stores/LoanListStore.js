@@ -35,6 +35,8 @@ class LoanListStore {
       handleAddLoan: LoanListAction.addLoan,
       handleUpdateLoan: LoanListAction.updateLoan,
       handleSubmitLoan: LoanListAction.submitLoan,
+      handleOpenLoanApplyModal: LoanListAction.openLoanApplyModal,
+      handleApplyLoan: LoanListAction.applyLoan,
 
 
     });
@@ -43,6 +45,7 @@ class LoanListStore {
       loading: true,
       typeList : [],
       addModalVisible : false,
+      applyLoanModalVisible : false,
       loanInfo:{},
       loanId:null,
       pagination: {
@@ -106,6 +109,37 @@ class LoanListStore {
       }})
   };
 
+  handleApplyLoan = (data) =>{
+    data = momentTansfer(data);
+    data.loanId=this.state.loanId;
+    let param = querystring.encode(data);
+    console.log("submit:"+param);
+    xPostFetch(SERVER_URL + '/loan/applyLoan?'+param).then(result => {
+      if (result && result.success) {
+        Notify('提交放款申请成功', result.msg, 'success');
+        this.handleOpenLoanApplyModal();
+        this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
+      } else{
+        Notify('提交放款申请发生异常', result.msg, 'error');
+      }})
+  };
+
+  handleOpenLoanApplyModal =() =>{
+    console.log("进入handleOpenLoanApplyModal");
+    let visible = !this.state.applyLoanModalVisible;
+    console.log(visible);
+    this.setState({
+      applyLoanModalVisible : visible,
+    });
+    xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
+      if (result && result.data) {
+        show("get Info OK");
+        this.setState({loanInfo: result.data,loanId:data.loanId});
+      } else{
+        Notify('请求贷款明细数据发生异常', result.msg, 'error');
+      }})
+
+  };
 
 
   handleOpenAddModal =() =>{
