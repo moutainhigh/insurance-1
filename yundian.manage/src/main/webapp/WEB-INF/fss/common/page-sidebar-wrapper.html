@@ -1,0 +1,71 @@
+<div class="page-sidebar-wrapper">
+			<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+			<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+			<div class="page-sidebar navbar-collapse collapse">
+				<!-- BEGIN SIDEBAR MENU -->
+				<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+				<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+				<!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+				<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+				<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+				<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+				<ul class="page-sidebar-menu page-sidebar-menu-compact" data-keep-expanded="true" data-auto-scroll="true" data-slide-speed="200">
+					<li id="id_0" >
+						<a href="${rc.contextPath}/index.html">
+						<i class="icon-home"></i>
+						<span class="title">首页</span>
+						</a>
+					</li>
+					<li id="id_1">
+						<a  href="${rc.contextPath}/loan/loanList.html">
+						<i class="icon-basket"></i>
+						<span class="title">分期管理</span>
+						<span class="selected"></span>
+						<span class="arrow open"></span>
+						</a>
+
+					</li>
+					
+					<li  id="id_2">
+						<a href="javascript:;">
+						<i class="icon-basket"></i>
+						<span class="title">客户管理</span>
+						<span class="selected"></span>
+						<span class="arrow open"></span>
+						</a>
+						<ul class="sub-menu">
+							<li id="id_2_1">
+								<a id="loan_menu" href="${rc.contextPath}/fss/loan/loanList.html">
+								<i class="icon-home"></i>
+									客户管理</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li id="id_3">
+						<a href="javascript:;">
+						<i class="icon-rocket"></i>
+						<span class="title">系统设置</span>
+						<span class="selected"></span>
+						<span class="arrow open"></span>
+						</a>
+						<ul class="sub-menu">
+							<li id="id_3_1">
+								<a id="guaranteeUserList2_menu" href="${rc.contextPath}/fss/guaranteeuser/guaranteeUserList.html">
+								<i class="icon-user"></i>
+								员工管理</a>
+							</li>
+							<li id="id_3_2">
+								<a id="guaranteeUserList2_menu" href="${rc.contextPath}/fss/guaranteeuser/guaranteeUserList.html">
+									<i class="icon-user"></i>
+									角色管理</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				
+				
+				<!-- END SIDEBAR MENU -->
+			</div>
+
+		</div>

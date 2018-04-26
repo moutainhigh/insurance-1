@@ -86,14 +86,13 @@ public class DealerUserController {
     public Result listAjax	(
             @RequestParam(defaultValue = "0", value = "page") int page,
             @RequestParam(defaultValue = "20", value = "pagesize") int pageSize,
-            @RequestParam(defaultValue = "{}", value = "queryJson") String loanQueryParamJson,
+            @ModelAttribute("fssLoanQueryParam") FssDealerUserModel fssLoanQueryParam,
             HttpSession session) {
         try {
 
             Paginator<FssDealerUserModel> paginator = new Paginator<>();
-            paginator.setCurrentPage(page);
+            paginator.setPage(page);
             paginator.setPageSize(pageSize);
-            FssDealerUserModel fssLoanQueryParam= JSON.parseObject(loanQueryParamJson,FssDealerUserModel.class);
             FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
             fssLoanQueryParam.setDealerId(fssDealerUserModel.getDealerId());
             paginator.setParam(fssLoanQueryParam);

@@ -3,6 +3,7 @@ package com.yundian.fssapi.service;
 import com.yundian.fssapi.domain.FssDealerModel;
 import com.yundian.fssapi.domain.FssLoanRepaymentModel;
 import com.yundian.fssapi.domain.FssLoanRepaymentPlanModel;
+import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
 
@@ -23,16 +24,18 @@ public interface FssRepaymentService {
 
  /**
   * 还款计划
-  * @param loanId
+  * @param paginator
   * @return
   */
- List<FssLoanRepaymentPlanModel> getRepaymentPlan(Long loanId);
+ Page<FssLoanRepaymentPlanModel> getRepaymentPlan(Paginator<FssLoanRepaymentPlanModel> paginator);
+
 
   /**
    * 还款明细
-   * @param loanId
+   * @param paginator
    * @return
    */
-    List<FssLoanRepaymentModel> getRepaymentDetail(Long loanId);
+  Page<FssLoanRepaymentModel> getRepaymentDetail(Paginator<FssLoanRepaymentModel> paginator) ;
+
 
 }

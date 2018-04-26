@@ -2,17 +2,22 @@ package com.yundian.fss.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.yundian.fss.dao.FssDealerModelMapper;
+import com.yundian.fss.dao.FssDealerUserModelMapper;
 import com.yundian.fssapi.domain.FssDealerModel;
+import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanModel;
+import com.yundian.fssapi.enums.FssDealerUserStatusEnum;
 import com.yundian.fssapi.exception.FssLoanException;
 import com.yundian.fssapi.service.FssDealerService;
 import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
+import com.yundian.toolkit.utils.MD5;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +33,43 @@ public class FssDealerServiceImpl implements FssDealerService {
 
     @Autowired
     FssDealerModelMapper fssDealerModelMapper;
+    @Autowired
+    FssDealerUserModelMapper fssDealerUserModelMapper;
+
+
+    @Override
+    public void updateFssDealer(FssDealerModel fssDealerModel) {
+        try {
+
+            fssDealerModelMapper.updateByPrimaryKeySelective(fssDealerModel);
+        } catch (Exception e) {
+            log.error(String.format("修改经销商信息失败:%s", JSON.toJSONString(fssDealerModel)), e);
+            throw new FssLoanException(ResultCodeContants.FAILED, "修改经销商信息失败", e);
+        }
+    }
+
+    @Override
+    public void addFssDealer(FssDealerModel fssDealerModel) {
+        try {
+
+            fssDealerModelMapper.insert(fssDealerModel);
+
+            FssDealerUserModel fssDealerUserModel = new FssDealerUserModel();
+            fssDealerUserModel.setDealerId(fssDealerModel.getDealerId());
+            fssDealerUserModel.setUserName(fssDealerModel.getPhone());
+            fssDealerUserModel.setRoleId("ADMIN");
+            fssDealerUserModel.setUserPwd(MD5.encodePassword(fssDealerModel.getPhone()));
+            fssDealerUserModel.setName(fssDealerModel.getContactor());
+            fssDealerUserModel.setCtime(new Date());
+            fssDealerUserModel.setMtime(new Date());
+            fssDealerUserModel.setStatus(FssDealerUserStatusEnum.NORMAL.code());
+            fssDealerUserModelMapper.insert(fssDealerUserModel);
+        } catch (Exception e) {
+            log.error(String.format("新增经销商信息失败:%s", JSON.toJSONString(fssDealerModel)), e);
+            throw new FssLoanException(ResultCodeContants.FAILED, "获取经销商信息失败", e);
+        }
+    }
+
 
     @Override
     public FssDealerModel getFssDealer(Long dealerId) {
@@ -46,7 +88,7 @@ public class FssDealerServiceImpl implements FssDealerService {
             HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("_limit", paginator.getPageSize());
             param.put("_offset",
-                    (paginator.getCurrentPage() - 1) * paginator.getPageSize());
+                    (paginator.getPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
 
             List<FssDealerModel> list = this.fssDealerModelMapper.

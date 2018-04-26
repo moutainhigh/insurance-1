@@ -256,4 +256,36 @@
       remark = #{remark,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <sql id="getFssLoanRepaymentPagingWhere">
+
+    <if test="loanId != null and loanId != ''">
+      and loan_id =#{loanId}
+    </if>
+
+    <if test="period != null and period != ''">
+      and period =#{period}
+    </if>
+
+
+  </sql>
+
+  <select id="getFssLoanRepaymentPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_loan_repayment
+    where 1=1
+    <include refid="getFssLoanRepaymentPagingWhere"/>
+    order by id desc
+    limit #{_offset}, #{_limit}
+
+  </select>
+
+  <select id="getFssLoanRepaymentPagingCount" resultType="java.lang.Integer" parameterType="map">
+    select
+    count(*)
+    from fss_loan_repayment
+    where 1=1
+    <include refid="getFssLoanRepaymentPagingWhere"/>
+  </select>
+
 </mapper>

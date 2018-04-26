@@ -1,12 +1,12 @@
 package com.yundian.dealerweb.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.yundian.dealerweb.controller.vo.FssLoanModelVo;
 import com.yundian.dealerweb.util.DealerWebConstants;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanDocumentModel;
 import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
+import com.yundian.fssapi.domain.vo.FssLoanModelVo;
 import com.yundian.fssapi.domain.vo.LoanDocumentVo;
 import com.yundian.fssapi.domain.vo.LoanInfoVo;
 import com.yundian.fssapi.domain.vo.match.LoanDocumentVoMatch;
@@ -15,15 +15,14 @@ import com.yundian.result.Page;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
 import com.yundian.toolkit.utils.MapUtil;
-import com.yundian.toolkit.utils.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -169,14 +168,13 @@ public class LoanController {
     public Result listAjax	(
             @RequestParam(defaultValue = "0", value = "page") int page,
             @RequestParam(defaultValue = "20", value = "pagesize") int pageSize,
-            @RequestParam(defaultValue = "{}", value = "queryJson") String loanQueryParamJson,
+            @ModelAttribute("fssLoanQueryParam") FssLoanModel fssLoanQueryParam,
             HttpSession session) {
         try {
 
             Paginator<FssLoanModel> paginator = new Paginator<>();
-            paginator.setCurrentPage(page);
+            paginator.setPage(page);
             paginator.setPageSize(pageSize);
-            FssLoanModel fssLoanQueryParam= JSON.parseObject(loanQueryParamJson,FssLoanModel.class);
             FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
             fssLoanQueryParam.setDealerId(fssDealerUserModel.getDealerId());
             paginator.setParam(fssLoanQueryParam);

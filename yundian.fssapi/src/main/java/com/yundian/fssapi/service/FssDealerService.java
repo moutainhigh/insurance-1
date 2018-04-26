@@ -11,6 +11,9 @@ import com.yundian.result.Paginator;
  */
 public interface FssDealerService {
 
+	void updateFssDealer(FssDealerModel fssDealerModel);
+
+	void addFssDealer(FssDealerModel fssDealerModel);
 	/**
 	 * 获取经销商信息信息
 	 * @param dealerId

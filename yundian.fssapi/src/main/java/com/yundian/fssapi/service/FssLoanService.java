@@ -80,6 +80,11 @@ public interface FssLoanService {
 	void  auditPass(Long loanId,String operater);
 
 	/**
+	 * 审核拒绝
+	 */
+	void  auditReject(Long loanId,String reason,String operater);
+
+	/**
 	 * 放款
 	 */
 	void makeloan(Long loanId,String operater);

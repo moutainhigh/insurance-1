@@ -18,7 +18,7 @@ public class Paginator<P> implements Serializable {
 	/**
 	 * 当前页
 	 */
-	private Integer currentPage;
+	private Integer page;
 	/**
 	 * 分页大小
 	 */
@@ -30,20 +30,19 @@ public class Paginator<P> implements Serializable {
 	public Paginator(){
 	}
 	/**
-	 * @param limit
-	 * @param offset
-	 * @param paramMap
+	 * @param _currentPage
+	 * @param _pageSize
 	 */
 	public Paginator(Integer _currentPage, Integer _pageSize) {
-		this.currentPage = _currentPage;
+		this.page = _currentPage;
 		this.pageSize=_pageSize;
 	}
 
 	
 	/**
-	 * @param limit
-	 * @param offset
-	 * @param paramMap
+	 * @param _currentPage
+	 * @param _pageSize
+	 * @param param
 	 */
 	public Paginator(Integer _currentPage, Integer _pageSize,P param) {
 		this(_currentPage,_pageSize);
@@ -57,13 +56,15 @@ public class Paginator<P> implements Serializable {
 	public void setParam(P param) {
 		this.param = param;
 	}
-	
-	public Integer getCurrentPage() {
-		return currentPage;
+
+	public Integer getPage() {
+		return this.page;
 	}
-	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage;
+
+	public void setPage(Integer page) {
+		this.page = page;
 	}
+
 	public Integer getPageSize() {
 		return pageSize;
 	}

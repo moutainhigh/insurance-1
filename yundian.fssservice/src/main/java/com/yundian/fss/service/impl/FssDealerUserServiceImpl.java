@@ -113,7 +113,7 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
             HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("_limit", paginator.getPageSize());
             param.put("_offset",
-                    (paginator.getCurrentPage() - 1) * paginator.getPageSize());
+                    (paginator.getPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
 
             List<FssDealerUserModel> list = this.fssDealerUserModelMapper

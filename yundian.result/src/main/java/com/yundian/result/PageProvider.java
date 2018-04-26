@@ -13,7 +13,7 @@ public class PageProvider {
 
     public static  <E> Page<E> getPage(Paginator paginator, int totalCount,List<E> items,Class<? extends E> cls) {
 
-        Page<E> page = new Page<E>(totalCount,paginator.getCurrentPage(),paginator.getPageSize(),items);
+        Page<E> page = new Page<E>(totalCount,paginator.getPage(),paginator.getPageSize(),items);
         return page;
     }
 }

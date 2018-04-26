@@ -43,7 +43,7 @@
     delete from fss_dealer
     where dealer_id = #{dealerId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssDealerModel" >
+  <insert id="insert" keyProperty="dealerId" useGeneratedKeys="true" parameterType="com.yundian.fssapi.domain.FssDealerModel" >
     insert into fss_dealer (dealer_id, dealer_name, dealer_code, 
       contactor, phone, businessentity, 
       organize_code, license_code, province, 

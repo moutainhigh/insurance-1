@@ -125,7 +125,7 @@ public class FssLoanServiceImpl implements FssLoanService {
             HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("_limit", paginator.getPageSize());
             param.put("_offset",
-                    (paginator.getCurrentPage() - 1) * paginator.getPageSize());
+                    (paginator.getPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
             List<FssLoanModel> list = this.fssLoanModelMapper.
                     getFssLoanPaging(param);
@@ -227,6 +227,18 @@ public class FssLoanServiceImpl implements FssLoanService {
         flowDataModel.setFlowToStatus(FssLoanStatusEnum.HAVE_LOAN);
         flowDataModel.setOperater(operater);
         flowDataModel.setContent(FssLoanStatusEnum.HAVE_LOAN.desc());
+        fssFlowManage.flow(flowDataModel);
+    }
+    /**
+     * 审核拒绝
+     */
+    @Override
+    public  void auditReject(Long loanId,String reason,String operater){
+        FlowDataModel flowDataModel = new FlowDataModel();
+        flowDataModel.setLoanId(loanId);
+        flowDataModel.setFlowToStatus(FssLoanStatusEnum.CLOSED);
+        flowDataModel.setOperater(operater);
+        flowDataModel.setContent(FssLoanStatusEnum.CLOSED.desc());
         fssFlowManage.flow(flowDataModel);
     }
 

@@ -23,6 +23,9 @@
 
 
 	<!--经销商用户服务 -->
+	<dubbo:service ref="fssDealerService" interface="com.yundian.fssapi.service.FssDealerService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
 	<dubbo:service ref="fssDealerUserService" interface="com.yundian.fssapi.service.FssDealerUserService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 
@@ -30,6 +33,11 @@
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 
 	<dubbo:service ref="fssLoanService" interface="com.yundian.fssapi.service.FssLoanService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
+	<dubbo:service ref="fssAdminUserService" interface="com.yundian.fssapi.service.FssAdminUserService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+	<dubbo:service ref="fssRepaymentService" interface="com.yundian.fssapi.service.FssRepaymentService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 
 </beans>
