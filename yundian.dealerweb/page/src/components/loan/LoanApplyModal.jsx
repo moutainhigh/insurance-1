@@ -66,7 +66,7 @@ class LoanApplyModal extends Component {
     }
     return (
       <div>
-        <Modal width={1000} visible={this.props.addModalVisible} title="申请放款" onCancel={this.handleAddCancel}
+        <Modal width={1000} visible={this.props.applyLoanModalVisible} title="申请放款" onCancel={this.handleAddCancel}
                footer={[
                  <Button key="back" type="ghost" size="large" onClick={this.handleAddCancel}>取消</Button>,
                  <Button key="submitTJ" type="primary" size="large" onClick={this.handleOnSubmit}>提交审核</Button>

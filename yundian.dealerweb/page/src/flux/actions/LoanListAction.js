@@ -39,6 +39,12 @@ class LoanListAction {
   };
 
   /**
+   * 打开查看页面
+   */
+  openShowModal =(data)=>{
+    return data;
+  }
+  /**
    * 打开申请放款模态框
    */
   openLoanApplyModal=(data)=>{

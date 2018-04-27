@@ -27,7 +27,7 @@ import java.util.List;
  * @author jnx
  * @create 2018/4/13
  */
-@Service
+@Service("fssDealerService")
 @Slf4j
 public class FssDealerServiceImpl implements FssDealerService {
 

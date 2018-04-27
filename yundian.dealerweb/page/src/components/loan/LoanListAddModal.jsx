@@ -97,8 +97,15 @@ class LoanListAddModal extends Component {
 
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
-      labelCol:{span:2,offset: 0},
-      wrapperCol: {span: 23}
+      labelCol:{span:6,offset: 0},
+      wrapperCol: {span: 18}
+    };
+    const formItemLayoutOneLine = {
+      labelCol:{span:5,offset: -1},
+      wrapperCol: {span: 19}
+    };
+    const formItemLayoutNoLable = {
+      wrapperCol: {span: 19}
     };
 
     const rowLayout = {
@@ -122,25 +129,22 @@ class LoanListAddModal extends Component {
               <Form layout="horizontal">
                 <Card title="被保险人信息" style={{marginBottom: 24}} bordered={true}>
                     <Row style={rowLayout}>
-                      <Col span="2"><FormItem label="*被保人姓名"></FormItem></Col>
-                      <Col span="6">
-                        <FormItem {...formItemLayout}>
+                      <Col span="8">
+                        <FormItem label="被保人姓名" {...formItemLayout}>
                           {getFieldDecorator('insuresName', { rules: [ {required: true, message: '请输入被保险人姓名'}]} )(
                             <Input/>
                           )}
                         </FormItem>
                       </Col>
-                      <Col span="2"><FormItem label="联系电话" /></Col>
-                      <Col span="6">
-                        <FormItem {...formItemLayout}>
+                      <Col span="8" >
+                        <FormItem label="联系电话" {...formItemLayout}>
                           {getFieldDecorator('insuresPhone', { rules: [ {required: true, message: '请输入联系电话'}, {validator: this.checkMobileLength}]} )(
                             <Input/>
                           )}
                         </FormItem>
                       </Col>
-                      <Col span="2"><FormItem label="身份证号" /></Col>
-                      <Col span="6">
-                        <FormItem {...formItemLayout}>
+                      <Col span="8" >
+                        <FormItem label="身份证号" {...formItemLayout}>
                           {getFieldDecorator('insuresIdcard', { rules: [ {required: true, message: '请输入身份证号'}, {validator: this.checkIdCardLength}]})(
                             <Input/>
                           )}
@@ -148,25 +152,22 @@ class LoanListAddModal extends Component {
                           </Col>
                     </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="联系人姓名" /></Col>
-                    <Col span="6">
-                        <FormItem  {...formItemLayout}>
+                    <Col span="8">
+                        <FormItem label="联系人姓名" {...formItemLayout}>
                           {getFieldDecorator('insuresLinkName', { rules: [ {required: true, message: '请输入联系人姓名'}]})(
                             <Input/>
                           )}
                         </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="联系电话" /></Col>
-                      <Col span="6">
-                        <FormItem   {...formItemLayout}>
+                      <Col span="8">
+                        <FormItem   label="联系电话" {...formItemLayout}>
                           {getFieldDecorator('insuresLinkPhone', { rules: [ {required: true, message: '请输入联系电话'}, {validator: this.checkMobileLength}]})(
                             <Input/>
                           )}
                         </FormItem>
                       </Col>
-                    <Col span="2"><FormItem label="客户类型" /></Col>
-                        <Col span="6">
-                        <FormItem   {...formItemLayout}>
+                        <Col span="8">
+                        <FormItem  label="客户类型" {...formItemLayout}>
                           {getFieldDecorator('insuresType')(
                             <Select initialValue="personal">
                               <Option value="personal">个人</Option>
@@ -177,9 +178,8 @@ class LoanListAddModal extends Component {
                       </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"> <FormItem label="被保人地址" /></Col>
                     <Col span="10">
-                    <FormItem {...formItemLayout}>
+                    <FormItem label="被保人地址" {...formItemLayoutOneLine}>
                       {getFieldDecorator('insuresAddress')(
                         <Input/>
                       )}
@@ -189,34 +189,31 @@ class LoanListAddModal extends Component {
                   </Card>
                 <Card title="车辆信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="品牌车型" /></Col>
-                    <Col span="4">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="品牌车型" {...formItemLayout}>
                         {getFieldDecorator('carBrand', { rules: [ {required: true, message: '请输入品牌'}]} )(
                           <Input/>
                         )}
                       </FormItem>
-
                     </Col>
-                    <Col span="5">
-                      <FormItem {...formItemLayout}>
+                    <Col span="4">
+                      <FormItem style={{paddingLeft:2}}>
                         {getFieldDecorator('carVehicleName', { rules: [ {required: true, message: '请输入车系'}]} )(
                           <Input/>
                         )}
                       </FormItem>
 
                     </Col>
-                    <Col span="5">
-                      <FormItem {...formItemLayout}>
+                    <Col span="4">
+                      <FormItem style={{paddingLeft:2}}>
                         {getFieldDecorator('carModelName', { rules: [ {required: true, message: '请输入车型'}]} )(
                           <Input/>
                         )}
                       </FormItem>
 
                     </Col>
-                    <Col span="2"><FormItem label="车牌号" /></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="车牌号" {...formItemLayout}>
                         {getFieldDecorator('carPlateNumber', { rules: [ {required: true, message: '请输入车牌号'}]} )(
                           <Input/>
                         )}
@@ -225,25 +222,22 @@ class LoanListAddModal extends Component {
 
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="车架号" /></Col>
-                    <Col span="6">
-                      <FormItem  {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="车架号" {...formItemLayout}>
                         {getFieldDecorator('carVin', { rules: [ {required: true, message: '请输入车架号'}]})(
                           <Input/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="发动机号" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="发动机号" {...formItemLayout}>
                         {getFieldDecorator('carEngineNo', { rules: [ {required: true, message: '请输入发动机号'}]})(
                           <Input/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="车辆类型" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="车辆类型" {...formItemLayout}>
                         {getFieldDecorator('carType')(
                           <Select initialValue="1">
                             <Option value="1">新车</Option>
@@ -254,9 +248,8 @@ class LoanListAddModal extends Component {
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="购买方式" /></Col>
-                    <Col span="6">
-                      <FormItem  {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="购买方式" {...formItemLayout}>
                         {getFieldDecorator('carBuyType')(
                           <Select initialValue="1">
                             <Option value="1">分期</Option>
@@ -265,9 +258,8 @@ class LoanListAddModal extends Component {
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="车辆颜色" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="车辆颜色"  {...formItemLayout}>
                         {getFieldDecorator('carColor')(
                         <Select>
                           <Option value="1">白色</Option>
@@ -276,9 +268,8 @@ class LoanListAddModal extends Component {
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="购车日期" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem   label="购车日期" {...formItemLayout}>
                         {getFieldDecorator('carBuyDate')(
                           <DatePicker/>
                         )}
@@ -286,9 +277,8 @@ class LoanListAddModal extends Component {
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="座位数" /></Col>
-                    <Col span="6">
-                      <FormItem  {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="座位数"  {...formItemLayout}>
                         {getFieldDecorator('carSeatNumber')(
                           <Select>
                             <Option value="5">5座</Option>
@@ -297,17 +287,15 @@ class LoanListAddModal extends Component {
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="排量" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="排量" {...formItemLayout}>
                         {getFieldDecorator('carDisplacement')(
                           <Input/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="车" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="车"  {...formItemLayout}>
                         {getFieldDecorator('carImports')(
                           <RadioGroup initialValue="1">
                             <Radio value="1">国产</Radio>
@@ -320,9 +308,8 @@ class LoanListAddModal extends Component {
                 </Card>
                 <Card title="保单信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="投保类型" ></FormItem></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="投保类型"  {...formItemLayout}>
                         {getFieldDecorator('policyType')(
                           <Select>
                             <Option value="first">首保</Option>
@@ -331,17 +318,15 @@ class LoanListAddModal extends Component {
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="保险公司" /></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="保险公司" {...formItemLayout}>
                         {getFieldDecorator('policyInsuranceCompany')(
                           <Input/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="保险总额" /></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="保险总额" {...formItemLayout}>
                         {getFieldDecorator('policyTotalAmount')(
                           <Input/>
                         )}
@@ -349,17 +334,15 @@ class LoanListAddModal extends Component {
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="生效日期" /></Col>
-                    <Col span="6">
-                      <FormItem  {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="生效日期"  {...formItemLayout}>
                         {getFieldDecorator('policyEffectDate', { rules: [ {required: true, message: '请输入生效日期'}]})(
                           <DatePicker/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="到期日期" /></Col>
-                    <Col span="6">
-                      <FormItem   {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="到期日期"  {...formItemLayout}>
                         {getFieldDecorator('policyExpireDate', { rules: [ {required: true, message: '请输入到期日期'}]})(
                           <DatePicker/>
                         )}
@@ -367,17 +350,15 @@ class LoanListAddModal extends Component {
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                  <Col span="2"><FormItem label="交强险" /></Col>
-                  <Col span="6">
-                    <FormItem  {...formItemLayout}>
+                  <Col span="8">
+                    <FormItem label="交强险"  {...formItemLayout}>
                       {getFieldDecorator('policyCompulsoryInsurance')(
                         <InputNumber />
                       )}
                     </FormItem>
                   </Col>
-                  <Col span="2"><FormItem label="车船使用税" /></Col>
-                  <Col span="6">
-                    <FormItem   {...formItemLayout}>
+                  <Col span="8">
+                    <FormItem  label="车船使用税"  {...formItemLayout}>
                       {getFieldDecorator('policyVehicleTax')(
                         <InputNumber/>
                       )}
@@ -491,9 +472,8 @@ class LoanListAddModal extends Component {
                 </Card>
                 <Card title="金融方案" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="产品名称" ></FormItem></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="产品名称"  {...formItemLayout}>
                         {getFieldDecorator('planId' )(
                           <Select>
                             <Option value="100">默认金融方案</Option>
@@ -502,9 +482,8 @@ class LoanListAddModal extends Component {
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="贷款期限" /></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="贷款期限" {...formItemLayout}>
                         {getFieldDecorator('planPeriod', { rules: [ {required: true, message: '请选择贷款期限'}]} )(
                           <Select initialValue="12">
                             <Option value="6">6期</Option>
@@ -515,41 +494,41 @@ class LoanListAddModal extends Component {
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="融资类目" /></Col>
-                    <Col span="6">
-                      <FormItem  {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="融资类目"  {...formItemLayout}>
                         {getFieldDecorator('planFinancingType')(
                           <CheckboxGroup options={planFinancingTypeOptions} initialValue={['A','C']}/>
 
                           )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="贷款总额" /></Col>
-                    <Col span="6"><Input />
+                    <Col span="8">
+                      <FormItem  label="贷款总额"  {...formItemLayout}>
+                        {getFieldDecorator('planLoanAmount')(
+                          <InputNumber/>
+                        )}
+                      </FormItem>
                     </Col>
                   </Row>
                 </Card>
                 <Card title="还款卡信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="开户行" ></FormItem></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="开户行" {...formItemLayout}>
                         {getFieldDecorator('repayment_bank_code')(
                           <Select/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="还款卡号" /></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem label="还款卡号" {...formItemLayout}>
                         {getFieldDecorator('repaymentCard' )(
                           <Input/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="手机号码" /></Col>
-                    <Col span="6">
-                      <FormItem {...formItemLayout}>
+                    <Col span="8">
+                      <FormItem  label="手机号码" {...formItemLayout}>
                         {getFieldDecorator('insuresPhone')(
                           <Input/>
                         )}
@@ -559,31 +538,33 @@ class LoanListAddModal extends Component {
                 </Card>
                 <Card title="影象信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="身份证正面" ></FormItem></Col>
-                    <Col span="6">
+                    <Col span="12">
+                      <FormItem label="身份证正面" {...formItemLayout}>
                       {getFieldDecorator('idcardFrontPic',{initialValue:pictureWallValue})(
                           <PicturesWall  {...picturesWallprops}/>
                       )}
+                      </FormItem>
                     </Col>
-                    <Col span="2"><FormItem label="身份证反面" /></Col>
-                    <Col span="6">
+                    <Col span="12">
+                      <FormItem label="身份证反面" {...formItemLayout}>
                       {getFieldDecorator('idcardBackPic',{initialValue:pictureWallValue})(
                         <PicturesWall  {...picturesWallprops}/>
-                      )}
+                      )}</FormItem>
                     </Col>
                   </Row>
                     <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="交强险保单" /></Col>
-                    <Col span="6">
+                    <Col span="12">
+                      <FormItem label="交强险保单"{...formItemLayout}>
                       {getFieldDecorator('compulsoryInsurancePic',{initialValue:pictureWallValue})(
                         <PicturesWall  {...picturesWallprops}/>
-                      )}
+                      )}</FormItem>
                     </Col>
-                      <Col span="2"><FormItem label="商业险保单" /></Col>
-                      <Col span="6">
+                      <Col  span="12">
+                        <FormItem label="商业险保单" {...formItemLayout}>
                         {getFieldDecorator('commercialInsurancePic',{initialValue:pictureWallValue})(
                           <PicturesWall  {...picturesWallprops}/>
                         )}
+                      </FormItem>
                       </Col>
                   </Row>
                 </Card>

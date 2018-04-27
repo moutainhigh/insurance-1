@@ -7,7 +7,6 @@ import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.fssapi.service.FssLoanService;
 import com.yundian.result.Page;
-import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
 import org.junit.Assert;
 import org.junit.Test;
@@ -60,7 +59,7 @@ public class FssLoanServiceTest extends AbstractJUnit{
         fssLoanDocumentModel.setFileUrl("http://cdn-file.cheguo.com/files/2016-08-29/201608290904011559647.png");
         fssLoanDocumentModel.setCtime(new Date());
         fssLoanDocumentModels.add(fssLoanDocumentModel);
-        fssLoanService.insertFssLoanDocument(fssLoanDocumentModels);
+        fssLoanService.insertFssLoanDocument(fssLoanDocumentModel.getLoanId(),fssLoanDocumentModels);
         System.out.printf(JSON.toJSONString(fssLoanDocumentModels));
         Assert.assertTrue(true);
     }
@@ -69,7 +68,7 @@ public class FssLoanServiceTest extends AbstractJUnit{
     public void getPaginatorFssLoan()
     {
         Paginator<FssLoanModel> paginator = new Paginator<>();
-        paginator.setCurrentPage(1);
+        paginator.setPage(1);
         paginator.setPageSize(20);
         FssLoanModel fssLoanModel = new FssLoanModel();
         fssLoanModel.setDealerId(100L);

@@ -93,7 +93,7 @@ public class FssDealerUserServiceTest extends AbstractJUnit{
     public void getPaginatorFssDealerUserTest()
     {
         Paginator<FssDealerUserModel> paginator= new Paginator<FssDealerUserModel>();
-        paginator.setCurrentPage(1);
+        paginator.setPage(1);
         paginator.setPageSize(20);
         FssDealerUserModel fssDealerUserModel = new FssDealerUserModel();
         fssDealerUserModel.setDealerId(100L);

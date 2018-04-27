@@ -31,6 +31,7 @@ class LoanListStore {
       handlePagination: LoanListAction.setPagination,
       handleOpenAddModal: LoanListAction.openAddModal,
       handleOpenUpdateModal: LoanListAction.openUpdateModal,
+      handleOpenShowModal: LoanListAction.openShowModal,
 
       handleAddLoan: LoanListAction.addLoan,
       handleUpdateLoan: LoanListAction.updateLoan,
@@ -46,8 +47,11 @@ class LoanListStore {
       typeList : [],
       addModalVisible : false,
       applyLoanModalVisible : false,
+      showModalVisible:false,
       loanInfo:{},
       loanId:null,
+      fssLoanModel:{},
+      fssLoanDocs:{},
       pagination: {
         pageSize: 20,
         showSizeChanger: true,
@@ -141,6 +145,27 @@ class LoanListStore {
 
   };
 
+
+  //打开修改窗口
+  handleOpenShowModal =(data) =>{
+
+    console.log("loanId:"+data.loanId);
+    let visible = !this.state.showModalVisible;
+    console.log(visible);
+    this.setState({showModalVisible : visible});
+    xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
+      if (result && result.data) {
+        show("get Info OK");
+        this.setState({
+          fssLoanModel: result.data.fssLoanModel,
+          fssLoanDocs:result.data.fssLoanDocs,
+          loanId:data.loanId
+        });
+      } else{
+        Notify('请求贷款明细数据发生异常', result.msg, 'error');
+      }})
+
+  };
 
   handleOpenAddModal =() =>{
     console.log("进入store");

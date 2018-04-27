@@ -52,7 +52,7 @@ public class FssDealerCustomerServiceTest extends AbstractJUnit {
     {
         Paginator<FssDealerCustomerModel> paginator = new Paginator<>();
         paginator.setPageSize(20);
-        paginator.setCurrentPage(1);
+        paginator.setPage(1);
         FssDealerCustomerModel fssDealerCustomerModel = new FssDealerCustomerModel();
         fssDealerCustomerModel.setDealerId(100L);
         Page<FssDealerCustomerModel> pa= fssDealerCustomerService.getPaginatorFssDealerCustomer(paginator);

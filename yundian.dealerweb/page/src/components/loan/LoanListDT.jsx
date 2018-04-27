@@ -4,6 +4,8 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import {Row, Col, Table, Icon, Form, Input, Button, Cascader, Radio, Select, Layout, Spin} from 'antd';
 import LoanListAction from 'actions/LoanListAction';
 import LoanListAddModal from './LoanListAddModal';
+import LoanListShowModal from './LoanListShowModal';
+import LoanApplyModal from './LoanApplyModal'
 import { Popconfirm, message } from 'antd';
 import {Link} from 'react-router';
 //************************ 用于打印log的 **************************
@@ -34,7 +36,7 @@ class LoanListDT extends Component {
     {
       title: '订单号', dataIndex: 'loanCode', key: 'loanCode', width: 210,
     }, {
-      title: '被保险人信息', dataIndex: 'insures_name', key: 'insuresName', width: 300,
+      title: '被保险人信息', dataIndex: 'insuresName', key: 'insuresName', width: 300,
       render(text, record){
         return <div><span>{record.insuresName}</span><span>{record.insuresPhone}</span> </div>
       }
@@ -68,15 +70,27 @@ class LoanListDT extends Component {
           record.auditStatus == "WAITING_REVISED"){
           return(
             <div>
-              <a>查看</a>
+              <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
               <span className="ant-divider" />
               <a onClick={()=>LoanListAction.openUpdateModal({loanId : record.loanId})}>编辑</a>
             </div>
           )
-        }else{
+        }
+        if(record.auditStatus == "APPLY_LOAN"){
           return(
             <div>
-              <a>查看</a>
+              <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
+              <span className="ant-divider" />
+              <a onClick={()=>LoanListAction.openLoanApplyModal({loanId : record.loanId})}>申请放款</a>
+            </div>
+          )
+        }
+
+        //
+        else{
+          return(
+            <div>
+              <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
             </div>
           )
         }
@@ -99,7 +113,9 @@ class LoanListDT extends Component {
     return (
       <div>
         <LoanListAddModal loanInfo={this.props.loanInfo} addModalVisible={this.props.addModalVisible}/>
-        {/*<LoanListUpdateModal updateModalVisible={this.props.updateModalVisible} />*/}
+        <LoanListShowModal fssLoanModel={this.props.fssLoanModel} fssLoanDocs={this.props.fssLoanDocs} showModalVisible={this.props.showModalVisible} />
+        <LoanApplyModal loanInfo={this.props.loanInfo} applyLoanModalVisible={this.props.applyLoanModalVisible} />
+
         <Table columns={this.columns}
                dataSource={this.props.dataList}
                onChange={this.handleTableChange}
