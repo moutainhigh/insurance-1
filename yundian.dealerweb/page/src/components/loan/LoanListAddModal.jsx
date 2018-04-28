@@ -2,8 +2,9 @@ import React, {Component} from "react";
 import {Card, Upload,Radio,Form,Icon, Checkbox,InputNumber,Input, Modal, Select, Row, Col, Button,DatePicker} from "antd";
 import LoanListAction from "actions/LoanListAction";
 import { propsToFields,isEmptyObject } from 'services/functions';
-import PicturesWall from '../common/PicturesWall'
-import Moment from 'moment'
+import PicturesWall from '../common/PicturesWall';
+import SelectData from '../common/SelectData';
+import Moment from 'moment';
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
@@ -260,13 +261,11 @@ class LoanListAddModal extends Component {
                     </Col>
                     <Col span="8">
                       <FormItem  label="车辆颜色"  {...formItemLayout}>
-                        {getFieldDecorator('carColor')(
-                        <Select>
-                          <Option value="1">白色</Option>
-                          <Option value="2">黑色</Option>
-                        </Select>
-                        )}
-                      </FormItem>
+                      {getFieldDecorator('carColor')(
+                        <SelectData codeType="CarColor" attachOption="false"/>
+                      )}
+
+                    </FormItem>
                     </Col>
                     <Col span="8">
                       <FormItem   label="购车日期" {...formItemLayout}>

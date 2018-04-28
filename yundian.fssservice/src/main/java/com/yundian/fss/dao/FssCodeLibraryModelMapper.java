@@ -16,4 +16,6 @@ public interface FssCodeLibraryModelMapper {
 
     List<FssCodeLibraryModel> getCodes(@Param("codeType") String codeType);
 
+    FssCodeLibraryModel selectByCode(@Param("codeType") String codeType,@Param("codeId") String code);
+
 }

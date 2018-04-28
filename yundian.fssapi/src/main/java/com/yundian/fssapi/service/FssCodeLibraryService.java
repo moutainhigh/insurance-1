@@ -9,23 +9,24 @@ import com.yundian.result.Result;
 
 /**
  *
- * 
- * @author hehaibo
- * @version $Id: FssCodeLibraryService.java, v 0.1 2016年7月26日 下午8:59:44 hehaibo
- *          Exp $
+ *字典服务
  */
 public interface FssCodeLibraryService {
-	Result<Integer> insertFssCodeLibrary(FssCodeLibraryModel fssCodeLibraryModel);
 
-	Result<Integer> updateFssCodeLibrary(FssCodeLibraryModel fssCodeLibraryModel);
 
-	Result<Integer> deleteFssCodeLibraryById(Integer id);
+	/**
+	 * 获取指定类别和code的字典
+	 * @param codeType 类别
+	 * @param code
+	 * @return
+	 */
+	FssCodeLibraryModel getFssCodeLibraryByCode(String codeType,String code);
 
-	Result<FssCodeLibraryModel> getFssCodeLibraryById(Integer id);
+	/**
+	 * 获取指定类别的字典列表
+	 * @param codeType
+	 * @return
+	 */
+	List<FssCodeLibraryModel> getFssCodeLibraryListByType(String codeType);
 
-	Result<List<FssCodeLibraryModel>> getFssCodeLibraryList(
-			FssCodeLibraryModel fssCodeLibraryModel);
-
-	Result<PaginatedResult<FssCodeLibraryModel>> getPaginatorFssCodeLibrary(
-			Paginator<FssCodeLibraryModel> paginator);
 }

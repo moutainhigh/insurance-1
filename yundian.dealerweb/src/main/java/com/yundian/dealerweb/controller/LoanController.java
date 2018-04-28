@@ -150,15 +150,16 @@ public class LoanController {
             LoanInfoVo loanInfoVo= new LoanInfoVo();
             loanInfoVo.setFssLoanModel(loanInfoModel.getFssLoanModel());
             List<LoanDocumentVo> loanDocumentVoList = LoanDocumentVoMatch.matchList(loanInfoModel.getFssLoanDocumentModels());
-            Map<String,List<LoanDocumentVo>> listMap = loanDocumentVoList.stream()
+            if(loanDocumentVoList!=null&&loanDocumentVoList.size()>0) {
+                Map<String, List<LoanDocumentVo>> listMap = loanDocumentVoList.stream()
                         .collect(Collectors.groupingBy(LoanDocumentVo::getDocumentType));
-            loanInfoVo.setFssLoanDocs(listMap);
-
+                loanInfoVo.setFssLoanDocs(listMap);
+            }
             return Result.success(loanInfoVo);
         } catch (Exception ex) {
-            log.error(String.format("增加贷款信息异常："), ex);
+            log.error(String.format("贷款信息异常："), ex);
             System.out.printf(ex.getMessage());
-            return Result.fail("", "增加贷款信息异常，请重试");
+            return Result.fail("", "贷款信息异常，请重试");
         }
     }
 

@@ -25,9 +25,7 @@ public class FssCodeLibrayServiceTest extends AbstractJUnit{
     @Test
     public void getList()
     {
-        FssCodeLibraryModel fssCodeLibraryModel = new FssCodeLibraryModel();
-        fssCodeLibraryModel.setCodeType("FSS_FILE_CATEGORY");
-            Result<List<FssCodeLibraryModel>> listResult = fssCodeLibraryService.getFssCodeLibraryList(fssCodeLibraryModel);
+            List<FssCodeLibraryModel> listResult = fssCodeLibraryService.getFssCodeLibraryListByType("FSS_FILE_CATEGORY");
         System.out.printf("test_result:");
             System.out.printf(JSON.toJSONString(listResult));
             Assert.assertTrue(true);
