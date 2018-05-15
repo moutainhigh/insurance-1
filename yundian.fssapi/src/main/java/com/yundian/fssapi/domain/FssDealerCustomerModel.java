@@ -1,8 +1,13 @@
 package com.yundian.fssapi.domain;
 
+import com.yundian.tookit.excel.annotation.XLSValue;
+
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 客户表
+ */
 public class FssDealerCustomerModel implements Serializable{
     private Long id;
 
@@ -10,38 +15,40 @@ public class FssDealerCustomerModel implements Serializable{
 
     private Long userId;
 
+    @XLSValue("被保险人姓名")
     private String name;
-
+    @XLSValue("被保险人手机号码")
     private String phone;
-
+    @XLSValue("被保险人姓名")
     private String insuresName;
-
+    @XLSValue("被保险人身份证")
     private String insuresIdcard;
-
+    @XLSValue("被保险人手机号码")
     private String insuresPhone;
 
     private String insuresAddress;
 
     private String insuresType;
 
+    @XLSValue("被保险人联系人")
     private String insuresLinkName;
-
+    @XLSValue("被保险人联系人电话")
     private String insuresLinkPhone;
 
     private String carBrand;
-
+    @XLSValue("汽车品牌")
     private String carBrandName;
 
     private String carVehicle;
-
+    @XLSValue("汽车车系")
     private String carVehicleName;
 
     private String carModel;
-
+    @XLSValue("汽车车型")
     private String carModelName;
-
+    @XLSValue("车牌号码")
     private String carPlateNumber;
-
+    @XLSValue("车架号")
     private String carVin;
 
     private String carEngineNo;
@@ -52,6 +59,7 @@ public class FssDealerCustomerModel implements Serializable{
 
     private String carColor;
 
+    @XLSValue("购车时间")
     private String carBuyDate;
 
     private Integer carSeatNumber;
@@ -66,12 +74,14 @@ public class FssDealerCustomerModel implements Serializable{
     private String policyBuyType;
     private String policyType;
 
+    @XLSValue("保险公司")
     private String policyInsuranceCompany;
 
     private Integer policyTotalAmount;
 
     private String policyEffectDate;
 
+    @XLSValue("保险到期日期")
     private String policyExpireDate;
 
     private Integer policyCompulsoryInsurance;

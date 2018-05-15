@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssCarModelsModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssCarModelsModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="series_code" property="seriesCode" jdbcType="VARCHAR" />
+    <result column="models_code" property="modelsCode" jdbcType="VARCHAR" />
+    <result column="models_name" property="modelsName" jdbcType="VARCHAR" />
+    <result column="guide_price" property="guidePrice" jdbcType="DECIMAL" />
+    <result column="engine" property="engine" jdbcType="VARCHAR" />
+    <result column="seats" property="seats" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, series_code, models_code, models_name, guide_price, engine, seats, ctime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fss_car_models
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByModelsCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from fss_car_models
+    where models_code = #{modelsCode,jdbcType=VARCHAR}
+  </select>
+
+
+
+  <select id="getModelsListBySeriesCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from fss_car_models
+    where series_code = #{seriesCode,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fss_car_models
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssCarModelsModel" >
+    insert into fss_car_models (id, series_code, models_code, 
+      models_name, guide_price, engine, 
+      seats, ctime)
+    values (#{id,jdbcType=INTEGER}, #{seriesCode,jdbcType=VARCHAR}, #{modelsCode,jdbcType=VARCHAR}, 
+      #{modelsName,jdbcType=VARCHAR}, #{guidePrice,jdbcType=DECIMAL}, #{engine,jdbcType=VARCHAR}, 
+      #{seats,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssCarModelsModel" >
+    insert into fss_car_models
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="seriesCode != null" >
+        series_code,
+      </if>
+      <if test="modelsCode != null" >
+        models_code,
+      </if>
+      <if test="modelsName != null" >
+        models_name,
+      </if>
+      <if test="guidePrice != null" >
+        guide_price,
+      </if>
+      <if test="engine != null" >
+        engine,
+      </if>
+      <if test="seats != null" >
+        seats,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seriesCode != null" >
+        #{seriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelsCode != null" >
+        #{modelsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelsName != null" >
+        #{modelsName,jdbcType=VARCHAR},
+      </if>
+      <if test="guidePrice != null" >
+        #{guidePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="engine != null" >
+        #{engine,jdbcType=VARCHAR},
+      </if>
+      <if test="seats != null" >
+        #{seats,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssCarModelsModel" >
+    update fss_car_models
+    <set >
+      <if test="seriesCode != null" >
+        series_code = #{seriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelsCode != null" >
+        models_code = #{modelsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelsName != null" >
+        models_name = #{modelsName,jdbcType=VARCHAR},
+      </if>
+      <if test="guidePrice != null" >
+        guide_price = #{guidePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="engine != null" >
+        engine = #{engine,jdbcType=VARCHAR},
+      </if>
+      <if test="seats != null" >
+        seats = #{seats,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssCarModelsModel" >
+    update fss_car_models
+    set series_code = #{seriesCode,jdbcType=VARCHAR},
+      models_code = #{modelsCode,jdbcType=VARCHAR},
+      models_name = #{modelsName,jdbcType=VARCHAR},
+      guide_price = #{guidePrice,jdbcType=DECIMAL},
+      engine = #{engine,jdbcType=VARCHAR},
+      seats = #{seats,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -29,16 +29,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="yundian.toolkit" />
+    <orderEntry type="library" name="Maven: org.apache.poi:poi:3.9" level="project" />
     <orderEntry type="module" module-name="yundian.fssapi" />
     <orderEntry type="module" module-name="yundian.result" />
+    <orderEntry type="library" name="Maven: com.aliyun.oss:aliyun-sdk-oss:2.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jdom:jdom:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-client:1.19" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.19" level="project" />
     <orderEntry type="library" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:4.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.1.6.RELEASE" level="project" />

@@ -15,44 +15,27 @@ const show = (info) => {
 class LoanApplyModal extends Component {
 
 
-  handleAddCancel =(e)=> {
-    LoanListAction.openLoanApplyModal();
+  handleAddCancel =()=> {
+    LoanListAction.cancelLoanApplyModal();
   };
   handleOnSubmit = (e) => {
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log("handleOnSubmit:"+JSON.stringify(values))
+      console.log("applyLoan:"+JSON.stringify(values))
           if (!err) {
             LoanListAction.applyLoan(values);
       }
     });
   }
-
   handleUploadChange = ({ fileList }) =>
   {
-   show(fileList);
+    show(fileList);
   }
-
-
-
   render() {
     const picturesWallprops={
       length:1,
       maxFileSize:2,
-      // initialValue:[{
-      //   uid: -1,
-      //   name: 'xxx.png',
-      //   status: 'done',
-      //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      // }],
       onChange:this.handleUploadChange
     };
-
-  const pictureWallValue=[{
-    uid: -11,
-    name: 'xxx.png',
-    status: 'done',
-    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  }];
 
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
@@ -69,7 +52,7 @@ class LoanApplyModal extends Component {
         <Modal width={1000} visible={this.props.applyLoanModalVisible} title="申请放款" onCancel={this.handleAddCancel}
                footer={[
                  <Button key="back" type="ghost" size="large" onClick={this.handleAddCancel}>取消</Button>,
-                 <Button key="submitTJ" type="primary" size="large" onClick={this.handleOnSubmit}>提交审核</Button>
+                 <Button key="submitTJ" type="primary" size="large" onClick={this.handleOnSubmit}>申请放款</Button>
                ]}>
               <Form layout="horizontal">
                 <Card title="被保险人信息" style={{marginBottom: 24}} bordered={true}>
@@ -105,13 +88,13 @@ class LoanApplyModal extends Component {
                   <Row style={rowLayout}>
                     <Col span="2"><FormItem label="贷款合同" ></FormItem></Col>
                     <Col span="6">
-                      {getFieldDecorator('withholdingAgreementPic',{initialValue:pictureWallValue})(
+                      {getFieldDecorator('withholdingAgreementPic' , { rules: [ {required: true, message: '请上传贷款合同照片'}]})(
                           <PicturesWall  {...picturesWallprops}/>
                       )}
                     </Col>
                     <Col span="2"><FormItem label="委托代扣协议" /></Col>
                     <Col span="6">
-                      {getFieldDecorator('commercialInsurancePic',{initialValue:pictureWallValue})(
+                      {getFieldDecorator('commercialInsurancePic' , { rules: [ {required: true, message: '请上传委托代扣协议照片'}]})(
                         <PicturesWall  {...picturesWallprops}/>
                       )}
                     </Col>
@@ -126,12 +109,16 @@ class LoanApplyModal extends Component {
 
 LoanApplyModal = Form.create({
   mapPropsToFields(props){
-    show(props)
-    show(isEmptyObject(props.loanInfo))
     if(!isEmptyObject(props.loanInfo))
     {
       let loan = props.loanInfo.fssLoanModel;
-      return  propsToFields(loan);
+      if(props.loanInfo.fssLoanDocs!=null){
+        let docs = props.loanInfo.fssLoanDocs;
+        loan.withholdingAgreementPic = docs.withholdingAgreementPic;
+        loan.commercialInsurancePic = docs.commercialInsurancePic;
+      }
+      let fields = propsToFields(loan);
+      return fields;
 
     }else {
 

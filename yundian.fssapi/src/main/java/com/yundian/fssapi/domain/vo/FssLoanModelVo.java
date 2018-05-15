@@ -4,6 +4,7 @@ import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.vo.LoanDocumentVo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 贷款信息
@@ -17,83 +18,82 @@ public class FssLoanModelVo extends FssLoanModel implements Serializable {
     /**
      * 贷款合同
      */
-    private LoanDocumentVo loanContractPic;
+    private String loanContractPic;
 
 
     /**
      * 委托代扣协议
      */
-    private LoanDocumentVo withholdingAgreementPic;
+    private String withholdingAgreementPic;
 
 
     /**
      * 身份证正面照片
      */
-    private LoanDocumentVo idcardFrontPic;
+    private String idcardFrontPic;
 
 
     /**
      * 身份证反面照片
      */
-    private LoanDocumentVo idcardBackPic;
+    private String idcardBackPic;
 
 
     /**
      * 交强险保单
      */
-    private LoanDocumentVo compulsoryInsurancePic;
+    private String compulsoryInsurancePic;
 
     /**
      * 商业险保单
      */
-    private LoanDocumentVo commercialInsurancePic;
+    private String commercialInsurancePic;
 
-
-    public LoanDocumentVo getIdcardFrontPic() {
-        return this.idcardFrontPic;
-    }
-
-    public void setIdcardFrontPic(LoanDocumentVo idcardFrontPic) {
-        this.idcardFrontPic = idcardFrontPic;
-    }
-
-    public LoanDocumentVo getIdcardBackPic() {
-        return this.idcardBackPic;
-    }
-
-    public void setIdcardBackPic(LoanDocumentVo idcardBackPic) {
-        this.idcardBackPic = idcardBackPic;
-    }
-
-    public LoanDocumentVo getCompulsoryInsurancePic() {
-        return this.compulsoryInsurancePic;
-    }
-
-    public void setCompulsoryInsurancePic(LoanDocumentVo compulsoryInsurancePic) {
-        this.compulsoryInsurancePic = compulsoryInsurancePic;
-    }
-
-    public LoanDocumentVo getCommercialInsurancePic() {
-        return this.commercialInsurancePic;
-    }
-
-    public void setCommercialInsurancePic(LoanDocumentVo commercialInsurancePic) {
-        this.commercialInsurancePic = commercialInsurancePic;
-    }
-
-    public LoanDocumentVo getLoanContractPic() {
+    public String getLoanContractPic() {
         return this.loanContractPic;
     }
 
-    public void setLoanContractPic(LoanDocumentVo loanContractPic) {
+    public void setLoanContractPic(String loanContractPic) {
         this.loanContractPic = loanContractPic;
     }
 
-    public LoanDocumentVo getWithholdingAgreementPic() {
+    public String getWithholdingAgreementPic() {
         return this.withholdingAgreementPic;
     }
 
-    public void setWithholdingAgreementPic(LoanDocumentVo withholdingAgreementPic) {
+    public void setWithholdingAgreementPic(String withholdingAgreementPic) {
         this.withholdingAgreementPic = withholdingAgreementPic;
+    }
+
+    public String getIdcardFrontPic() {
+        return this.idcardFrontPic;
+    }
+
+    public void setIdcardFrontPic(String idcardFrontPic) {
+        this.idcardFrontPic = idcardFrontPic;
+    }
+
+    public String getIdcardBackPic() {
+        return this.idcardBackPic;
+    }
+
+    public void setIdcardBackPic(String idcardBackPic) {
+        this.idcardBackPic = idcardBackPic;
+    }
+
+    public String getCompulsoryInsurancePic() {
+        return this.compulsoryInsurancePic;
+    }
+
+    public void setCompulsoryInsurancePic(String compulsoryInsurancePic) {
+        this.compulsoryInsurancePic = compulsoryInsurancePic;
+    }
+
+    public String getCommercialInsurancePic() {
+        return this.commercialInsurancePic;
+    }
+
+    public void setCommercialInsurancePic(String commercialInsurancePic) {
+        this.commercialInsurancePic = commercialInsurancePic;
     }
 }

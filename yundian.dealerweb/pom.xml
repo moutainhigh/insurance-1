@@ -1,4 +1,4 @@
-﻿﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.yundian</groupId>
@@ -29,6 +29,7 @@
 		<zkclient.version>0.1</zkclient.version>
 		<curator.version>1.1.10</curator.version>
 		<slf4j.version>1.6.3</slf4j.version>
+		<aliyun-sdk-oss>2.2.1</aliyun-sdk-oss>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-modules-validation.version>0.8</spring-modules-validation.version>
 
@@ -51,17 +52,28 @@
 			<artifactId>yundian.result</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>${aliyun-sdk-oss}</version>
+			<exclusions>
+				<exclusion>
+				<artifactId>json-lib</artifactId>
+				<groupId>net.sf.json-lib</groupId>
+			</exclusion>
 
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>1.19</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.2</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.apache.httpcomponents</groupId>-->
+			<!--<artifactId>httpclient</artifactId>-->
+			<!--<version>4.2</version>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>

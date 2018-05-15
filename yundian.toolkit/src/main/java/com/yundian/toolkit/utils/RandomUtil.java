@@ -1,7 +1,11 @@
 package com.yundian.toolkit.utils;
 
 
-/** 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
+/**
  * @ClassName: RandomUtil 
  * @Description: TODO(随即数的产生) 
  * @author gulijiang
@@ -81,5 +85,33 @@ public class RandomUtil {
 	 */
 	public static String generateRandomNumber(int n){		
 		return RandomUtil.getValidateCode(n,PHONECODESEQUEBCE);
+	}
+
+	/**
+	 * 生成随机名：当前年月日时分秒+五位随机数
+	 *
+	 * @return
+	 */
+	public static String getRandomCode() {
+
+		SimpleDateFormat simpleDateFormat;
+
+		simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+
+		Date date = new Date();
+
+		String str = simpleDateFormat.format(date);
+
+		Random random = new Random();
+		// 获取4位随机数
+		int rannum = (int) (random.nextDouble() * (9999 - 1000 + 1)) + 1000;
+		// 当前时间
+		return  str+rannum;
+	}
+	public static void main(String[] args) {
+
+		String fileName = RandomUtil.getRandomCode();
+
+		System.out.println(fileName);//8835920140307
 	}
 }

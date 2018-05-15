@@ -1,13 +1,14 @@
 package com.yundian.fss.dao;
 
 import com.yundian.fssapi.domain.FssLoanDocumentModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface FssLoanDocumentModelMapper {
     int deleteByPrimaryKey(Long id);
 
-    int deleteByDocmentType(Long loanId,String  documentType);
+    int deleteByDocmentType(@Param("loanId") Long loanId, @Param("documentType") String  documentType);
 
     int insert(FssLoanDocumentModel record);
 

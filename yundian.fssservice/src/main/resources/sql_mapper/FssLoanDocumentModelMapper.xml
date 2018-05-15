@@ -37,7 +37,7 @@
 
   <delete id="deleteByDocmentType" parameterType="java.util.Map" >
     delete from fss_loan_document
-    where loan_id = #{loanId,jdbcType=BIGINT} and document_type={documentType,jdbcType=VARCHAR}
+    where loan_id = #{loanId,jdbcType=BIGINT} and document_type=#{documentType,jdbcType=VARCHAR}
   </delete>
 
 

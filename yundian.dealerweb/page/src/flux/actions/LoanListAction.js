@@ -44,12 +44,22 @@ class LoanListAction {
   openShowModal =(data)=>{
     return data;
   }
+
+  关闭查到页面
+  cancelShowModal=()=>{
+    return null;
+  }
   /**
    * 打开申请放款模态框
    */
   openLoanApplyModal=(data)=>{
     return data;
   }
+
+  cancelLoanApplyModal=()=>{
+    return null;
+  }
+
   /**
    * 打开修改模态框
    * @param data
@@ -82,20 +92,16 @@ class LoanListAction {
     return data;
   };
 
-  /**
-   * 删除记录
-   * @param data
-   * @returns {*}
-   */
-  deleteRecord = (data)=> {
+
+  carCascaderLoadData = (data)=> {
     return data;
   };
 
   /**
-   *改变激活状态
+   *汽车品牌
    */
-  changeStatus =(data)=> {
-    return data;
+  getBandList =()=> {
+    return null;
   };
 }
 

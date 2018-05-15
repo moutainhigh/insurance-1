@@ -17,6 +17,7 @@ class LoanListSearchBox extends Component {
   handOpenAddModal =(e) =>{
     show("点击添加按钮");
     LoanListAction.openAddModal();
+    this.props.form.resetFields();
   };
 
   render() {

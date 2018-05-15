@@ -74,9 +74,9 @@ class MenuLayout extends Component {
 			</div>
             <Menu style={{marginTop:10}} theme="light" onSelect={this.selectClick} selectedKeys={[this.props.current]}
                    mode="inline" defaultOpenKeys={['1','2','3','31','4','5','6','7']}>
-				<SubMenu key="1" title={<span><Icon type="folder" />保险大盘</span>}>
-					<Menu.Item key="11"><Link to="/dashboard">保险大盘</Link></Menu.Item>
-				</SubMenu>
+				{/*<SubMenu key="1" title={<span><Icon type="folder" />保险大盘</span>}>*/}
+					{/*<Menu.Item key="11"><Link to="/dashboard">保险大盘</Link></Menu.Item>*/}
+				{/*</SubMenu>*/}
         <SubMenu key="2" title={<span><Icon type="folder" />投保管理</span>}>
                 <Menu.Item key="21"><Link to="/loanlist">分期管理</Link></Menu.Item>
          </SubMenu>

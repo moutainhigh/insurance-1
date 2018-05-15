@@ -6,11 +6,25 @@ const FormItem = Form.Item;
 const show = (info) => {
   console.log("jsx LoanListShowModal: " + JSON.stringify(info));
 }
+class ViewImg extends Component {
+
+  render() {
+    let data = this.props.data;
+    let url = '';
+    if (data) {
+      url = data.url;
+    }
+    return (
+      <img width="100px" height="100px" src={url} onClick={()=>{window.open(url)}} />
+    )
+  }
+}
+
 class LoanListShowModal extends Component {
 
   //取消
-  handleShowCancel =(e)=> {
-    LoanListAction.openShowModal();
+  handleShowCancel =()=> {
+    LoanListAction.cancelShowModal();
   };
 
   render() {
@@ -22,127 +36,173 @@ class LoanListShowModal extends Component {
 
     const rowLayout = {
       marginTop: 5,
-      marginBottom: 5
+      marginBottom: 10
     }
+
+    show(this.props.showLoanInfo);
     let fssLoanModel = {};
-    if(this.props.fssLoanModel!=null){
-      fssLoanModel = this.props.fssLoanModel;
+    let docs = {};
+    let imgViewIdcardFrontPic ;
+    let imgViewIdcardBackPic ;
+    let imgViewCompulsoryInsurancePic ;
+    let imgViewCommercialInsurancePic ;
+    let imgViewWithholdingAgreementPic ;
+    let imgViewLoanContractPic ;
+    if(!isEmptyObject(this.props.showLoanInfo)) {
+      fssLoanModel = this.props.showLoanInfo.fssLoanModel;
+       docs = this.props.showLoanInfo.fssLoanDocs;
+      show(docs);
+       if(docs!=null) {
+         if (docs.idcardFrontPic != undefined) {
+           imgViewIdcardFrontPic = docs.idcardFrontPic.map((item, index) => {
+             let data = {title: '', desc: '', url: item.url};
+             return <ViewImg data={data} key={index}/>;
+           });
+         }
+         if (docs.idcardBackPic != undefined) {
+           imgViewIdcardBackPic = docs.idcardBackPic.map((item, index) => {
+             let data = {title: '', desc: '', url: item.url};
+             return <ViewImg data={data} key={index}/>;
+           });
+         }
+         if (docs.compulsoryInsurancePic != undefined) {
+           imgViewCompulsoryInsurancePic = docs.compulsoryInsurancePic.map((item, index) => {
+             let data = {title: '', desc: '', url: item.url};
+             return <ViewImg data={data} key={index}/>;
+           });
+         }
+         if (docs.commercialInsurancePic != undefined) {
+           imgViewCommercialInsurancePic = docs.commercialInsurancePic.map((item, index) => {
+             let data = {title: '', desc: '', url: item.url};
+             return <ViewImg data={data} key={index}/>;
+           });
+         }
+         if (docs.withholdingAgreementPic != undefined) {
+           imgViewWithholdingAgreementPic = docs.withholdingAgreementPic.map((item, index) => {
+             let data = {title: '', desc: '', url: item.url};
+             return <ViewImg data={data} key={index}/>;
+           });
+         }
+         if (docs.loanContractPic != undefined) {
+           imgViewLoanContractPic = docs.loanContractPic.map((item, index) => {
+             let data = {title: '', desc: '', url: item.url};
+             return <ViewImg data={data} key={index}/>;
+           });
+         }
+       }
     }
+
+
+
+
+
     return (
       <div>
-        <Modal width={1000} visible={this.props.showModalVisible} title="保险分期" onCancel={this.handleShowCancel}
+        <Modal width={1000} visible={this.props.showModalVisible} title="查看保险分期" onCancel={this.handleShowCancel}
                footer={[
                  <Button key="back" type="ghost" size="large" onClick={this.handleShowCancel}>返回</Button>,
                ]}>
 
                 <Card title="被保险人信息" style={{marginBottom: 24}} bordered={true}>
                     <Row style={rowLayout}>
-                      <Col span="2"><FormItem label="*被保人姓名"></FormItem></Col>
-                      <Col span="6">{fssLoanModel.insuresName==undefined?"":fssLoanModel.insuresName}
+                      <Col span="2"><span>被保人姓名:</span></Col>
+                      <Col span="6"><span>{fssLoanModel.insuresName==undefined?"":fssLoanModel.insuresName}</span>
                       </Col>
-                      <Col span="2"><FormItem label="联系电话" /></Col>
-                      <Col span="6">
-                        {fssLoanModel.insuresPhone}
+                      <Col span="2"><span>联系电话:</span></Col>
+                      <Col span="6"><span>{fssLoanModel.insuresPhone}</span>
                       </Col>
-                      <Col span="2"><FormItem label="身份证号" /></Col>
-                      <Col span="6">
-                        {fssLoanModel.insuresIdcard}
-                          </Col>
+                      <Col span="2"><span>身份证号:</span></Col>
+                      <Col span="6"><span>{fssLoanModel.insuresIdcard}</span>
+                      </Col>
                     </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="联系人姓名" /></Col>
-                    <Col span="6">
-                      {fssLoanModel.insuresLinkName}
+                    <Col span="2"><span>联系人姓名:</span></Col>
+                    <Col span="6"><span>
+                      {fssLoanModel.insuresLinkName}</span>
                     </Col>
-                    <Col span="2"><FormItem label="联系电话" /></Col>
-                      <Col span="6">
-                        {fssLoanModel.insuresLinkPhone}
+                    <Col span="2"><span>联系电话:</span></Col>
+                      <Col span="6"><span>
+                        {fssLoanModel.insuresLinkPhone}</span>
                       </Col>
-                    <Col span="2"><FormItem label="客户类型" /></Col>
-                        <Col span="6">
-                          {fssLoanModel.insuresType=="personal"? "个人":"企业"}
+                    <Col span="2"><span>客户类型</span></Col>
+                        <Col span="6"><span>{fssLoanModel.insuresType=="personal"? "个人":"企业"}</span>
                       </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"> <FormItem label="被保人地址" /></Col>
-                    <Col span="10">{fssLoanModel.insuresAddress}
+                    <Col span="2"> <span>被保人地址:</span></Col>
+                    <Col span="10"><span>{fssLoanModel.insuresAddress}</span>
                     </Col>
                   </Row>
                   </Card>
                 <Card title="车辆信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="品牌车型" /></Col>
-                    <Col span="4">{fssLoanModel.carBrand}
+                    <Col span="2"><span>品牌车型:</span></Col>
+                    <Col span="14"><span>{fssLoanModel.carBrandName}-{fssLoanModel.carVehicleName}-{fssLoanModel.carModelName}</span>
                     </Col>
-                    <Col span="5">{fssLoanModel.carVehicleName}
+                    <Col span="2"><span>车牌号:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carPlateNumber}</span>
                     </Col>
-                    <Col span="5">{fssLoanModel.carModelName}
-                    </Col>
-                    <Col span="2"><FormItem label="车牌号" /></Col>
-                    <Col span="6">{fssLoanModel.carPlateNumber}
-                    </Col>
-
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="车架号" /></Col>
+                    <Col span="2"><span>车架号:</span></Col>
                     <Col span="6">{fssLoanModel.carVin}
                     </Col>
-                    <Col span="2"><FormItem label="发动机号" /></Col>
-                    <Col span="6">{fssLoanModel.carEngineNo}
+                    <Col span="2"><span>发动机号:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carEngineNo}</span>
                     </Col>
-                    <Col span="2"><FormItem label="车辆类型" /></Col>
-                    <Col span="6"> {fssLoanModel.carType==1? "新车":"二手车"}
-                    </Col>
-                  </Row>
-                  <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="购买方式" /></Col>
-                    <Col span="6">{fssLoanModel.carBuyType==1? "分期":"全款"}
-                    </Col>
-                    <Col span="2"><FormItem label="车辆颜色" /></Col>
-                    <Col span="6">{fssLoanModel.carColor}
-                    </Col>
-                    <Col span="2"><FormItem label="购车日期" /></Col>
-                    <Col span="6">{fssLoanModel.carBuyDate}
+                    <Col span="2"><span>车辆类型:</span></Col>
+                    <Col span="6"> <span>{fssLoanModel.carType==1? "新车":"二手车"}</span>
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="座位数" /></Col>
-                    <Col span="6">{fssLoanModel.carSeatNumber}
+                    <Col span="2"><span>购买方式:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carBuyType==1? "分期":"全款"}</span>
                     </Col>
-                    <Col span="2"><FormItem label="排量" /></Col>
-                    <Col span="6">{fssLoanModel.carDisplacement}
+                    <Col span="2"><span>车辆颜色:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carColor}</span>
                     </Col>
-                    <Col span="2"><FormItem label="车" /></Col>
-                    <Col span="6">{fssLoanModel.carImports}
+                    <Col span="2"><span>购车日期:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carBuyDate}</span>
+                    </Col>
+                  </Row>
+                  <Row style={rowLayout}>
+                    <Col span="2"><span>座位数:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carSeatNumber}</span>
+                    </Col>
+                    <Col span="2"><span>排量:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carDisplacement}</span>
+                    </Col>
+                    <Col span="2"><span>车:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.carImports}</span>
                     </Col>
                   </Row>
                 </Card>
                 <Card title="保单信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="投保类型" ></FormItem></Col>
-                    <Col span="6">{fssLoanModel.policyType}
+                    <Col span="2"><span>投保类型:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.policyType}</span>
                     </Col>
-                    <Col span="2"><FormItem label="保险公司" /></Col>
-                    <Col span="6">{fssLoanModel.policyInsuranceCompany}
+                    <Col span="2"><span>保险公司:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.policyInsuranceCompany}</span>
                     </Col>
-                    <Col span="2"><FormItem label="保险总额" /></Col>
-                    <Col span="6">{fssLoanModel.policyTotalAmount}
-                    </Col>
-                  </Row>
-                  <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="生效日期" /></Col>
-                    <Col span="6">{fssLoanModel.policyEffectDate}
-                    </Col>
-                    <Col span="2"><FormItem label="到期日期" /></Col>
-                    <Col span="6">{fssLoanModel.policyExpireDate}
+                    <Col span="2"><span>保险总额:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.policyTotalAmount}</span>
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                  <Col span="2"><FormItem label="交强险" /></Col>
-                  <Col span="6">{fssLoanModel.policyCompulsoryInsurance}
+                    <Col span="2"><span>生效日期:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.policyEffectDate}</span>
+                    </Col>
+                    <Col span="2"><span>到期日期:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.policyExpireDate}</span>
+                    </Col>
+                  </Row>
+                  <Row style={rowLayout}>
+                  <Col span="2"><span>交强险:</span></Col>
+                  <Col span="6"><span>{fssLoanModel.policyCompulsoryInsurance}</span>
                   </Col>
-                  <Col span="2"><FormItem label="车船使用税" /></Col>
-                  <Col span="6">{fssLoanModel.policyVehicleTax}
+                  <Col span="2"><span>车船使用税:</span></Col>
+                  <Col span="6"><span>{fssLoanModel.policyVehicleTax}</span>
                   </Col>
                 </Row>
                   <Row style={rowLayout}>
@@ -191,29 +251,29 @@ class LoanListShowModal extends Component {
                 </Card>
                 <Card title="金融方案" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="产品名称" ></FormItem></Col>
-                    <Col span="6">{fssLoanModel.planId}
+                    <Col span="2"><span>金融产品:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.planName}</span>
                     </Col>
-                    <Col span="2"><FormItem label="贷款期限" /></Col>
-                    <Col span="6">{fssLoanModel.planPeriod}
+                    <Col span="2"><span>贷款期限:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.planPeriod}</span>
                     </Col>
                   </Row>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="融资类目" /></Col>
-                    <Col span="6">{fssLoanModel.planFinancingType}
+                    <Col span="2"><span>融资类目:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.planFinancingType}</span>
                     </Col>
-                    <Col span="2"><FormItem label="贷款总额" /></Col>
-                    <Col span="6">{fssLoanModel.planLoanAmount}
+                    <Col span="2"><span>贷款总额:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.planLoanAmount}</span>
                     </Col>
                   </Row>
                 </Card>
                 <Card title="还款卡信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
-                    <Col span="2"><FormItem label="开户行" ></FormItem></Col>
-                    <Col span="6">{fssLoanModel.repaymentBankCode}
+                    <Col span="2"><span>开户行:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.repaymentBankCode}</span>
                     </Col>
-                    <Col span="2"><FormItem label="还款卡号" /></Col>
-                    <Col span="6">{fssLoanModel.repaymentCard}
+                    <Col span="2"><span>还款卡号:</span></Col>
+                    <Col span="6"><span>{fssLoanModel.repaymentCard}</span>
                     </Col>
                     <Col span="2">
                     </Col>
@@ -222,32 +282,30 @@ class LoanListShowModal extends Component {
                 <Card title="影象信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
                     <Col span="2"><FormItem label="身份证正面" ></FormItem></Col>
-                    <Col span="6">{fssLoanModel.idcardFrontPic}
+                    <Col span="6">{imgViewIdcardFrontPic}
 
                     </Col>
                     <Col span="2"><FormItem label="身份证反面" /></Col>
-                    <Col span="6">{fssLoanModel.idcardBackPic}
+                    <Col span="6">{imgViewIdcardBackPic}
 
                     </Col>
                   </Row>
                     <Row style={rowLayout}>
                     <Col span="2"><FormItem label="交强险保单" /></Col>
-                    <Col span="6">{fssLoanModel.compulsoryInsurancePic}
+                    <Col span="6">{imgViewCommercialInsurancePic}
 
                     </Col>
                       <Col span="2"><FormItem label="商业险保单" /></Col>
-                      <Col span="6">{fssLoanModel.carSeatcommercialInsurancePicNumber}
+                      <Col span="6">{imgViewCompulsoryInsurancePic}
 
                       </Col>
                   </Row>
                   <Row style={rowLayout}>
                     <Col span="2"><FormItem label="贷款合同" /></Col>
-                    <Col span="6">{fssLoanModel.loanContractPic}
+                    <Col span="6">{imgViewLoanContractPic}
                     </Col>
                     <Col span="2"><FormItem label="委托代扣协议" /></Col>
-                    <Col span="6">
-                      <img alt="withholdingAgreementPic" style={{ width: '100%' }}
-                           src={fssLoanModel.withholdingAgreementPic} />
+                    <Col span="6">{imgViewWithholdingAgreementPic}
 
                     </Col>
                   </Row>

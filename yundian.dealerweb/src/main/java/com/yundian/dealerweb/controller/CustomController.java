@@ -27,11 +27,11 @@ public class CustomController {
     FssDealerCustomerService fssDealerCustomerService;
 
 
-    @RequestMapping(value="/customer/customerList",method= RequestMethod.GET)
+    @RequestMapping(value="/customer/importXsl",method= RequestMethod.POST)
     public String loanList() {
 
-        return "/customer/customerList";
 
+        return null;
     }
 
     @ResponseBody

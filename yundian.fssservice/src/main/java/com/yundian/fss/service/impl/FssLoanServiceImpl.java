@@ -1,21 +1,22 @@
 package com.yundian.fss.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.yundian.fss.dao.FssLoanDocumentModelMapper;
-import com.yundian.fss.dao.FssLoanModelMapper;
+import com.yundian.fss.dao.*;
 import com.yundian.fss.manager.FssFlowManage;
-import com.yundian.fssapi.domain.FssLoanDocumentModel;
-import com.yundian.fssapi.domain.FssLoanModel;
+import com.yundian.fssapi.domain.*;
 import com.yundian.fssapi.domain.statistics.FlowDataModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.exception.FssLoanException;
+import com.yundian.fssapi.service.FssCarService;
 import com.yundian.fssapi.service.FssLoanService;
 import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
+import com.yundian.toolkit.utils.RandomUtil;
 import com.yundian.toolkit.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,12 @@ public class FssLoanServiceImpl implements FssLoanService {
 
     @Autowired
     FssFlowManage fssFlowManage;
-
+    @Autowired
+    FssCarBrandModelMapper fssCarBrandModelMapper;
+    @Autowired
+    FssCarSeriesModelMapper fssCarSeriesModelMapper;
+    @Autowired
+    FssCarModelsModelMapper fssCarModelsModelMapper;
     @Autowired
     FssLoanModelMapper fssLoanModelMapper;
     @Autowired
@@ -66,6 +72,9 @@ public class FssLoanServiceImpl implements FssLoanService {
     public Long insertFssLoan(FssLoanModel fssLoanModel) {
 
         try {
+            fssLoanModel.setAuditStatus(FssLoanStatusEnum.INIT.code());
+            fssLoanModel.setAuditStatusPre(FssLoanStatusEnum.INIT.code());
+            fssLoanModel.setLoanCode("L"+ RandomUtil.getRandomCode());
              fssLoanModelMapper.insert(fssLoanModel);
             return fssLoanModel.getLoanId();
         } catch (Exception e) {
@@ -148,7 +157,19 @@ public class FssLoanServiceImpl implements FssLoanService {
     public Long saveLoan(LoanInfoModel loanInfoModel) {
         Long loanId = loanInfoModel.getLoanId();
         try {
-
+            FssLoanModel fssLoanModel = loanInfoModel.getFssLoanModel();
+            if(fssLoanModel!=null&& StringUtil.isNotBlank(fssLoanModel.getCarBrand())){
+               FssCarBrandModel fssCarBrandModel= fssCarBrandModelMapper.selectByBrandCode(fssLoanModel.getCarBrand());
+               fssLoanModel.setCarBrandName(fssCarBrandModel.getBrandName());
+            }
+            if(fssLoanModel!=null&& StringUtil.isNotBlank(fssLoanModel.getCarVehicle())){
+                FssCarSeriesModel fssCarSeriesModel= fssCarSeriesModelMapper.selectBySeriesCode(fssLoanModel.getCarVehicle());
+                fssLoanModel.setCarVehicleName(fssCarSeriesModel.getSeriesName());
+            }
+            if(fssLoanModel!=null&& StringUtil.isNotBlank(fssLoanModel.getCarModel())){
+                FssCarModelsModel fssCarModelsModel= fssCarModelsModelMapper.selectByModelsCode(fssLoanModel.getCarModel());
+                fssLoanModel.setCarModelName(fssCarModelsModel.getModelsName());
+            }
             if (loanInfoModel.getLoanId() == null) {
                 loanId = insertFssLoan(loanInfoModel.getFssLoanModel());
                 loanInfoModel.setLoanId(loanId);
@@ -205,9 +226,9 @@ public class FssLoanServiceImpl implements FssLoanService {
         }
         FlowDataModel flowDataModel = new FlowDataModel();
         flowDataModel.setLoanId(loanId);
-        flowDataModel.setFlowToStatus(FssLoanStatusEnum.APPLY_LOAN);
+        flowDataModel.setFlowToStatus(FssLoanStatusEnum.WAITING_LOAN);
         flowDataModel.setOperater(operater);
-        flowDataModel.setContent(FssLoanStatusEnum.APPLY_LOAN.desc());
+        flowDataModel.setContent(FssLoanStatusEnum.WAITING_LOAN.desc());
         fssFlowManage.flow(flowDataModel);
     }
 

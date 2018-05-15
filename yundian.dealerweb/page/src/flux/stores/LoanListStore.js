@@ -4,6 +4,7 @@ import jsonp from "jsonp";
 import LoanListAction from '../actions/LoanListAction';
 import {Notify} from "components/common/Common";
 import {xFetch,xPostFetch} from "../../services/xFetch";
+import {isEmptyObject} from "../../services/functions"
 
 //************************ 用于打印log的 **************************
 const show = (info) => {
@@ -11,13 +12,13 @@ const show = (info) => {
 }
 const momentTansfer = (data)=>{
   let format="YYYY-MM-DD";
-  if(data.carBuyDate!=null) {
+  if(data.carBuyDate!=null&&data.carBuyDate!='') {
     data.carBuyDate = data.carBuyDate.format(format);
   }
-  if(data.policyEffectDate!=null) {
+  if(data.policyEffectDate!=null&&data.policyEffectDate!='') {
     data.policyEffectDate = data.policyEffectDate.format(format);
   }
-  if(data.policyExpireDate!=null) {
+  if(data.policyExpireDate!=null&&data.policyExpireDate!='') {
     data.policyExpireDate = data.policyExpireDate.format(format);
   }
   return data;
@@ -32,13 +33,16 @@ class LoanListStore {
       handleOpenAddModal: LoanListAction.openAddModal,
       handleOpenUpdateModal: LoanListAction.openUpdateModal,
       handleOpenShowModal: LoanListAction.openShowModal,
-
+      handleCancelShowModal: LoanListAction.cancelShowModal,
       handleAddLoan: LoanListAction.addLoan,
       handleUpdateLoan: LoanListAction.updateLoan,
       handleSubmitLoan: LoanListAction.submitLoan,
       handleOpenLoanApplyModal: LoanListAction.openLoanApplyModal,
-      handleApplyLoan: LoanListAction.applyLoan,
+      handleCancelLoanApplyModal: LoanListAction.cancelLoanApplyModal,
 
+      handleApplyLoan: LoanListAction.applyLoan,
+      handleCarCascaderLoadData:LoanListAction.carCascaderLoadData,
+      handleGetBandList:LoanListAction.getBandList
 
     });
     this.state = {
@@ -72,9 +76,41 @@ class LoanListStore {
 
   handleAddLoan = (data) =>{
     data = momentTansfer(data);
+    let arrayCarModel = data.arrayCarModel;
+
+    if(arrayCarModel.length>2) {
+      data.carBrand = arrayCarModel[0];
+      data.carVehicle = arrayCarModel[1];
+      data.carModel = arrayCarModel[2];
+    }
+    delete data.arrayCarModel;
+    let idcardFrontPic = data.idcardFrontPic;
+    delete data.idcardFrontPic;
+    let idcardBackPic = data.idcardBackPic;
+    delete data.idcardBackPic;
+    let compulsoryInsurancePic = data.compulsoryInsurancePic;
+    delete data.compulsoryInsurancePic;
+    let commercialInsurancePic = data.commercialInsurancePic;
+    delete data.commercialInsurancePic;
     let param = querystring.encode(data);
+    if(!isEmptyObject(idcardFrontPic)) {
+      param = param + "&idcardFrontPic=" + JSON.stringify(idcardFrontPic);
+    }
+    if(!isEmptyObject(idcardBackPic)) {
+      param =  param+"&idcardBackPic="+JSON.stringify(idcardBackPic);
+    }
+    if(!isEmptyObject(compulsoryInsurancePic)) {
+      param =  param+"&compulsoryInsurancePic="+JSON.stringify(compulsoryInsurancePic);
+
+    }
+    if(!isEmptyObject(commercialInsurancePic)) {
+      param =  param+"&commercialInsurancePic="+JSON.stringify(commercialInsurancePic);
+
+    }
+
     console.log("add:"+param)
-    xPostFetch(SERVER_URL + '/loan/addLoan?'+param).then(result => {
+
+    xPostFetch(SERVER_URL + '/loan/addLoan',param).then(result => {
       if (result && result.success) {
         Notify('添加成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -85,10 +121,39 @@ class LoanListStore {
   };
   handleUpdateLoan = (data) =>{
     data.loanId=this.state.loanId;
+    let arrayCarModel = data.arrayCarModel;
+
+    if(arrayCarModel.length>2) {
+      data.carBrand = arrayCarModel[0];
+      data.carVehicle = arrayCarModel[1];
+      data.carModel = arrayCarModel[2];
+    }
     data = momentTansfer(data);
+    let idcardFrontPic = data.idcardFrontPic;
+    delete data.idcardFrontPic;
+    let idcardBackPic = data.idcardBackPic;
+    delete data.idcardBackPic;
+    let compulsoryInsurancePic = data.compulsoryInsurancePic;
+    delete data.compulsoryInsurancePic;
+    let commercialInsurancePic = data.commercialInsurancePic;
+    delete data.commercialInsurancePic;
     let param = querystring.encode(data);
+    if(!isEmptyObject(idcardFrontPic)) {
+      param = param + "&idcardFrontPic=" + JSON.stringify(idcardFrontPic);
+    }
+    if(!isEmptyObject(idcardBackPic)) {
+      param =  param+"&idcardBackPic="+JSON.stringify(idcardBackPic);
+    }
+    if(!isEmptyObject(compulsoryInsurancePic)) {
+      param =  param+"&compulsoryInsurancePic="+JSON.stringify(compulsoryInsurancePic);
+
+    }
+    if(!isEmptyObject(commercialInsurancePic)) {
+      param =  param+"&commercialInsurancePic="+JSON.stringify(commercialInsurancePic);
+
+    }
     console.log("update:"+param);
-    xPostFetch(SERVER_URL + '/loan/updateLoan?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/loan/updateLoan',param).then(result => {
       if (result && result.success) {
         Notify('修改成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -101,9 +166,39 @@ class LoanListStore {
   handleSubmitLoan = (data) =>{
     data = momentTansfer(data);
     data.loanId=this.state.loanId;
+    let arrayCarModel = data.arrayCarModel;
+
+    if(arrayCarModel.length>2) {
+      data.carBrand = arrayCarModel[0];
+      data.carVehicle = arrayCarModel[1];
+      data.carModel = arrayCarModel[2];
+    }
+    let idcardFrontPic = data.idcardFrontPic;
+    delete data.idcardFrontPic;
+    let idcardBackPic = data.idcardBackPic;
+    delete data.idcardBackPic;
+    let compulsoryInsurancePic = data.compulsoryInsurancePic;
+    delete data.compulsoryInsurancePic;
+    let commercialInsurancePic = data.commercialInsurancePic;
+    delete data.commercialInsurancePic;
     let param = querystring.encode(data);
+    if(!isEmptyObject(idcardFrontPic)) {
+      param = param + "&idcardFrontPic=" + JSON.stringify(idcardFrontPic);
+    }
+    if(!isEmptyObject(idcardBackPic)) {
+      param =  param+"&idcardBackPic="+JSON.stringify(idcardBackPic);
+    }
+    if(!isEmptyObject(compulsoryInsurancePic)) {
+      param =  param+"&compulsoryInsurancePic="+JSON.stringify(compulsoryInsurancePic);
+
+    }
+    if(!isEmptyObject(commercialInsurancePic)) {
+      param =  param+"&commercialInsurancePic="+JSON.stringify(commercialInsurancePic);
+
+    }
+
     console.log("submit:"+param);
-    xPostFetch(SERVER_URL + '/loan/submitLoan?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/loan/submitLoan',param).then(result => {
       if (result && result.success) {
         Notify('修改成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -116,19 +211,31 @@ class LoanListStore {
   handleApplyLoan = (data) =>{
     data = momentTansfer(data);
     data.loanId=this.state.loanId;
+
+    let withholdingAgreementPic = data.withholdingAgreementPic;
+    delete data.withholdingAgreementPic;
+    let commercialInsurancePic = data.commercialInsurancePic;
+    delete data.commercialInsurancePic;
+
     let param = querystring.encode(data);
+    if(!isEmptyObject(withholdingAgreementPic)) {
+      param = param + "&withholdingAgreementPic=" + JSON.stringify(withholdingAgreementPic);
+    }
+    if(!isEmptyObject(commercialInsurancePic)) {
+      param =  param+"&commercialInsurancePic="+JSON.stringify(commercialInsurancePic);
+    }
     console.log("submit:"+param);
-    xPostFetch(SERVER_URL + '/loan/applyLoan?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/loan/applyLoan',param).then(result => {
       if (result && result.success) {
         Notify('提交放款申请成功', result.msg, 'success');
-        this.handleOpenLoanApplyModal();
+        this.handleCancelLoanApplyModal();
         this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
       } else{
         Notify('提交放款申请发生异常', result.msg, 'error');
       }})
   };
 
-  handleOpenLoanApplyModal =() =>{
+  handleOpenLoanApplyModal =(data) =>{
     console.log("进入handleOpenLoanApplyModal");
     let visible = !this.state.applyLoanModalVisible;
     console.log(visible);
@@ -144,23 +251,26 @@ class LoanListStore {
       }})
 
   };
+  handleCancelShowModal=()=>{
+    console.log('handleCancelShowModal:visible:');
+    this.setState({showModalVisible : false});
+  }
+  handleCancelLoanApplyModal=()=>{
+    this.setState({applyLoanModalVisible : false});
+  }
 
 
-  //打开修改窗口
+  //打开查看窗口
   handleOpenShowModal =(data) =>{
 
     console.log("loanId:"+data.loanId);
     let visible = !this.state.showModalVisible;
-    console.log(visible);
+    console.log('handleOpenShowModal:visible:'+visible);
     this.setState({showModalVisible : visible});
     xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
       if (result && result.data) {
         show("get Info OK");
-        this.setState({
-          fssLoanModel: result.data.fssLoanModel,
-          fssLoanDocs:result.data.fssLoanDocs,
-          loanId:data.loanId
-        });
+        this.setState({showLoanInfo: result.data,loanId:data.loanId});
       } else{
         Notify('请求贷款明细数据发生异常', result.msg, 'error');
       }})
@@ -182,12 +292,29 @@ class LoanListStore {
 
     console.log("loanId:"+data.loanId);
     let visible = !this.state.addModalVisible;
+    let carOptions = this.state.carOptions;
+
+
     console.log(visible);
     this.setState({addModalVisible : visible});
     xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
       if (result && result.data) {
         show("get Info OK");
-        this.setState({loanInfo: result.data,loanId:data.loanId});
+        let fssLoanModel = result.data.fssLoanModel;
+        if(fssLoanModel.carBrand!="") {
+          let childrenOptions = [{
+            value: fssLoanModel.carVehicle, label: fssLoanModel.carVehicleName
+            , children: [{value: fssLoanModel.carModel, label: fssLoanModel.carModelName}]
+          }]
+          carOptions.forEach(function (obj) {
+            if (obj.value == fssLoanModel.carBrand) {
+              obj.children = childrenOptions;
+              return;
+            }
+          })
+        }
+show(carOptions);
+        this.setState({carOptions:carOptions,loanInfo: result.data,loanId:data.loanId});
       } else{
         Notify('请求贷款明细数据发生异常', result.msg, 'error');
       }})
@@ -218,6 +345,72 @@ class LoanListStore {
         Notify('请求列表发生异常', result.msg, 'error');
       }})
   }
+
+
+  handleGetBandList = () => {
+    xFetch(SERVER_URL + '/car/getCarBrands').then(result => {
+      if (result && result.data) {
+
+        let options = result.data.map(brand=>(
+          {label:brand.brandName,value:brand.brandCode,isLeaf:false}
+        ));
+
+        this.setState({
+          carOptions: options,
+        });
+      } else{
+        show("请求列表发生异常");
+        Notify('请求列表发生异常', result.msg, 'error');
+      }})
+  }
+
+
+  //
+  handleCarCascaderLoadData =(selectedOptions) =>{
+
+    const targetOption = selectedOptions[selectedOptions.length - 1];
+    targetOption.loading = true;
+    if (selectedOptions.length == 1){
+      //第一级，获取车系
+      xFetch(SERVER_URL + '/car/getCarSeries?brandCode='+targetOption.value).then(result => {
+        if (result && result.data) {
+          show("get series OK");
+            let children = result.data.map(series=>(
+            {label:series.seriesName,value:series.seriesCode,isLeaf:false}
+          ));
+          show(children);
+          targetOption.children =children;
+
+          this.setState({
+            carOptions: [...this.state.carOptions],
+          });
+          targetOption.loading = false;
+        } else{
+          Notify('请求数据发生异常', result.msg, 'error');
+        }})
+    }
+    else if(selectedOptions.length == 2) {
+      //选择第二级，获取车型
+      //第一级，获取车系
+      xFetch(SERVER_URL + '/car/getCarModels?seriesCode='+targetOption.value).then(result => {
+        if (result && result.data) {
+          show("get car models OK");
+          let children = result.data.map(models=>(
+            {label:models.modelsName,value:models.modelsCode,isLeaf:true}
+          ));
+          show(children);
+          targetOption.children =children;
+
+          this.setState({
+            carOptions: [...this.state.carOptions],
+          });
+          targetOption.loading = false;
+        } else{
+          Notify('请求数据发生异常', result.msg, 'error');
+        }})
+    }
+    targetOption.loading = false;
+  };
 
 
 }

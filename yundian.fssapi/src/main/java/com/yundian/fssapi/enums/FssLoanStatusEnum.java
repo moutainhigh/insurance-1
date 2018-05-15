@@ -17,7 +17,7 @@ public enum FssLoanStatusEnum {
 
 	WAITING_REVISED("WAITING_REVISED","待资料修改"),
 
-	WAITING_LOAN("WAITING_LOAN","审核通过待放款"),
+	WAITING_LOAN("WAITING_LOAN","待放款"),
 
 	HAVE_LOAN("HAVE_LOAN","已放款"),
 

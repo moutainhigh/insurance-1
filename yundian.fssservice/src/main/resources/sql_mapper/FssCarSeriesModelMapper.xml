@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssCarSeriesModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssCarSeriesModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="brand_code" property="brandCode" jdbcType="VARCHAR" />
+    <result column="series_code" property="seriesCode" jdbcType="VARCHAR" />
+    <result column="series_name" property="seriesName" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="series_level" property="seriesLevel" jdbcType="VARCHAR" />
+    <result column="structure" property="structure" jdbcType="VARCHAR" />
+    <result column="engine" property="engine" jdbcType="VARCHAR" />
+    <result column="gearbox" property="gearbox" jdbcType="VARCHAR" />
+    <result column="guide_price_start" property="guidePriceStart" jdbcType="DECIMAL" />
+    <result column="guide_price_end" property="guidePriceEnd" jdbcType="DECIMAL" />
+    <result column="car_imports" property="carImports" jdbcType="INTEGER" />
+    <result column="series_score" property="seriesScore" jdbcType="INTEGER" />
+    <result column="order_by" property="orderBy" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, brand_code, series_code, series_name, logo_url, series_level, structure, engine, 
+    gearbox, guide_price_start, guide_price_end, car_imports, series_score, order_by, 
+    ctime
+  </sql>
+  <select id="selectBySeriesCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from fss_car_series
+    where series_code = #{seriesCode,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from fss_car_series
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="getSeriesListByBrandCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from fss_car_series
+    where brand_code = #{brandCode,jdbcType=VARCHAR}
+  </select>
+
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fss_car_series
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssCarSeriesModel" >
+    insert into fss_car_series (id, brand_code, series_code, 
+      series_name, logo_url, series_level, 
+      structure, engine, gearbox, 
+      guide_price_start, guide_price_end, car_imports, 
+      series_score, order_by, ctime
+      )
+    values (#{id,jdbcType=INTEGER}, #{brandCode,jdbcType=VARCHAR}, #{seriesCode,jdbcType=VARCHAR}, 
+      #{seriesName,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{seriesLevel,jdbcType=VARCHAR}, 
+      #{structure,jdbcType=VARCHAR}, #{engine,jdbcType=VARCHAR}, #{gearbox,jdbcType=VARCHAR}, 
+      #{guidePriceStart,jdbcType=DECIMAL}, #{guidePriceEnd,jdbcType=DECIMAL}, #{carImports,jdbcType=INTEGER}, 
+      #{seriesScore,jdbcType=INTEGER}, #{orderBy,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssCarSeriesModel" >
+    insert into fss_car_series
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="brandCode != null" >
+        brand_code,
+      </if>
+      <if test="seriesCode != null" >
+        series_code,
+      </if>
+      <if test="seriesName != null" >
+        series_name,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="seriesLevel != null" >
+        series_level,
+      </if>
+      <if test="structure != null" >
+        structure,
+      </if>
+      <if test="engine != null" >
+        engine,
+      </if>
+      <if test="gearbox != null" >
+        gearbox,
+      </if>
+      <if test="guidePriceStart != null" >
+        guide_price_start,
+      </if>
+      <if test="guidePriceEnd != null" >
+        guide_price_end,
+      </if>
+      <if test="carImports != null" >
+        car_imports,
+      </if>
+      <if test="seriesScore != null" >
+        series_score,
+      </if>
+      <if test="orderBy != null" >
+        order_by,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="brandCode != null" >
+        #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCode != null" >
+        #{seriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null" >
+        #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesLevel != null" >
+        #{seriesLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="structure != null" >
+        #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="engine != null" >
+        #{engine,jdbcType=VARCHAR},
+      </if>
+      <if test="gearbox != null" >
+        #{gearbox,jdbcType=VARCHAR},
+      </if>
+      <if test="guidePriceStart != null" >
+        #{guidePriceStart,jdbcType=DECIMAL},
+      </if>
+      <if test="guidePriceEnd != null" >
+        #{guidePriceEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="carImports != null" >
+        #{carImports,jdbcType=INTEGER},
+      </if>
+      <if test="seriesScore != null" >
+        #{seriesScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderBy != null" >
+        #{orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssCarSeriesModel" >
+    update fss_car_series
+    <set >
+      <if test="brandCode != null" >
+        brand_code = #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesCode != null" >
+        series_code = #{seriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesName != null" >
+        series_name = #{seriesName,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesLevel != null" >
+        series_level = #{seriesLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="structure != null" >
+        structure = #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="engine != null" >
+        engine = #{engine,jdbcType=VARCHAR},
+      </if>
+      <if test="gearbox != null" >
+        gearbox = #{gearbox,jdbcType=VARCHAR},
+      </if>
+      <if test="guidePriceStart != null" >
+        guide_price_start = #{guidePriceStart,jdbcType=DECIMAL},
+      </if>
+      <if test="guidePriceEnd != null" >
+        guide_price_end = #{guidePriceEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="carImports != null" >
+        car_imports = #{carImports,jdbcType=INTEGER},
+      </if>
+      <if test="seriesScore != null" >
+        series_score = #{seriesScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderBy != null" >
+        order_by = #{orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssCarSeriesModel" >
+    update fss_car_series
+    set brand_code = #{brandCode,jdbcType=VARCHAR},
+      series_code = #{seriesCode,jdbcType=VARCHAR},
+      series_name = #{seriesName,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      series_level = #{seriesLevel,jdbcType=VARCHAR},
+      structure = #{structure,jdbcType=VARCHAR},
+      engine = #{engine,jdbcType=VARCHAR},
+      gearbox = #{gearbox,jdbcType=VARCHAR},
+      guide_price_start = #{guidePriceStart,jdbcType=DECIMAL},
+      guide_price_end = #{guidePriceEnd,jdbcType=DECIMAL},
+      car_imports = #{carImports,jdbcType=INTEGER},
+      series_score = #{seriesScore,jdbcType=INTEGER},
+      order_by = #{orderBy,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

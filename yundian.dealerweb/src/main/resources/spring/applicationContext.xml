@@ -33,12 +33,22 @@
 		<property name="locations">
 			<list> 
 				<value>classpath*:statics.properties</value>
+				<value>classpath*:aliyunoss.properties</value>
 			</list>
 		</property>
 	</bean> 
 	
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 
+<bean id="aliOssFileUpload" class="com.yundian.dealerweb.upload.AliOssFileUpload">
+	<property name="accessKeyId" value="${oss.access_key_id}" />
+	<property name="accessKeySecret" value="${oss.access_key_secret}" />
+	<property name="endPoint" value="${oss.aliyun_server}" />
+	<property name="thumbnailEndPoint" value="${oss.thumbnail_server}" />
+	<property name="bucketName" value="${oss.bucket_name}" />
+	<property name="cdnName" value="${oss.cdn_name}" />
+	<property name="thumbnailName" value="${oss.thumbnail_name}" />
 
+</bean>
 
 </beans> 

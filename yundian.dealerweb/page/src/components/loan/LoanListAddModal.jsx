@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Upload,Radio,Form,Icon, Checkbox,InputNumber,Input, Modal, Select, Row, Col, Button,DatePicker} from "antd";
+import {Card, Cascader,Radio,Form,Icon, Checkbox,InputNumber,Input, Modal, Select, Row, Col, Button,DatePicker} from "antd";
 import LoanListAction from "actions/LoanListAction";
 import { propsToFields,isEmptyObject } from 'services/functions';
 import PicturesWall from '../common/PicturesWall';
@@ -17,11 +17,14 @@ const planFinancingTypeOptions = [
   { label: '交强险', value: 'B' },
   { label: '车船使用税', value: 'C' },
 ];
+
+
 class LoanListAddModal extends Component {
 
 
   handleAddCancel =(e)=> {
     LoanListAction.openAddModal();
+    this.props.form.resetFields();
   };
   handleOnSubmit = (e) => {
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -30,6 +33,7 @@ class LoanListAddModal extends Component {
             LoanListAction.submitLoan(values);
       }
     });
+
   }
   handleOnSave = (e) => {
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -43,6 +47,7 @@ class LoanListAddModal extends Component {
         }
       }
     });
+
   }
 
   handleUploadChange = ({ fileList }) =>
@@ -50,8 +55,17 @@ class LoanListAddModal extends Component {
    show(fileList);
   }
 
+handleCascaderOnLoadData=(selectedOptions)=>{
+  // LoanListAction.carCascaderLoadData(selectedOptions);
+}
 
-
+handleCascaderOnChange=(value,selectedOptions)=>{
+  console.log("handleCascaderOnChange:");
+  show(selectedOptions);
+  if(!isEmptyObject(selectedOptions)) {
+    LoanListAction.carCascaderLoadData(selectedOptions);
+  }
+}
   checkIdCardLength = (rule, value, callback) => {
     let regex = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}[0-9Xx]$)/;
     if (!regex.test(value)) {
@@ -74,27 +88,13 @@ class LoanListAddModal extends Component {
 
 
   render() {
-
-   // show(this.props.loanInfo.fssLoanDocumentModels)
-
     const picturesWallprops={
       length:1,
       maxFileSize:2,
-      // initialValue:[{
-      //   uid: -1,
-      //   name: 'xxx.png',
-      //   status: 'done',
-      //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      // }],
       onChange:this.handleUploadChange
     };
 
-  const pictureWallValue=[{
-    uid: -11,
-    name: 'xxx.png',
-    status: 'done',
-    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  }];
+  const pictureWallValue=[];
 
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
@@ -191,24 +191,15 @@ class LoanListAddModal extends Component {
                 <Card title="车辆信息" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
                     <Col span="8">
-                      <FormItem label="品牌车型" {...formItemLayout}>
-                        {getFieldDecorator('carBrand', { rules: [ {required: true, message: '请输入品牌'}]} )(
-                          <Input/>
-                        )}
-                      </FormItem>
-                    </Col>
-                    <Col span="4">
-                      <FormItem style={{paddingLeft:2}}>
-                        {getFieldDecorator('carVehicleName', { rules: [ {required: true, message: '请输入车系'}]} )(
-                          <Input/>
-                        )}
-                      </FormItem>
-
-                    </Col>
-                    <Col span="4">
-                      <FormItem style={{paddingLeft:2}}>
-                        {getFieldDecorator('carModelName', { rules: [ {required: true, message: '请输入车型'}]} )(
-                          <Input/>
+                      <FormItem label="汽车型号" {...formItemLayout} >
+                        {getFieldDecorator('arrayCarModel', { rules: [ {required: true, message: '请选择车型'}]} )(
+                          <Cascader
+                            options={this.props.carOptions}
+                            loadData={this.handleCascaderOnLoadData}
+                            onChange={this.handleCascaderOnChange}
+                            changeOnSelect={true}
+                            placeholder="请选择车型"
+                            />
                         )}
                       </FormItem>
 
@@ -539,14 +530,14 @@ class LoanListAddModal extends Component {
                   <Row style={rowLayout}>
                     <Col span="12">
                       <FormItem label="身份证正面" {...formItemLayout}>
-                      {getFieldDecorator('idcardFrontPic',{initialValue:pictureWallValue})(
+                      {getFieldDecorator('idcardFrontPic', { rules: [ {required: true, message: '请上传身份证正面照片'}]})(
                           <PicturesWall  {...picturesWallprops}/>
                       )}
                       </FormItem>
                     </Col>
                     <Col span="12">
                       <FormItem label="身份证反面" {...formItemLayout}>
-                      {getFieldDecorator('idcardBackPic',{initialValue:pictureWallValue})(
+                      {getFieldDecorator('idcardBackPic', { rules: [ {required: true, message: '请上传身份证反面照片'}]})(
                         <PicturesWall  {...picturesWallprops}/>
                       )}</FormItem>
                     </Col>
@@ -554,13 +545,13 @@ class LoanListAddModal extends Component {
                     <Row style={rowLayout}>
                     <Col span="12">
                       <FormItem label="交强险保单"{...formItemLayout}>
-                      {getFieldDecorator('compulsoryInsurancePic',{initialValue:pictureWallValue})(
+                      {getFieldDecorator('compulsoryInsurancePic', { rules: [ {required: true, message: '请上传交强险保单照片'}]})(
                         <PicturesWall  {...picturesWallprops}/>
                       )}</FormItem>
                     </Col>
                       <Col  span="12">
                         <FormItem label="商业险保单" {...formItemLayout}>
-                        {getFieldDecorator('commercialInsurancePic',{initialValue:pictureWallValue})(
+                        {getFieldDecorator('commercialInsurancePic', { rules: [ {required: true, message: '请上传商业险保单照片'}]})(
                           <PicturesWall  {...picturesWallprops}/>
                         )}
                       </FormItem>
@@ -577,13 +568,21 @@ class LoanListAddModal extends Component {
 LoanListAddModal = Form.create({
   mapPropsToFields(props){
     show(props)
-    show(isEmptyObject(props.loanInfo))
     if(!isEmptyObject(props.loanInfo))
     {
       let loan = props.loanInfo.fssLoanModel;
-      let docs = props.loanInfo.fssLoanDocumentModels;
-
-      return  propsToFields(loan);
+      show(props.loanInfo.fssLoanDocs==undefined);
+      if(props.loanInfo.fssLoanDocs!=undefined){
+        let docs = props.loanInfo.fssLoanDocs;
+        loan.idcardFrontPic = docs.idcardFrontPic;
+        loan.idcardBackPic = docs.idcardBackPic;
+        loan.compulsoryInsurancePic = docs.compulsoryInsurancePic;
+        loan.commercialInsurancePic = docs.commercialInsurancePic;
+      }
+      loan.arrayCarModel = [loan.carBrand,loan.carVehicle,loan.carModel];
+      let fields = propsToFields(loan);
+      show(fields);
+      return fields;
 
     }else {
 

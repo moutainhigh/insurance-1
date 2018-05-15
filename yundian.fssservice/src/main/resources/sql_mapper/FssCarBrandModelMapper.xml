@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssCarBrandModelMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssCarBrandModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="brand_code" property="brandCode" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="spell" property="spell" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="hit" property="hit" jdbcType="VARCHAR" />
+    <result column="order_by" property="orderBy" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, brand_code, brand_name, spell, logo_url, status, hit, order_by, ctime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fss_car_brand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByBrandCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from fss_car_brand
+    where brand_code = #{brandCode,jdbcType=VARCHAR}
+  </select>
+
+
+
+  <select id="getFssCarBandList" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_car_brand
+    where status='Y'
+    order by order_by desc
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fss_car_brand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssCarBrandModel" >
+    insert into fss_car_brand (id, brand_code, brand_name, 
+      spell, logo_url, status, 
+      hit, order_by, ctime
+      )
+    values (#{id,jdbcType=INTEGER}, #{brandCode,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, 
+      #{spell,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{hit,jdbcType=VARCHAR}, #{orderBy,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssCarBrandModel" >
+    insert into fss_car_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="brandCode != null" >
+        brand_code,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="spell != null" >
+        spell,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="hit != null" >
+        hit,
+      </if>
+      <if test="orderBy != null" >
+        order_by,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="brandCode != null" >
+        #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null" >
+        #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="hit != null" >
+        #{hit,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBy != null" >
+        #{orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssCarBrandModel" >
+    update fss_car_brand
+    <set >
+      <if test="brandCode != null" >
+        brand_code = #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null" >
+        spell = #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="hit != null" >
+        hit = #{hit,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBy != null" >
+        order_by = #{orderBy,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssCarBrandModel" >
+    update fss_car_brand
+    set brand_code = #{brandCode,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      spell = #{spell,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      hit = #{hit,jdbcType=VARCHAR},
+      order_by = #{orderBy,jdbcType=INTEGER},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

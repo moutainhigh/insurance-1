@@ -50,26 +50,20 @@ export function xFetch(url ,options) {
   let token = '';
 
   console.log(options)
-  if(!options){
+  if(options==undefined){
     options = {
-      method: 'get'
+      method: 'GET'
     };
   }
+  options.credentials = 'include';
 
-  //开发时候指定SERVER_URL,需带token,正式发布不需要携带该token
-  //开发环境下，不携带cookie
-  if(SERVER_URL){
-    token = '_security_token_inc=91523195277834434';
-  }else{
-    options.credentials = 'include';
-  }
-
-  if(url.endsWith('.json')){
-    seperator = '?';
-  }else{
-    seperator = '&';
-  }
-  url = url + seperator + token;
+  //
+  // if(url.endsWith('.json')){
+  //   seperator = '?';
+  // }else{
+  //   seperator = '&';
+  // }
+  // url = url + seperator + token;
 
 
   return fetch(url, options)

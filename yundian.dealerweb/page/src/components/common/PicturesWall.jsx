@@ -14,18 +14,21 @@ import {Upload, Icon, Modal, message} from "antd";
  *}]
  * 4.onChange:组件上传状态变更的事件，参数是fileList({name, url: response.data, uid, status})
  */
-
+const show = (info) => {
+  console.log("jsx picturesSall: " + JSON.stringify(info));
+}
 class PicturesWall extends React.Component {
 
     state = {
         previewVisible: false,
-        previewImage: '',
-        length: this.props.length,
-        maxFileSize: this.props.maxFileSize ? this.props.maxFileSize : 2,
-        fileList: this.props.value instanceof Array ? this.props.value : [],
+      previewImage: '',
+      length: this.props.length,
+      maxFileSize: this.props.maxFileSize ? this.props.maxFileSize : 2,
+      fileList: this.props.value instanceof Array ? this.props.value : [],
+      data:{source:1020010},
+      action: "http://localhost:9001/uploadfileforaliyun?source=1020010100",
+      value:this.props.value instanceof Array ? this.props.value : [],
 
-        action: "//jsonplaceholder.typicode.com/posts/",
-        imageHead: "http://",
     };
 
     /**
@@ -75,7 +78,9 @@ class PicturesWall extends React.Component {
             }
             return file;
         });
-        this.setState({fileList: fileList});
+        this.setState({fileList: fileList,value:fileList});
+      console.log("pictures handleUpload "+fileList);
+      show(fileList);
         return fileList;
     };
 
@@ -86,7 +91,7 @@ class PicturesWall extends React.Component {
 
     filter = (file) => {
         const {name, response, uid, status} = file;
-        return {name, url: response.data, uid, status};
+        return {name, url: response.data.url, uid, status};
     };
 
     /**
@@ -106,30 +111,22 @@ class PicturesWall extends React.Component {
 
     render() {
         const {previewVisible, previewImage} = this.state;
-        let fileList = this.state.fileList;
-        // if (fileList.length > 0) {
-        //     fileList.map((file, i) => {
-        //
-        //         if (!common.startsWith(file.url, 'http://')) {
-        //             file.url = `${this.state.imageHead}${file.url}`;
-        //         }
-        //     });
-        // }
-
+      console.log("获取：this.props.value:"+this.props.value);
+      console.log("获取：this.state.value:"+this.state.value);
+        let initValue = this.props.value;
+        if(this.props.value==undefined){
+          initValue =this.state.value;
+        }
         //一共有多少个图片
-        const uploadButton = fileList.length >= this.props.length ? null : (
+        const uploadButton = initValue.length >= this.props.length ? null : (
             <div>
                 <Icon type="plus"/>
             </div>
         );
 
-      console.log("获取：this.props.value:"+this.props.value);
-      console.log("获取：this.props.length:"+this.props.length);
-      console.log("获取：this.props.maxFileSize:"+this.props.maxFileSize);
-        // showUploadList={false} 加了就显示不了
         const props = {
             action: this.state.action,
-            fileList: fileList,
+            fileList: this.props.value,
             // data: {
             // },
             headers: {'X-Requested-With': null},
@@ -144,10 +141,10 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload {...props}>
-                    {fileList.length >= this.state.length ? null : uploadButton}
+                    {uploadButton}
                 </Upload>
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="example" style={{width: '100%'}} src={previewImage}/>
+                    <img alt="preview" style={{width: '100%'}} src={previewImage}/>
                 </Modal>
             </div>
         );

@@ -26,7 +26,11 @@ class LoanListDT extends Component {
       pagination: state.pagination,
       dataList: state.dataList,
       addModalVisible: state.addModalVisible,
-      loanInfo:state.loanInfo
+      showModalVisible:state.showModalVisible,
+      loanInfo:state.loanInfo,
+      showLoanInfo:state.showLoanInfo,
+      applyLoanModalVisible:state.applyLoanModalVisible,
+      carOptions:state.carOptions
 
 
     };
@@ -76,7 +80,7 @@ class LoanListDT extends Component {
             </div>
           )
         }
-        if(record.auditStatus == "APPLY_LOAN"){
+          if(record.auditStatus == "APPLY_LOAN"){
           return(
             <div>
               <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
@@ -101,6 +105,8 @@ class LoanListDT extends Component {
   componentDidMount() {
     loanListList = this;
     LoanListAction.initDataListInfo({page: 1, pageSize: this.props.pagination.pageSize});
+    //获取汽车品牌数据
+    LoanListAction.getBandList();
   }
 
   handleTableChange = (pagination) => {
@@ -112,8 +118,8 @@ class LoanListDT extends Component {
   render() {
     return (
       <div>
-        <LoanListAddModal loanInfo={this.props.loanInfo} addModalVisible={this.props.addModalVisible}/>
-        <LoanListShowModal fssLoanModel={this.props.fssLoanModel} fssLoanDocs={this.props.fssLoanDocs} showModalVisible={this.props.showModalVisible} />
+        <LoanListAddModal carOptions = {this.props.carOptions} loanInfo={this.props.loanInfo} addModalVisible={this.props.addModalVisible}/>
+        <LoanListShowModal showLoanInfo={this.props.showLoanInfo}  showModalVisible={this.props.showModalVisible} />
         <LoanApplyModal loanInfo={this.props.loanInfo} applyLoanModalVisible={this.props.applyLoanModalVisible} />
 
         <Table columns={this.columns}

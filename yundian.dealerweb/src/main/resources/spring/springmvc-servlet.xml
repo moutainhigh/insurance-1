@@ -109,6 +109,8 @@
 			<!-- 登录 -->
 			<mvc:exclude-mapping path="/login.html"/>
 			<mvc:exclude-mapping path="/doLogin"/>
+			<mvc:exclude-mapping path="/uploadfileforaliyun"/>
+
 			<bean class="com.yundian.dealerweb.interceptor.CommonInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -10,17 +10,20 @@ import com.yundian.fssapi.domain.vo.FssLoanModelVo;
 import com.yundian.fssapi.domain.vo.LoanDocumentVo;
 import com.yundian.fssapi.domain.vo.LoanInfoVo;
 import com.yundian.fssapi.domain.vo.match.LoanDocumentVoMatch;
+import com.yundian.fssapi.enums.FssLoanDocumentTypeEnum;
+import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.service.FssLoanService;
 import com.yundian.result.Page;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
-import com.yundian.toolkit.utils.MapUtil;
+import com.yundian.toolkit.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,23 +41,12 @@ public class LoanController {
     @Autowired
     FssLoanService fssLoanService;
 
-
-    @RequestMapping(value="/loan/loanList",method= RequestMethod.GET)
-    public String loanList() {
-
-        return "/loan/loanList";
-
-    }
-
     @ResponseBody
     @RequestMapping(value="/loan/applyLoan",method= RequestMethod.POST)
     public Result applyLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
 
         try {
-
-            List<LoanDocumentVo> loanDocumentVoList = MapUtil.mergeObj(LoanDocumentVo.class,
-                    fssLoanModel.getLoanContractPic(),
-                    fssLoanModel.getWithholdingAgreementPic());
+            List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
 
             fssLoanService.applyLoan(fssLoanModel.getLoanId(),fssLoanDocumentModelList,"operater");
@@ -89,14 +81,10 @@ public class LoanController {
     public Result updateLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
 
         try {
-            List<LoanDocumentVo> loanDocumentVoList = MapUtil.mergeObj(LoanDocumentVo.class,
-                    fssLoanModel.getIdcardFrontPic(),
-                    fssLoanModel.getIdcardBackPic(),
-                    fssLoanModel.getCommercialInsurancePic(),
-                    fssLoanModel.getCompulsoryInsurancePic());
+
+            List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
 
-            //
             fssLoanService.insertFssLoanDocument(fssLoanModel.getLoanId(),fssLoanDocumentModelList);
             fssLoanService.updateFssLoan(fssLoanModel);
             return Result.success("");
@@ -108,19 +96,15 @@ public class LoanController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/loan/addLoan",method= RequestMethod.POST)
+    @RequestMapping(value="/loan/addLoan",method = RequestMethod.POST)
     public Result addLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel,HttpSession session) {
 
         try {
+
+
             FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
             fssLoanModel.setDealerId(fssDealerUserModel.getDealerId());
-
-            List<LoanDocumentVo> loanDocumentVoList = MapUtil.mergeObj(LoanDocumentVo.class,
-                    fssLoanModel.getIdcardFrontPic(),
-                    fssLoanModel.getIdcardBackPic(),
-                    fssLoanModel.getCommercialInsurancePic(),
-                    fssLoanModel.getCompulsoryInsurancePic());
-
+            List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
             LoanInfoModel loanInfoModel = new LoanInfoModel();
             loanInfoModel.setFssLoanModel(fssLoanModel);
@@ -180,6 +164,15 @@ public class LoanController {
             fssLoanQueryParam.setDealerId(fssDealerUserModel.getDealerId());
             paginator.setParam(fssLoanQueryParam);
             Page<FssLoanModel> paginatedResult = fssLoanService.getPaginatorFssLoan(paginator);
+            if(paginatedResult.getItems().size()>0) {
+                paginatedResult.getItems().stream().forEach(e -> {
+                    try {
+                        e.setAuditStatus(FssLoanStatusEnum.valueOf(e.getAuditStatus()).desc());
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                    }
+                });
+            }
             return Result.success(paginatedResult);
 
         } catch (Exception ex) {
@@ -187,6 +180,43 @@ public class LoanController {
             System.out.printf(ex.getMessage());
             return Result.fail("","网络异常，请重试");
         }
+    }
+
+    private List<LoanDocumentVo> getUploadDocumentVos(FssLoanModelVo fssLoanModel){
+        List<LoanDocumentVo> loanDocumentVoList =  new ArrayList<>();
+        if(StringUtil.isNotBlank(fssLoanModel.getIdcardFrontPic())){
+            List<LoanDocumentVo> idcardFrontPic = JSON.parseArray(fssLoanModel.getIdcardFrontPic(),LoanDocumentVo.class);
+            idcardFrontPic.stream().forEach((e)->e.setDocumentType(FssLoanDocumentTypeEnum.IDCARD_FRONT.code()));
+            loanDocumentVoList.addAll(idcardFrontPic);
+        }
+        if(StringUtil.isNotBlank(fssLoanModel.getIdcardBackPic())){
+            List<LoanDocumentVo> idcardBackPic = JSON.parseArray(fssLoanModel.getIdcardBackPic(),LoanDocumentVo.class);
+            idcardBackPic.stream().forEach((e)->e.setDocumentType(FssLoanDocumentTypeEnum.IDCARD_BACK.code()));
+            loanDocumentVoList.addAll(idcardBackPic);
+        }
+        if(StringUtil.isNotBlank(fssLoanModel.getCommercialInsurancePic())){
+            List<LoanDocumentVo> commercialInsurancePic = JSON.parseArray(fssLoanModel.getCommercialInsurancePic(),LoanDocumentVo.class);
+            commercialInsurancePic.stream().forEach((e)->e.setDocumentType(FssLoanDocumentTypeEnum.COMMERCIAL_INSURANCE.code()));
+
+            loanDocumentVoList.addAll(commercialInsurancePic);
+        }
+        if(StringUtil.isNotBlank(fssLoanModel.getCompulsoryInsurancePic())){
+            List<LoanDocumentVo> compulsoryInsurancePic = JSON.parseArray(fssLoanModel.getCompulsoryInsurancePic(),LoanDocumentVo.class);
+            compulsoryInsurancePic.stream().forEach((e)->e.setDocumentType(FssLoanDocumentTypeEnum.COMPULSORY_INSURANCE.code()));
+            loanDocumentVoList.addAll(compulsoryInsurancePic);
+        }
+        if(StringUtil.isNotBlank(fssLoanModel.getLoanContractPic())){
+            List<LoanDocumentVo> loanContractPic = JSON.parseArray(fssLoanModel.getLoanContractPic(),LoanDocumentVo.class);
+            loanContractPic.stream().forEach((e)->e.setDocumentType(FssLoanDocumentTypeEnum.LOAN_CONTRACT.code()));
+            loanDocumentVoList.addAll(loanContractPic);
+        }
+        if(StringUtil.isNotBlank(fssLoanModel.getWithholdingAgreementPic())){
+            List<LoanDocumentVo> withholdingAgreementPic = JSON.parseArray(fssLoanModel.getWithholdingAgreementPic(),LoanDocumentVo.class);
+            withholdingAgreementPic.stream().forEach((e)->e.setDocumentType(FssLoanDocumentTypeEnum.WITHHOLDING_AGREEMENT.code()));
+
+            loanDocumentVoList.addAll(withholdingAgreementPic);
+        }
+        return loanDocumentVoList;
     }
 
 }
