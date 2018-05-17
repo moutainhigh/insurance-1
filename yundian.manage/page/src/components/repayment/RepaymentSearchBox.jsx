@@ -8,7 +8,7 @@ const show = (info) => {
   console.log("LoanListSearchBox jsx " + JSON.stringify(info));
 }
 const {MonthPicker, RangePicker} = DatePicker;
-class LoanListSearchBox extends Component {
+class RepaymentSearchBox extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let fieldValues = this.props.form.getFieldsValue();
@@ -77,5 +77,5 @@ class LoanListSearchBox extends Component {
   }
 }
 //
-LoanListSearchBox = Form.create()(LoanListSearchBox);
-export default LoanListSearchBox;
+RepaymentSearchBox = Form.create()(RepaymentSearchBox);
+export default RepaymentSearchBox;

@@ -7,7 +7,7 @@ import Dealer from 'components/dealer/Dealer'
 import DealerUserList from 'components/usermanage/DealerUserList'
 const Routes = () =>
   <Router history={hashHistory}>
-    <Route path="/" component={dealer} />
+    <Route path="/" component={Dealer} />
     <Route path="/dealer" component={Dealer} />
     <Route path="/loan" component={LoanList}/>
     {/*<Route path="/repayment" component={repayment}/>*/}

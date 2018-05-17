@@ -81,9 +81,13 @@ export function propsToFields(modelObj)
       // console.log(isDate(modelObj[i]))
       if (isDate(modelObj[i])) {
         fields[i] = {value: Moment(String(modelObj[i]))};
-      } else {
-      fields[i] = {value: String(modelObj[i])};
-    }
+      }
+      else if( modelObj[i] instanceof Array){
+        fields[i] = {value: modelObj[i]};
+      }
+      else {
+        fields[i] = {value: String(modelObj[i])};
+      }
     }
   }
   return fields;

@@ -1,6 +1,8 @@
 package com.yundian.dealerweb.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.yundian.dealerweb.util.AdminWebConstants;
+import com.yundian.fssapi.domain.FssAdminUserModel;
 import com.yundian.fssapi.domain.FssDealerModel;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanModel;
@@ -38,30 +40,47 @@ public class LoanController {
     @RequestMapping(value="/loan/audit",method= RequestMethod.POST)
     public Result submitLoan(@RequestParam("loanId") Long loanId,
                              @RequestParam("type") String auditType,
-                             @RequestParam("reason") String reason) {
+                             @RequestParam("reason") String reason,HttpSession session) {
 
         try {
+
+            FssAdminUserModel fssAdminUserModel =(FssAdminUserModel) session.getAttribute(AdminWebConstants.SYS.WEB_ADMIN_USER_SESSION);
+            String operater = fssAdminUserModel.getName();
             switch (auditType)
             {
                 case "auditOk":
-                    fssLoanService.auditPass(loanId,"");
+                    fssLoanService.auditPass(loanId,operater);
                     break;
                 case "auditReject":
-                    fssLoanService.auditReject(loanId,reason,"");
+                    fssLoanService.auditReject(loanId,reason,operater);
                     break;
                 case "auditReturn":
-                    fssLoanService.returnLoan(loanId,"");
+                    fssLoanService.returnLoan(loanId,operater);
                     break;
             }
             return Result.success("");
         } catch (Exception ex) {
-            log.error(String.format("增加贷款信息异常："), ex);
+            log.error(String.format("贷款审核异常："), ex);
             System.out.printf(ex.getMessage());
-            return Result.fail("", "增加贷款信息异常，请重试");
+            return Result.fail("", "增款审核异常，请重试");
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value="/loan/grantLoan",method= RequestMethod.POST)
+    public Result grantLoan(@RequestParam("loanId") Long loanId,HttpSession session) {
 
+        try {
+            FssAdminUserModel fssAdminUserModel =(FssAdminUserModel) session.getAttribute(AdminWebConstants.SYS.WEB_ADMIN_USER_SESSION);
+
+            fssLoanService.makeloan(loanId,fssAdminUserModel.getName());
+            return Result.success("");
+        } catch (Exception ex) {
+            log.error(String.format("放款操作异常："), ex);
+            System.out.printf(ex.getMessage());
+            return Result.fail("", "放款操作异常，请重试");
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value="/loan/getInfo",method= RequestMethod.GET)

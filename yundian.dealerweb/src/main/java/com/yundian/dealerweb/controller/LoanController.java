@@ -61,12 +61,19 @@ public class LoanController {
 
     @ResponseBody
     @RequestMapping(value="/loan/submitLoan",method= RequestMethod.POST)
-    public Result submitLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel) {
+    public Result submitLoan(@ModelAttribute("fssLoanModelVo") FssLoanModelVo fssLoanModel,HttpSession session) {
 
         try {
+            FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
+            fssLoanModel.setDealerId(fssDealerUserModel.getDealerId());
+            fssLoanModel.setDealerName(fssDealerUserModel.getDealerName());
+            fssLoanModel.setDealerUserId(fssDealerUserModel.getUserId());
+            fssLoanModel.setDealerUserName(fssDealerUserModel.getUserName());
+            fssLoanModel.setSubmitPerson(fssDealerUserModel.getName());
             LoanInfoModel loanInfoModel = new LoanInfoModel();
             loanInfoModel.setFssLoanModel(fssLoanModel);
             loanInfoModel.setLoanId(fssLoanModel.getLoanId());
+
             fssLoanService.submitLoan(loanInfoModel,"操作人");
             return Result.success("");
         } catch (Exception ex) {
@@ -101,9 +108,12 @@ public class LoanController {
 
         try {
 
-
             FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
             fssLoanModel.setDealerId(fssDealerUserModel.getDealerId());
+            fssLoanModel.setDealerName(fssDealerUserModel.getDealerName());
+            fssLoanModel.setDealerUserId(fssDealerUserModel.getUserId());
+            fssLoanModel.setDealerUserName(fssDealerUserModel.getUserName());
+            fssLoanModel.setSubmitPerson(fssDealerUserModel.getName());
             List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
             LoanInfoModel loanInfoModel = new LoanInfoModel();

@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Card, Upload,Radio,Form,Icon, Checkbox,InputNumber,Input, Modal, Select, Row, Col, Button,DatePicker} from "antd";
+import {Radio, Form, Checkbox, Input, Modal, Select, Cascader,Button} from "antd";
 import DealerAction from "actions/DealerAction";
-import { propsToFields,isEmptyObject } from 'services/functions';
-import Moment from 'moment'
+import {propsToFields, isEmptyObject} from "services/functions";
+import {citys} from "services/data"
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
@@ -22,13 +22,12 @@ class DealerAddModal extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       console.log("handleOnSave:"+JSON.stringify(values))
       if (!err) {
-        if(!isEmptyObject(this.props.delaerInfo)){
+        if(!isEmptyObject(this.props.dealerInfo)){
           //修改
           DealerAction.updateDealer(values);
         }else {
-          DealerAction.updateDealer(values);
+          DealerAction.addDealer(values);
         }
-        this.props.form.resetFields();
       }
     });
   }
@@ -41,6 +40,7 @@ class DealerAddModal extends Component {
   render() {
 
 
+    let cityOption = citys;
     const {getFieldDecorator} = this.props.form;
     const formItemLayout = {
       labelCol:{span:6,offset: 0},
@@ -62,8 +62,11 @@ class DealerAddModal extends Component {
                 </FormItem>
 
                 <FormItem label="所在地区" {...formItemLayout}>
-                  {getFieldDecorator('province')(
-                    <Input/>
+                  {getFieldDecorator('arrayProvince' )(
+                    <Cascader
+                      options={cityOption}
+                      placeholder="请选择所在地区"
+                    />
                   )}
                 </FormItem>
                 <FormItem label="详细地址" {...formItemLayout}>
@@ -71,13 +74,13 @@ class DealerAddModal extends Component {
                     <Input/>
                   )}
                 </FormItem>
-                <FormItem label="联系人" {...formItemLayout}>
-                  {getFieldDecorator('contactor', { rules: [ {required: true, message: '请输入联系人姓名'}]} )(
+                <FormItem label="开户人姓名" {...formItemLayout}>
+                  {getFieldDecorator('contactor', { rules: [ {required: true, message: '请输入开户人姓名'}]} )(
                     <Input/>
                   )}
                 </FormItem>
-                <FormItem label="联系人电话" {...formItemLayout}>
-                  {getFieldDecorator('phone', { rules: [ {required: true, message: '请输入联系人电话手机号码'}]} )(
+                <FormItem label="开户人手机号码" {...formItemLayout}>
+                  {getFieldDecorator('phone', { rules: [ {required: true, message: '请输入开户人手机号码'}]} )(
                     <Input/>
                   )}
                 </FormItem>
@@ -90,11 +93,14 @@ class DealerAddModal extends Component {
 
 DealerAddModal = Form.create({
   mapPropsToFields(props){
-    show(props)
-    show(isEmptyObject(props.delaerInfo))
-    if(!isEmptyObject(props.delaerInfo))
+    if(!isEmptyObject(props.dealerInfo))
     {
-      return  propsToFields(props.delaerInfo);
+      let dealer = props.dealerInfo;
+      if(dealer.province!=null&&dealer.city!=null) {
+        dealer.arrayProvince = [dealer.province, dealer.city];
+      }
+      show(propsToFields(props.dealerInfo));
+      return  propsToFields(props.dealerInfo);
 
     }
   }

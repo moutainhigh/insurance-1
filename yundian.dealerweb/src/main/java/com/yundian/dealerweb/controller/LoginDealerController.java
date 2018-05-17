@@ -2,8 +2,10 @@ package com.yundian.dealerweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yundian.dealerweb.util.DealerWebConstants;
+import com.yundian.fssapi.domain.FssDealerModel;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.enums.FssDealerUserStatusEnum;
+import com.yundian.fssapi.service.FssDealerService;
 import com.yundian.fssapi.service.FssDealerUserService;
 import com.yundian.toolkit.utils.MD5;
 import com.yundian.toolkit.utils.WebUtil;
@@ -34,6 +36,8 @@ public class LoginDealerController {
 	@Autowired
 	private FssDealerUserService fssDealerUserService;
 
+	@Autowired
+	private FssDealerService fssDealerService;
 	/**
 	 * 跳转到登录页面
 	 * 
@@ -78,7 +82,8 @@ public class LoginDealerController {
 				  	return WebUtil.getFailureJsonObject("账号无效");
 				  }
 				fssDealerUserModel.setUserPwd("");
-
+				FssDealerModel fssDealerModel = fssDealerService.getFssDealer(fssDealerUserModel.getDealerId());
+				fssDealerUserModel.setDealerName(fssDealerModel.getDealerName());
 				// 将用户登录信息放入session中
 				session.setAttribute(
 						DealerWebConstants.SYS.WEB_USER_SESSION, fssDealerUserModel);

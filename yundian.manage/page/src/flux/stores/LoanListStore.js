@@ -4,23 +4,11 @@ import jsonp from "jsonp";
 import LoanListAction from '../actions/LoanListAction';
 import {Notify} from "components/common/Common";
 import {xFetch,xPostFetch} from "../../services/xFetch";
+import {isEmptyObject} from "../../services/functions"
 
 //************************ 用于打印log的 **************************
 const show = (info) => {
   console.log("store LoanListStore: " + info);
-}
-const momentTansfer = (data)=>{
-  let format="YYYY-MM-DD";
-  if(data.carBuyDate!=null) {
-    data.carBuyDate = data.carBuyDate.format(format);
-  }
-  if(data.policyEffectDate!=null) {
-    data.policyEffectDate = data.policyEffectDate.format(format);
-  }
-  if(data.policyExpireDate!=null) {
-    data.policyExpireDate = data.policyExpireDate.format(format);
-  }
-  return data;
 }
 //****************************************************************
 class LoanListStore {
@@ -29,23 +17,33 @@ class LoanListStore {
       handleInitDataList: LoanListAction.initDataListInfo,
       handleQuerySubmit: LoanListAction.querySubmit,
       handlePagination: LoanListAction.setPagination,
-      handleOpenAddModal: LoanListAction.openAddModal,
-      handleOpenUpdateModal: LoanListAction.openUpdateModal,
+      //打开查看页面
+      handleOpenShowModal: LoanListAction.openShowModal,
+      handleCancelShowModal: LoanListAction.cancelShowModal,
 
-      handleAuditOK: LoanListAction.auditOK,
-      handleAuditReject: LoanListAction.auditReject,
-      handleAuditReturn: LoanListAction.auditReturn,
-
+      //打开放款页面
+      handleOpenLoanGrantModal: LoanListAction.openLoanGrantModal,
+      handleCancelLoanGrantModal: LoanListAction.cancelLoanGrantModal,
+      //打开审核页面
+      handleOpenAuditModal: LoanListAction.openAuditModal,
+      handleCancelAuditModal: LoanListAction.cancelAuditModal,
+      //放款
+      handleGrantLoan: LoanListAction.grantLoan,
+      //审核操作
+      handleAudit: LoanListAction.audit,
 
     });
     this.state = {
       dataList: [],
       loading: true,
       typeList : [],
-      addModalVisible : false,
-      applyLoanModalVisible : false,
+      auditModalVisible : false,
+      grantLoanModalVisible : false,
+      showModalVisible:false,
       loanInfo:{},
       loanId:null,
+      fssLoanModel:{},
+      fssLoanDocs:{},
       pagination: {
         pageSize: 20,
         showSizeChanger: true,
@@ -64,93 +62,91 @@ class LoanListStore {
     this.handleQuerySubmit({data: this.state.params, pager: pager});
   };
 
-  handleAuditOK = (data) =>{
-    let param = querystring.encode(data);
-    console.log("AuditOK:"+param)
-    xPostFetch(SERVER_URL + '/loan/audit?type=auditOk'+param).then(result => {
-      if (result && result.success) {
-        Notify('订单审核通过', result.msg, 'success');
-        this.handleOpenAddModal();
-        this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
-      } else{
-        Notify('添加发生异常', result.msg, 'error');
-      }})
-  };
-  handleAuditReject = (data) =>{
-    data.loanId=this.state.loanId;
-    data = momentTansfer(data);
-    let param = querystring.encode(data);
-    console.log("update:"+param);
-    xPostFetch(SERVER_URL + '/loan/audit?type=auditReject?'+param).then(result => {
-      if (result && result.success) {
-        Notify('订单已拒绝', result.msg, 'success');
-        this.handleOpenAddModal();
-        this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
-      } else{
-        Notify('添加发生异常', result.msg, 'error');
-      }})
-  };
 
-  handleAuditReturn = (data) =>{
-    data = momentTansfer(data);
+  /**
+   * 审核操作
+   * @param data
+   */
+  handleAudit = (data) =>{
     data.loanId=this.state.loanId;
+    console.log("audit:"+data);
     let param = querystring.encode(data);
-    console.log("submit:"+param);
-    xPostFetch(SERVER_URL + 'loan/audit?type=auditReturn?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/loan/audit',param).then(result => {
       if (result && result.success) {
-        Notify('订单已经成功退回', result.msg, 'success');
-        this.handleOpenLoanApplyModal();
+        Notify('审核成功', result.msg, 'success');
+        this.handleCancelAuditModal();
         this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
       } else{
         Notify('提交放款申请发生异常', result.msg, 'error');
       }})
   };
 
-  handleOpenLoanApplyModal =() =>{
-    console.log("进入handleOpenLoanApplyModal");
-    let visible = !this.state.applyLoanModalVisible;
+  /**
+   * 放款
+   * @param data
+   */
+  handleGrantLoan = (data) =>{
+    data.loanId=this.state.loanId;
+    let param = querystring.encode(data);
+    xPostFetch(SERVER_URL + '/loan/grantLoan',param).then(result => {
+      if (result && result.success) {
+        Notify('提交放款成功', result.msg, 'success');
+        this.handleCancelLoanGrantModal();
+        this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
+      } else{
+        Notify('提交放款申请发生异常', result.msg, 'error');
+      }})
+  };
+
+  /**
+   * 打开审核页面
+   */
+  handleOpenAuditModal =(data) =>{
+    console.log("handleOpenAuditModal");
+    let visible = !this.state.auditModalVisible;
     console.log(visible);
     this.setState({
-      applyLoanModalVisible : visible,
+      auditModalVisible : visible,
     });
     xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
       if (result && result.data) {
         show("get Info OK");
-        this.setState({loanInfo: result.data,loanId:data.loanId});
+        this.setState({auditLoanInfo: result.data,loanId:data.loanId});
       } else{
         Notify('请求贷款明细数据发生异常', result.msg, 'error');
       }})
 
   };
 
+  handleCancelLoanGrantModal=()=>{
+    this.setState({grantLoanModalVisible : false});
+  }
 
-  handleOpenAddModal =() =>{
-    console.log("进入store");
-    let visible = !this.state.addModalVisible;
-    console.log(visible);
-    this.setState({
-      addModalVisible : visible,
-      loanInfo:{},
-      loanId:null
-    });
-  };
-  //打开修改窗口
-  handleOpenUpdateModal =(data) =>{
+  handleCancelShowModal=()=>{
+    console.log('handleCancelShowModal:visible:');
+    this.setState({showModalVisible : false});
+  }
+  handleCancelAuditModal=()=>{
+    this.setState({auditModalVisible : false});
+  }
+
+
+  //打开查看窗口
+  handleOpenShowModal =(data) =>{
 
     console.log("loanId:"+data.loanId);
-    let visible = !this.state.addModalVisible;
-    console.log(visible);
-    this.setState({addModalVisible : visible});
+    let visible = !this.state.showModalVisible;
+    console.log('handleOpenShowModal:visible:'+visible);
+    this.setState({showModalVisible : visible});
     xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
       if (result && result.data) {
         show("get Info OK");
-        this.setState({loanInfo: result.data,loanId:data.loanId});
+        this.setState({showLoanInfo: result.data,loanId:data.loanId});
       } else{
         Notify('请求贷款明细数据发生异常', result.msg, 'error');
       }})
 
   };
-
 
   handleQuerySubmit = (data) => {
     this.setState({loading:true});
@@ -175,7 +171,6 @@ class LoanListStore {
         Notify('请求列表发生异常', result.msg, 'error');
       }})
   }
-
 
 }
 

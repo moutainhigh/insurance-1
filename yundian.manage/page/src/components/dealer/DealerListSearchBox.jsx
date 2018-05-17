@@ -26,7 +26,7 @@ class DealerListSearchBox extends Component {
       <div>
         <Form inline>
 <Row>
-          <FormItem label="dealerName">
+          <FormItem label="经销商名称">
             {getFieldDecorator('insuresName')(
               <Input size="large" placeholder="经销商名称" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}

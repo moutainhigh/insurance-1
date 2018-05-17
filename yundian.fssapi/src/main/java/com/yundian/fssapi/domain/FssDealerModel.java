@@ -20,11 +20,11 @@ public class FssDealerModel implements Serializable {
 
     private String licenseCode;
 
-    private Integer province;
+    private String province;
 
-    private Integer city;
+    private String city;
 
-    private Integer area;
+    private String area;
 
     private String provinceName;
 
@@ -116,27 +116,27 @@ public class FssDealerModel implements Serializable {
         this.licenseCode = licenseCode == null ? null : licenseCode.trim();
     }
 
-    public Integer getProvince() {
-        return province;
+    public String getProvince() {
+        return this.province;
     }
 
-    public void setProvince(Integer province) {
+    public void setProvince(String province) {
         this.province = province;
     }
 
-    public Integer getCity() {
-        return city;
+    public String getCity() {
+        return this.city;
     }
 
-    public void setCity(Integer city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public Integer getArea() {
-        return area;
+    public String getArea() {
+        return this.area;
     }
 
-    public void setArea(Integer area) {
+    public void setArea(String area) {
         this.area = area;
     }
 

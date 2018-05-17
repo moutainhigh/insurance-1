@@ -11,9 +11,9 @@ const show = (info) => {
 }
 //****************************************************************
 let loanListList = null;
-class LoanListDT extends Component {
+class RepaymentDT extends Component {
   static getStores() {
-    return [LoanListStore];
+    return [RepaymentStore];
   }
 
   static getPropsFromStores() {
@@ -109,10 +109,7 @@ class LoanListDT extends Component {
   render() {
     return (
       <div>
-        <LoanInfoShowModal showLoanInfo={this.props.showLoanInfo}  showModalVisible={this.props.showModalVisible} />
-        <LoanAuditModal auditLoanInfo={this.props.auditLoanInfo} auditModalVisible={this.props.auditModalVisible} />
-        <LoanGrantModal loanInfo={this.props.loanInfo} grantLoanModalVisible={this.props.grantLoanModalVisible} />
-        <Table columns={this.columns}
+          <Table columns={this.columns}
                dataSource={this.props.dataList}
                onChange={this.handleTableChange}
                pagination={this.props.pagination}
@@ -123,4 +120,4 @@ class LoanListDT extends Component {
   }
 }
 
-export default connectToStores(LoanListDT);
+export default connectToStores(RepaymentDT);

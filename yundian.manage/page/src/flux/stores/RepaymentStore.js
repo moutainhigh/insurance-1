@@ -11,7 +11,7 @@ const show = (info) => {
 }
 
 //****************************************************************
-class DealerStore {
+class RepaymentStore {
   constructor() {
     this.bindListeners({
       handleInitDataList: DealerAction.initDataListInfo,
@@ -169,4 +169,4 @@ class DealerStore {
 
 }
 
-export default alt.createStore(DealerStore, 'DealerStore');
+export default alt.createStore(RepaymentStore, 'RepaymentStore');

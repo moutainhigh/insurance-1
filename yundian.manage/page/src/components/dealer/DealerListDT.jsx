@@ -8,7 +8,7 @@ import { Popconfirm, message } from 'antd';
 import {Link} from 'react-router';
 //************************ 用于打印log的 **************************
 const show = (info) => {
-  console.log(" jsx  : " + JSON.stringify(info));
+  console.log(" DealerListDT stjsx  : " + JSON.stringify(info));
 }
 //****************************************************************
 class DealerListDT extends Component {
@@ -56,9 +56,8 @@ class DealerListDT extends Component {
       render(text, record, index){
         return(
           <div>
-            <a>查看</a>
             <span className="ant-divider" />
-            <a onClick={()=>DealerAction.openUpdateModal({id : record.id})}>编辑</a>
+            <a onClick={()=>DealerAction.openUpdateModal({dealerId : record.dealerId})}>编辑</a>
           </div>
         )
       }
@@ -78,7 +77,7 @@ class DealerListDT extends Component {
   render() {
     return (
       <div>
-        <DealerAddModal dealerInfo={this.props.dealerInfo} addModalVisible={this.props.addModalVisible}/>
+        <DealerAddModal  dealerInfo={this.props.dealerInfo} addModalVisible={this.props.addModalVisible}/>
         <Table columns={this.columns}
                dataSource={this.props.dataList}
                onChange={this.handleTableChange}

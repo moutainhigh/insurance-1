@@ -12,27 +12,11 @@ class LoanListAction {
   };
 
   /**
-   * 通过
+   * 提交查询
    * @param data
    * @returns {*}
    */
-  auditOK = (data)=> {
-    return data;
-  };
-  /**
-   * 拒绝
-   * @param data
-   * @returns {*}
-   */
-  auditReject = (data)=> {
-    return data;
-  };
-  /**
-   * 退回
-   * @param data
-   * @returns {*}
-   */
-  auditReturn = (data)=> {
+  querySubmit = (data)=> {
     return data;
   };
 
@@ -46,67 +30,67 @@ class LoanListAction {
   };
 
   /**
-   * 打开添加模态框
-   * @param data
-   * @returns {*}
+   * 打开查看页面
    */
-  openAddModal =()=> {
+  openShowModal =(data)=>{
+    return data;
+  }
+
+  /**
+   * 关闭查看页面
+   * @returns {null}
+   */
+  cancelShowModal=()=>{
     return null;
-  };
+  }
+
+
 
   /**
-   * 打开申请放款模态框
+   * 打开放款页面
    */
-  openLoanApplyModal=(data)=>{
+  openLoanGrantModal=(data)=>{
     return data;
   }
   /**
-   * 打开修改模态框
-   * @param data
-   * @returns {*}
+   * 关闭
+   * @returns {null}
    */
-  openUpdateModal =(data)=> {
-    return data;
-  };
+  cancelLoanGrantModal=()=>{
+    return null;
+  }
   /**
-   * 申请放款
+   * 发放贷款
    * @param data
    * @returns {*}
    */
-  applyLoan =(data)=>{
+  grantLoan =(data)=>{
     return data;
   }
-  addLoan =(data)=> {
-    return data;
-  };
-
- updateLoan =(data)=> {
-    return data;
-  };
   /**
-   * 提交审核
+   * 打开审核页面
+   * @returns data
+   */
+  openAuditModal=(data)=>{
+    return data;
+  }
+  /**
+   * 关闭审核页面
+   * @returns{null}
+   */
+  cancelAuditModal=()=>{
+    return null;
+  }
+
+  /**
+   * 审核操作，集成通过,拒绝,退回
    * @param data
-   * @returns {*}
    */
-  submitLoan =(data)=> {
+  audit =(data)=> {
     return data;
-  };
+  }
 
-  /**
-   * 删除记录
-   * @param data
-   * @returns {*}
-   */
-  deleteRecord = (data)=> {
-    return data;
-  };
 
-  /**
-   *改变激活状态
-   */
-  changeStatus =(data)=> {
-    return data;
-  };
 }
 
 export default alt.createActions(LoanListAction);

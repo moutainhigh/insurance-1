@@ -8,6 +8,8 @@ public class FssDealerUserModel implements Serializable {
 
     private Long dealerId;
 
+    private String dealerName;
+
     private String roleId;
 
     private String userName;
@@ -142,5 +144,13 @@ public class FssDealerUserModel implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getDealerName() {
+        return this.dealerName;
+    }
+
+    public void setDealerName(String dealerName) {
+        this.dealerName = dealerName;
     }
 }
