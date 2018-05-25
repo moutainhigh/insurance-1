@@ -1,0 +1,17 @@
+git pull
+echo ‘………………..打包项目……………………’
+
+mvn clean install -DskipTests=true
+
+echo ‘………………..部署yundian.dealerweb……………………’
+cd /home/luoyiuser/data/www/yundian.dealerweb
+rm -rf *
+jar -xvf /home/luoyiuser/source/insurance/yundian.dealerweb/target/yundian.dealerweb.war
+
+
+echo ‘………………重启yundian.dealerweb……………………’
+
+ps  -ef |grep yundian.dealerweb/ |awk '{print "kill -9 " $2}' |sh
+sh  /home/luoyiuser/server/yundian.dealerweb/bin/startup.sh
+echo 'yundian.dealerweb ok!'
+tail -100f /home/luoyiuser/server/yundian.dealerweb/logs/catalina.out

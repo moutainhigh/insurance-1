@@ -8,7 +8,7 @@ cd /home/luoyiuser/data/www/yundian.fssservice
 rm -rf *
 jar -xvf /home/luoyiuser/source/insurance/yundian.fssservice/target/yundian.fssservice.war
 
-echo ‘………………..部署yundian.fssservice项目……………………’
+echo ‘………………..部署yundian.dealerweb……………………’
 cd /home/luoyiuser/data/www/yundian.dealerweb
 rm -rf *
 jar -xvf /home/luoyiuser/source/insurance/yundian.dealerweb/target/yundian.dealerweb.war
