@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Card, Cascader,Radio,Form,Icon, Checkbox,InputNumber,Input, Modal, Select, Row, Col, Button,DatePicker} from "antd";
 import LoanListAction from "actions/LoanListAction";
 import { propsToFields,isEmptyObject } from 'services/functions';
+import {banks} from "services/data"
 import PicturesWall from '../common/PicturesWall';
 import SelectData from '../common/SelectData';
 import Moment from 'moment';
@@ -88,6 +89,20 @@ handleCascaderOnChange=(value,selectedOptions)=>{
 
 
   render() {
+
+    //金融方案
+    let planOptions = [];
+    if(!isEmptyObject(this.props.planOptions)) {
+      planOptions = this.props.planOptions.map((item,index) => {
+        return <Option value={item.id} key={index}>{item.productName}</Option>;
+      });
+    }
+    //开户行
+    let repaymentBankCodeOptions = [];
+    repaymentBankCodeOptions = banks.map((item,index) => {
+        return <Option value={item.code} key={index}>{item.label}</Option>;
+      });
+
     const picturesWallprops={
       length:1,
       maxFileSize:2,
@@ -317,7 +332,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem label="保险总额" {...formItemLayout}>
-                        {getFieldDecorator('policyTotalAmount')(
+                        {getFieldDecorator('policyTotalAmount' ,{ rules: [ {required: true, message: '请输入保险总额'}]})(
                           <Input/>
                         )}
                       </FormItem>
@@ -466,8 +481,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                       <FormItem label="产品名称"  {...formItemLayout}>
                         {getFieldDecorator('planId' )(
                           <Select>
-                            <Option value="100">默认金融方案</Option>
-                            {/*<Option value="200">12期</Option>*/}
+                            {planOptions}
                           </Select>
                         )}
                       </FormItem>
@@ -476,8 +490,9 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                       <FormItem label="贷款期限" {...formItemLayout}>
                         {getFieldDecorator('planPeriod', { rules: [ {required: true, message: '请选择贷款期限'}]} )(
                           <Select initialValue="12">
-                            <Option value="6">6期</Option>
                             <Option value="12">12期</Option>
+                            <Option value="24">24期</Option>
+                            <Option value="36">36期</Option>
                           </Select>
                         )}
                       </FormItem>
@@ -493,8 +508,15 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                       </FormItem>
                     </Col>
                     <Col span="8">
-                      <FormItem  label="贷款总额"  {...formItemLayout}>
-                        {getFieldDecorator('planLoanAmount')(
+                    <FormItem  label="贷款总额"  {...formItemLayout}>
+                      {getFieldDecorator('planLoanAmount' , { rules: [ {required: true, message: '请输入贷款总额'}]})(
+                        <InputNumber/>
+                      )}
+                    </FormItem>
+                  </Col>
+                    <Col span="8">
+                      <FormItem  label="服务费"  {...formItemLayout}>
+                        {getFieldDecorator('loanFee')(
                           <InputNumber/>
                         )}
                       </FormItem>
@@ -505,8 +527,10 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                       <FormItem label="开户行" {...formItemLayout}>
-                        {getFieldDecorator('repayment_bank_code')(
-                          <Select/>
+                        {getFieldDecorator('repaymentBankCode')(
+                          <Select>
+                            {repaymentBankCodeOptions}
+                          </Select>
                         )}
                       </FormItem>
                     </Col>

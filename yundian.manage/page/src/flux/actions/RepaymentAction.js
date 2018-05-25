@@ -30,30 +30,23 @@ class RepaymentAction {
   };
 
   /**
-   * 打开添加模态框
+   * 关闭
    * @param data
    * @returns {*}
    */
-  openAddModal =()=> {
+  closeShowModal =()=> {
     return null;
   };
 
   /**
-   * 打开修改模态框
+   * 打开查看模态框
    * @param data
    * @returns {*}
    */
-  openUpdateModal =(data)=> {
+  openShowModal =(data)=> {
     return data;
   };
 
-  addDealer =(data)=> {
-    return data;
-  };
-
-  updateDealer =(data)=> {
-    return data;
-  };
 
 
 }

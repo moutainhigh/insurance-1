@@ -58,6 +58,9 @@
     <result column="plan_period" property="planPeriod" jdbcType="INTEGER" />
     <result column="plan_financing_type" property="planFinancingType" jdbcType="VARCHAR" />
     <result column="plan_loan_amount" property="planLoanAmount" jdbcType="INTEGER" />
+    <result column="loan_rate" property="loanRate" jdbcType="INTEGER" />
+    <result column="loan_fee" property="loanFee" jdbcType="INTEGER" />
+    <result column="agree_repayment_date" property="agreeRepaymentDate" jdbcType="INTEGER" />
     <result column="repayment_bank_code" property="repaymentBankCode" jdbcType="VARCHAR" />
     <result column="repayment_bank_name" property="repaymentBankName" jdbcType="VARCHAR" />
     <result column="repayment_card" property="repaymentCard" jdbcType="VARCHAR" />
@@ -84,8 +87,8 @@
     policy_three_pay, policy_three_pay_level, policy_damage, policy_lost, policy_auto_ignition, 
     policy_seat_passenger, policy_scratch, policy_glass_breakage, policy_disregard_contributing, 
     policy_seat_driver, policy_wading, plan_id, plan_name, plan_period, plan_financing_type, 
-    plan_loan_amount, repayment_bank_code, repayment_bank_name, repayment_card, sign_time, 
-    audit_status,audit_status_pre,closed_reason, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark
+    plan_loan_amount, loan_rate,loan_fee,repayment_bank_code, repayment_bank_name, repayment_card, sign_time,
+    audit_status,audit_status_pre,closed_reason, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark,agree_repayment_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -120,7 +123,7 @@
       repayment_bank_code, repayment_bank_name, repayment_card, 
       sign_time, audit_status, audit_status_pre,closed_reason,audit_time,
       audit_name, loan_time, submit_person, 
-      ctime, mtime, remark
+      ctime, mtime, remark,loan_fee,loan_rate,agree_repayment_date
       )
     values ( #{fundId,jdbcType=INTEGER}, #{fundName,jdbcType=VARCHAR},
       #{dealerId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{dealerName,jdbcType=VARCHAR}, 
@@ -144,7 +147,7 @@
       #{repaymentBankCode,jdbcType=VARCHAR}, #{repaymentBankName,jdbcType=VARCHAR}, #{repaymentCard,jdbcType=VARCHAR}, 
       #{signTime,jdbcType=TIMESTAMP}, #{auditStatus,jdbcType=VARCHAR},#{auditStatusPre,jdbcType=VARCHAR},#{closedReason,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP},
       #{auditName,jdbcType=VARCHAR}, #{loanTime,jdbcType=TIMESTAMP}, #{submitPerson,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},#{loanFee,jdbcType=INTEGER},#{loanRate,jdbcType=INTEGER},#{agreeRepaymentDate,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" keyProperty="loanId" useGeneratedKeys="true" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
@@ -354,6 +357,15 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="loanRate != null" >
+        loan_rate,
+      </if>
+      <if test="loanFee != null" >
+        loan_fee,
+      </if>
+      <if test="agreeRepaymentDate != null" >
+        agree_repayment_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="loanId != null" >
@@ -559,6 +571,15 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="loanRate != null" >
+        #{loanRate,jdbcType=INTEGER},
+      </if>
+      <if test="loanFee != null" >
+        #{loanFee,jdbcType=INTEGER},
+      </if>
+      <if test="agreeRepaymentDate != null" >
+        #{agreeRepaymentDate,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -769,6 +790,15 @@
       <if test="auditStatusPre != null" >
         audit_status_pre = #{auditStatusPre,jdbcType=VARCHAR},
       </if>
+      <if test="loanRate != null" >
+        loan_rate = #{loanRate,jdbcType=INTEGER},
+      </if>
+      <if test="loanFee != null" >
+        loan_fee =#{loanFee,jdbcType=INTEGER},
+      </if>
+      <if test="agreeRepaymentDate != null" >
+        agree_repayment_date =#{agreeRepaymentDate,jdbcType=INTEGER},
+      </if>
     </set>
     where loan_id = #{loanId,jdbcType=BIGINT}
   </update>
@@ -841,7 +871,8 @@
       submit_person = #{submitPerson,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=TIMESTAMP},
       mtime = #{mtime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      agree_repayment_date =#{agreeRepaymentDate,jdbcType=INTEGER}
     where loan_id = #{loanId,jdbcType=BIGINT}
   </update>
 

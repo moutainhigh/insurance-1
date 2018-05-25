@@ -1,10 +1,8 @@
-import LoanListStore from "stores/LoanListStore.js";
 import React, {Component} from "react";
 import connectToStores from "alt-utils/lib/connectToStores";
 import {Table} from "antd";
+import RepaymentAction from "actions/RepaymentAction";
 import LoanListAction from "actions/LoanListAction";
-import LoanListShowModal from "./LoanInfoShowModal";
-import LoanApplyModal from "./LoanGrantModal";
 //************************ 用于打印log的 **************************
 const show = (info) => {
   console.log(" jsx  : " + JSON.stringify(info));
@@ -17,7 +15,7 @@ class RepaymentDT extends Component {
   }
 
   static getPropsFromStores() {
-    let state = LoanListStore.getState();
+    let state = RepaymentStore.getState();
     return {
       loading: state.loading,
       pagination: state.pagination,
@@ -63,35 +61,15 @@ class RepaymentDT extends Component {
     }, {
       title: '操作', dataIndex: 'handle', key: 'handle', width: 120,
       render(text, record, index){
-        if(record.auditStatus == "AUDITING"){//待审核
-          return(
-            <div>
-              <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
-              <span className="ant-divider" />
-              <a onClick={()=>LoanListAction.openUpdateModal({loanId : record.loanId})}>审核</a>
-            </div>
-          )
-        }
-          if(record.auditStatus == "WAITING_LOAN"){ //待放款
-          return(
-            <div>
-              <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
-              <span className="ant-divider" />
-              <a onClick={()=>LoanListAction.openLoanApplyModal({loanId : record.loanId})}>放款</a>
-            </div>
-          )
-        }
 
-        //
-        else{
           return(
             <div>
-              <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
+              <a onClick={()=>RepaymentAction.openShowModal({loanId : record.loanId})}>查看</a>
+              <span className="ant-divider" />
             </div>
           )
-        }
-      }
     }
+  }
   ];
 
   componentDidMount() {
@@ -109,6 +87,9 @@ class RepaymentDT extends Component {
   render() {
     return (
       <div>
+        <RepaymentDetail showModalVisible={this.props.showModalVisible}
+                         showLoanInfo={this.props.showLoanInfo}
+                         repaymentPlans={this.props.repaymentPlans}></RepaymentDetail>
           <Table columns={this.columns}
                dataSource={this.props.dataList}
                onChange={this.handleTableChange}

@@ -90,4 +90,13 @@ public class FssLoanServiceTest extends AbstractJUnit{
         System.out.printf(JSON.toJSONString(loanInfoModel));
         Assert.assertTrue(true);
     }
+
+
+    @Test
+    public void makeloan()
+    {
+        fssLoanService.makeloan(137L,"放款人");
+        System.out.printf("success");
+        Assert.assertTrue(true);
+    }
 }

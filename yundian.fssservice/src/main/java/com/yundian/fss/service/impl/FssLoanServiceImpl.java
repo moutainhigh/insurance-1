@@ -10,6 +10,7 @@ import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.exception.FssLoanException;
 import com.yundian.fssapi.service.FssCarService;
 import com.yundian.fssapi.service.FssLoanService;
+import com.yundian.fssapi.service.FssRepaymentService;
 import com.yundian.result.*;
 import com.yundian.toolkit.utils.BeanUtilsExt;
 import com.yundian.toolkit.utils.RandomUtil;
@@ -20,6 +21,7 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +49,30 @@ public class FssLoanServiceImpl implements FssLoanService {
     FssLoanModelMapper fssLoanModelMapper;
     @Autowired
     FssLoanDocumentModelMapper fssLoanDocumentModelMapper;
+
+    @Autowired
+    FssPlanModelMapper fssPlanModelMapper;
+
+    @Autowired
+    FssRepaymentService fssRepaymentService;
+
+
+    /**
+     * 约定还款日
+     */
+    int agreePaymentDate =15;
+    @Override
+    public List<FssPlanModel> getFssPlanList() {
+
+        try {
+            List<FssPlanModel> fssPlanList = fssPlanModelMapper.getFssPlanList();
+            return fssPlanList;
+        } catch (Exception e) {
+            log.error(String.format("获取金融方案失败"), e);
+            throw new FssLoanException(ResultCodeContants.FAILED, "获取金融方案失败", e);
+        }
+
+    }
 
     @Override
     public LoanInfoModel getFssLoan(Long loanId) {
@@ -170,6 +196,12 @@ public class FssLoanServiceImpl implements FssLoanService {
                 FssCarModelsModel fssCarModelsModel= fssCarModelsModelMapper.selectByModelsCode(fssLoanModel.getCarModel());
                 fssLoanModel.setCarModelName(fssCarModelsModel.getModelsName());
             }
+            if(fssLoanModel!=null&& fssLoanModel.getPlanId()!=null){
+                FssPlanModel fssPlanModel= fssPlanModelMapper.selectByPrimaryKey(fssLoanModel.getPlanId());
+                fssLoanModel.setPlanName(fssPlanModel.getProductName());
+                fssLoanModel.setLoanRate(fssPlanModel.getRate());
+            }
+
             if (loanInfoModel.getLoanId() == null) {
                 loanId = insertFssLoan(loanInfoModel.getFssLoanModel());
                 loanInfoModel.setLoanId(loanId);
@@ -243,6 +275,14 @@ public class FssLoanServiceImpl implements FssLoanService {
     }
     @Override
     public void makeloan(Long loanId,String operater) {
+
+        FssLoanModel fssLoanModel = new FssLoanModel();
+        fssLoanModel.setLoanId(loanId);
+        fssLoanModel.setAgreeRepaymentDate(agreePaymentDate);
+        fssLoanModelMapper.updateByPrimaryKeySelective(fssLoanModel);
+        //生成还款计划
+        fssRepaymentService.initRepaymentPlan(loanId);
+
         FlowDataModel flowDataModel = new FlowDataModel();
         flowDataModel.setLoanId(loanId);
         flowDataModel.setFlowToStatus(FssLoanStatusEnum.HAVE_LOAN);
@@ -262,5 +302,8 @@ public class FssLoanServiceImpl implements FssLoanService {
         flowDataModel.setContent(FssLoanStatusEnum.CLOSED.desc());
         fssFlowManage.flow(flowDataModel);
     }
+
+
+
 
 }

@@ -30,8 +30,8 @@ class LoanListDT extends Component {
       loanInfo:state.loanInfo,
       showLoanInfo:state.showLoanInfo,
       applyLoanModalVisible:state.applyLoanModalVisible,
-      carOptions:state.carOptions
-
+      carOptions:state.carOptions,
+      planOptions:state.planOptions
 
     };
   }
@@ -118,7 +118,7 @@ class LoanListDT extends Component {
   render() {
     return (
       <div>
-        <LoanListAddModal carOptions = {this.props.carOptions} loanInfo={this.props.loanInfo} addModalVisible={this.props.addModalVisible}/>
+        <LoanListAddModal planOptions ={this.props.planOptions} carOptions = {this.props.carOptions} loanInfo={this.props.loanInfo} addModalVisible={this.props.addModalVisible}/>
         <LoanListShowModal showLoanInfo={this.props.showLoanInfo}  showModalVisible={this.props.showModalVisible} />
         <LoanApplyModal loanInfo={this.props.loanInfo} applyLoanModalVisible={this.props.applyLoanModalVisible} />
 

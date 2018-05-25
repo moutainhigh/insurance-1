@@ -5,6 +5,7 @@ import com.yundian.dealerweb.util.DealerWebConstants;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanDocumentModel;
 import com.yundian.fssapi.domain.FssLoanModel;
+import com.yundian.fssapi.domain.FssPlanModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.fssapi.domain.vo.FssLoanModelVo;
 import com.yundian.fssapi.domain.vo.LoanDocumentVo;
@@ -70,6 +71,15 @@ public class LoanController {
             fssLoanModel.setDealerUserId(fssDealerUserModel.getUserId());
             fssLoanModel.setDealerUserName(fssDealerUserModel.getUserName());
             fssLoanModel.setSubmitPerson(fssDealerUserModel.getName());
+            if(fssLoanModel.getPlanLoanAmount()!=null){
+                //金额元——>分
+                fssLoanModel.setPlanLoanAmount(fssLoanModel.getPlanLoanAmount()*100);
+            }
+            if(fssLoanModel.getPolicyTotalAmount()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyTotalAmount(fssLoanModel.getPolicyTotalAmount()*100);
+            }
+
             LoanInfoModel loanInfoModel = new LoanInfoModel();
             loanInfoModel.setFssLoanModel(fssLoanModel);
             loanInfoModel.setLoanId(fssLoanModel.getLoanId());
@@ -91,7 +101,14 @@ public class LoanController {
 
             List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
-
+            if(fssLoanModel.getPlanLoanAmount()!=null){
+                //金额元——>分
+                fssLoanModel.setPlanLoanAmount(fssLoanModel.getPlanLoanAmount()*100);
+            }
+            if(fssLoanModel.getPolicyTotalAmount()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyTotalAmount(fssLoanModel.getPolicyTotalAmount()*100);
+            }
             fssLoanService.insertFssLoanDocument(fssLoanModel.getLoanId(),fssLoanDocumentModelList);
             fssLoanService.updateFssLoan(fssLoanModel);
             return Result.success("");
@@ -114,6 +131,14 @@ public class LoanController {
             fssLoanModel.setDealerUserId(fssDealerUserModel.getUserId());
             fssLoanModel.setDealerUserName(fssDealerUserModel.getUserName());
             fssLoanModel.setSubmitPerson(fssDealerUserModel.getName());
+            if(fssLoanModel.getPlanLoanAmount()!=null){
+                //金额元——>分
+                fssLoanModel.setPlanLoanAmount(fssLoanModel.getPlanLoanAmount()*100);
+            }
+            if(fssLoanModel.getPolicyTotalAmount()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyTotalAmount(fssLoanModel.getPolicyTotalAmount()*100);
+            }
             List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
             LoanInfoModel loanInfoModel = new LoanInfoModel();
@@ -140,7 +165,14 @@ public class LoanController {
                 return Result.fail("", "参数错误，请重试");
             }
             LoanInfoModel loanInfoModel= fssLoanService.getFssLoan(loanId);
-
+            if(loanInfoModel.getFssLoanModel().getPlanLoanAmount()!=null){
+                //金额分——>元
+                loanInfoModel.getFssLoanModel().setPlanLoanAmount(loanInfoModel.getFssLoanModel().getPlanLoanAmount()/100);
+            }
+            if(loanInfoModel.getFssLoanModel().getPolicyTotalAmount()!=null){
+                //金额分——>元
+                loanInfoModel.getFssLoanModel().setPolicyTotalAmount(loanInfoModel.getFssLoanModel().getPolicyTotalAmount()/100);
+            }
             LoanInfoVo loanInfoVo= new LoanInfoVo();
             loanInfoVo.setFssLoanModel(loanInfoModel.getFssLoanModel());
             List<LoanDocumentVo> loanDocumentVoList = LoanDocumentVoMatch.matchList(loanInfoModel.getFssLoanDocumentModels());
@@ -156,7 +188,19 @@ public class LoanController {
             return Result.fail("", "贷款信息异常，请重试");
         }
     }
+    @ResponseBody
+    @RequestMapping(value="/loan/getPlan",method= RequestMethod.GET)
+    public Result getPlans() {
 
+        try {
+            List<FssPlanModel> fssPlanList= fssLoanService.getFssPlanList();
+            return Result.success(fssPlanList);
+        } catch (Exception ex) {
+            log.error(String.format("获取金融方案失败："), ex);
+            System.out.printf(ex.getMessage());
+            return Result.fail("", "获取金融方案，请重试");
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value = "/loan/getList")

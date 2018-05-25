@@ -3,6 +3,7 @@ package com.yundian.fssapi.service;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanDocumentModel;
 import com.yundian.fssapi.domain.FssLoanModel;
+import com.yundian.fssapi.domain.FssPlanModel;
 import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface FssLoanService {
 
 
-
+	List<FssPlanModel> getFssPlanList();
 	/**
      *获取保险分期详细信息
 	 * @param loanId

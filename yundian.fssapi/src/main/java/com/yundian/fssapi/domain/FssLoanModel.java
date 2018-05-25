@@ -260,7 +260,7 @@ public class FssLoanModel implements Serializable {
      *
      *方案id
      */
-    private Integer planId;
+    private Long planId;
     /**
      *
      *方案名称
@@ -281,6 +281,22 @@ public class FssLoanModel implements Serializable {
      *
      */
     private Integer planLoanAmount;
+
+    /**
+     * 贷款利率（年化）
+     */
+    private Integer loanRate;
+
+    /**
+     * 服务费
+     */
+    private Integer loanFee;
+
+    /**
+     * 约定还款日，如：19
+     */
+    private Integer agreeRepaymentDate;
+
     /**
      *
      *还款银行开户行
@@ -770,11 +786,11 @@ public class FssLoanModel implements Serializable {
         this.policyWading = policyWading;
     }
 
-    public Integer getPlanId() {
+    public Long getPlanId() {
         return planId;
     }
 
-    public void setPlanId(Integer planId) {
+    public void setPlanId(Long planId) {
         this.planId = planId;
     }
 
@@ -906,5 +922,27 @@ public class FssLoanModel implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
+    public Integer getLoanRate() {
+        return this.loanRate;
+    }
 
+    public void setLoanRate(Integer loanRate) {
+        this.loanRate = loanRate;
+    }
+
+    public Integer getLoanFee() {
+        return this.loanFee;
+    }
+
+    public void setLoanFee(Integer loanFee) {
+        this.loanFee = loanFee;
+    }
+
+    public Integer getAgreeRepaymentDate() {
+        return this.agreeRepaymentDate;
+    }
+
+    public void setAgreeRepaymentDate(Integer agreeRepaymentDate) {
+        this.agreeRepaymentDate = agreeRepaymentDate;
+    }
 }

@@ -185,4 +185,39 @@
       mtime = #{mtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <sql id="getFssPlanPagingWhere">
+
+    <if test="productName != null and productName != ''">
+      and product_name =#{product_name}
+    </if>
+
+  </sql>
+
+  <select id="getFssPlanPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_plan
+    where 1=1
+    <include refid="getFssPlanPagingWhere"/>
+    order by id desc
+    limit #{_offset}, #{_limit}
+
+  </select>
+
+  <select id="getFssPlanPagingCount" resultType="java.lang.Integer" parameterType="map">
+    select
+    count(*)
+    from fss_plan
+    where 1=1
+    <include refid="getFssPlanPagingWhere"/>
+  </select>
+
+
+  <select id="getFssPlanList" resultMap="BaseResultMap">
+    select * from fss_plan
+    where 1=1
+    order by id desc
+
+  </select>
+
 </mapper>

@@ -42,7 +42,7 @@ class LoanListStore {
 
       handleApplyLoan: LoanListAction.applyLoan,
       handleCarCascaderLoadData:LoanListAction.carCascaderLoadData,
-      handleGetBandList:LoanListAction.getBandList
+      handleIntiData:LoanListAction.intiData
 
     });
     this.state = {
@@ -313,7 +313,7 @@ class LoanListStore {
             }
           })
         }
-show(carOptions);
+        show(carOptions);
         this.setState({carOptions:carOptions,loanInfo: result.data,loanId:data.loanId});
       } else{
         Notify('请求贷款明细数据发生异常', result.msg, 'error');
@@ -347,7 +347,7 @@ show(carOptions);
   }
 
 
-  handleGetBandList = () => {
+  handleIntiData = () => {
     xFetch(SERVER_URL + '/car/getCarBrands').then(result => {
       if (result && result.data) {
 
@@ -357,6 +357,16 @@ show(carOptions);
 
         this.setState({
           carOptions: options,
+        });
+      } else{
+        show("请求列表发生异常");
+        Notify('请求列表发生异常', result.msg, 'error');
+      }})
+
+    xFetch(SERVER_URL + '/loan/getPlans').then(result => {
+      if (result && result.data) {
+        this.setState({
+          planOptions: result.data,
         });
       } else{
         show("请求列表发生异常");

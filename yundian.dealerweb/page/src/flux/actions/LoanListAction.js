@@ -100,7 +100,7 @@ class LoanListAction {
   /**
    *汽车品牌
    */
-  getBandList =()=> {
+  intiData =()=> {
     return null;
   };
 }

@@ -2,7 +2,11 @@ package com.yundian.dealerweb.controller;
 
 import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.FssLoanRepaymentModel;
+import com.yundian.fssapi.domain.FssLoanRepaymentPlanModel;
 import com.yundian.fssapi.service.FssDealerCustomerService;
+import com.yundian.fssapi.service.FssRepaymentService;
+import com.yundian.result.Page;
+import com.yundian.result.Paginator;
 import com.yundian.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +27,27 @@ import javax.servlet.http.HttpSession;
 public class RepaymentController {
 
     @Autowired
-    FssDealerCustomerService fssDealerCustomerService;
+    FssRepaymentService fssRepaymentService;
 
     @ResponseBody
-    @RequestMapping(value = "/repayment/getList")
+    @RequestMapping(value = "/repayment/getPlans")
     public Result listAjax	(
-            @RequestParam(defaultValue = "0", value = "page") int page,
-            @RequestParam(defaultValue = "20", value = "pagesize") int pageSize,
-            @ModelAttribute("fssLoanQueryParam") FssLoanRepaymentModel fssLoanQueryParam,
-            HttpSession session) {
+            @RequestParam(defaultValue = "0", value = "loanId") long loanId) {
         try {
 
-//            Paginator<FssDealerCustomerModel> paginator = new Paginator<>();
-//            paginator.setCurrentPage(page);
-//            paginator.setPageSize(pageSize);
-//            FssDealerCustomerModel fssLoanQueryParam= JSON.parseObject(loanQueryParamJson,FssDealerCustomerModel.class);
-//            FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
-//            fssLoanQueryParam.setDealerId(fssDealerUserModel.getDealerId());
-//            paginator.setParam(fssLoanQueryParam);
-//
-//            Page<FssDealerCustomerModel> paginatedResult = fssDealerCustomerService.getPaginatorFssDealerCustomer(paginator);
-//            return Result.success(paginatedResult);
-            return Result.success("");
+            int page=1;
+            int pageSize=36;
+            Paginator<FssLoanRepaymentPlanModel> paginator = new Paginator<>();
+            paginator.setPage(page);
+            paginator.setPageSize(pageSize);
+            FssLoanRepaymentPlanModel fssLoanQueryParam= new FssLoanRepaymentPlanModel();
+            fssLoanQueryParam.setLoanId(loanId);
+            paginator.setParam(fssLoanQueryParam);
+            Page<FssLoanRepaymentPlanModel> paginatedResult = fssRepaymentService.getRepaymentPlan(paginator);
+            return Result.success(paginatedResult.getItems());
 
         } catch (Exception ex) {
-            log.error(String.format("分页查询客户信息异常："), ex);
+            log.error(String.format("还款计划信息异常："), ex);
             System.out.printf(ex.getMessage());
             return Result.fail("","网络异常，请重试");
         }

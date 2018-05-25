@@ -5,6 +5,9 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="loan_id" property="loanId" jdbcType="BIGINT" />
     <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="period_count" property="periodCount" jdbcType="INTEGER" />
+    <result column="repayment_date" property="repaymentDate" jdbcType="VARCHAR" />
+    <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
     <result column="agreed_repayment_date" property="agreedRepaymentDate" jdbcType="VARCHAR" />
     <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
     <result column="pay_fee" property="payFee" jdbcType="INTEGER" />
@@ -19,7 +22,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, loan_id, period, agreed_repayment_date, pay_amount, pay_fee, plan_amount, plan_captial_amount, 
-    plan_interest_amount, overdue_days, repayment_status, ctime, mtime, remark
+    plan_interest_amount, overdue_days, repayment_status, ctime, mtime, remark,period_count,repayment_date,repayment_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -35,13 +38,13 @@
     insert into fss_loan_repayment_plan (id, loan_id, period, 
       agreed_repayment_date, pay_amount, pay_fee, 
       plan_amount, plan_captial_amount, plan_interest_amount, 
-      overdue_days, repayment_status, ctime, 
-      mtime, remark)
+      overdue_days, repayment_status, ctime,
+      mtime, remark,period_count,repayment_date,repayment_time)
     values (#{id,jdbcType=BIGINT}, #{loanId,jdbcType=BIGINT}, #{period,jdbcType=INTEGER}, 
       #{agreedRepaymentDate,jdbcType=VARCHAR}, #{payAmount,jdbcType=INTEGER}, #{payFee,jdbcType=INTEGER}, 
       #{planAmount,jdbcType=INTEGER}, #{planCaptialAmount,jdbcType=INTEGER}, #{planInterestAmount,jdbcType=INTEGER}, 
       #{overdueDays,jdbcType=INTEGER}, #{repaymentStatus,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, 
-      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+      #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},#{periodCount,jdbcType=INTEGER},#{repaymentDate,jdbcType=VARCHAR},#{repaymentTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
     insert into fss_loan_repayment_plan
@@ -88,6 +91,15 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="periodCount != null" >
+        period_count,
+      </if>
+      <if test="repaymentDate != null" >
+        repayment_date,
+      </if>
+      <if test="repaymentTime != null" >
+        repayment_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -132,6 +144,15 @@
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="periodCount != null" >
+        #{periodCount,jdbcType=VARCHAR},,
+      </if>
+      <if test="repaymentDate != null" >
+        #{repaymentDate,jdbcType=VARCHAR},,
+      </if>
+      <if test="repaymentTime != null" >
+        #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssLoanRepaymentPlanModel" >
@@ -175,6 +196,15 @@
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="periodCount != null" >
+        period_count = #{periodCount,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentDate != null" >
+        repayment_date = #{repaymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentTime != null" >
+        repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

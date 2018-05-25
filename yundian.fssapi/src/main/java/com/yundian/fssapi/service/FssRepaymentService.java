@@ -23,6 +23,14 @@ public interface FssRepaymentService {
 
 
  /**
+  * 还款
+  * @param loanId 订单编号
+  * @param period 期数
+  * @param payAmount 还款金额
+  */
+ void repayment(Long loanId,Integer period,Integer payAmount);
+
+ /**
   * 还款计划
   * @param paginator
   * @return

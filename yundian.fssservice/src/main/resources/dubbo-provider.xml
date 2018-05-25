@@ -18,9 +18,6 @@
 	<dubbo:service ref="fssCodeLibraryService" interface="com.yundian.fssapi.service.FssCodeLibraryService"  
 		group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 
-	<!--<dubbo:service ref="fssSysAreaService" interface="com.yundian.fssapi.service.FssSysAreaService"  -->
-		<!--group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>-->
-
 
 	<!--经销商用户服务 -->
 	<dubbo:service ref="fssDealerService" interface="com.yundian.fssapi.service.FssDealerService"

@@ -9,8 +9,21 @@ public class FssLoanRepaymentPlanModel implements Serializable {
     private Long loanId;
 
     private Integer period;
+    /**
+     * 总期数
+     */
+    private Integer periodCount;
 
     private String agreedRepaymentDate;
+
+    /**
+     * 实际还款日期
+     */
+    private String repaymentDate;
+    /**
+     * 还款时间
+     */
+    private Date repaymentTime;
 
     private Integer payAmount;
 
@@ -118,6 +131,30 @@ public class FssLoanRepaymentPlanModel implements Serializable {
 
     public void setRepaymentStatus(String repaymentStatus) {
         this.repaymentStatus = repaymentStatus == null ? null : repaymentStatus.trim();
+    }
+
+    public Integer getPeriodCount() {
+        return this.periodCount;
+    }
+
+    public void setPeriodCount(Integer periodCount) {
+        this.periodCount = periodCount;
+    }
+
+    public String getRepaymentDate() {
+        return this.repaymentDate;
+    }
+
+    public void setRepaymentDate(String repaymentDate) {
+        this.repaymentDate = repaymentDate;
+    }
+
+    public Date getRepaymentTime() {
+        return this.repaymentTime;
+    }
+
+    public void setRepaymentTime(Date repaymentTime) {
+        this.repaymentTime = repaymentTime;
     }
 
     public Date getCtime() {

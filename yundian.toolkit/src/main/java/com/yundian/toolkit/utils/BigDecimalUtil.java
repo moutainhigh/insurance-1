@@ -129,7 +129,7 @@ public class BigDecimalUtil {
 	 * 提供精确的小数位(2位)四舍五入处理。
 	 * 
 	 * @param v 需要四舍五入的数字字符串
-	 * @param scale 小数点后保留几位
+//	 * @param scale 小数点后保留几位
 	 * @return 四舍五入后的结果
 	 */
 	public static double round(String v) {
@@ -155,6 +155,17 @@ public class BigDecimalUtil {
 		BigDecimal b = new BigDecimal(Double.toString(v));
 		BigDecimal one = new BigDecimal("1");
 		return b.divide(one, scale, BigDecimal.ROUND_DOWN).doubleValue();
+	}
+
+	/**
+	 * 幂运算：pow(4,3) =4^3
+	 * @param m
+	 * @param n
+	 * @return
+	 */
+	public static double pow(double m ,int n){
+		BigDecimal b = new BigDecimal(Double.toString(m));
+		return b.pow(n).doubleValue();
 	}
 
 }
