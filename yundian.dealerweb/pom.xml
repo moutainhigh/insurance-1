@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.yundian</groupId>
 	<artifactId>yundian.dealerweb</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>yundian.dealerweb</name>
 	<url>http://maven.apache.org</url>
@@ -260,6 +260,7 @@
 
 
 	<build>
+		<finalName>yundian.dealerweb</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
