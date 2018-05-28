@@ -189,7 +189,7 @@ public class LoanController {
         }
     }
     @ResponseBody
-    @RequestMapping(value="/loan/getPlan",method= RequestMethod.GET)
+    @RequestMapping(value="/loan/getPlans",method= RequestMethod.GET)
     public Result getPlans() {
 
         try {

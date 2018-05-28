@@ -92,6 +92,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
 
     //金融方案
     let planOptions = [];
+    show(planOptions)
     if(!isEmptyObject(this.props.planOptions)) {
       planOptions = this.props.planOptions.map((item,index) => {
         return <Option value={item.id} key={index}>{item.productName}</Option>;
@@ -527,7 +528,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                       <FormItem label="开户行" {...formItemLayout}>
-                        {getFieldDecorator('repaymentBankCode')(
+                        {getFieldDecorator('repaymentBankCode', { rules: [ {required: true, message: '请选择开户行'}]})(
                           <Select>
                             {repaymentBankCodeOptions}
                           </Select>
@@ -536,18 +537,18 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem label="还款卡号" {...formItemLayout}>
-                        {getFieldDecorator('repaymentCard' )(
+                        {getFieldDecorator('repaymentCard' , { rules: [ {required: true, message: '请选择还款卡号'}]})(
                           <Input/>
                         )}
                       </FormItem>
                     </Col>
-                    <Col span="8">
-                      <FormItem  label="手机号码" {...formItemLayout}>
-                        {getFieldDecorator('insuresPhone')(
-                          <Input/>
-                        )}
-                      </FormItem>
-                    </Col>
+                    {/*<Col span="8">*/}
+                      {/*<FormItem  label="手机号码" {...formItemLayout}>*/}
+                        {/*{getFieldDecorator('insuresPhone')(*/}
+                          {/*<Input/>*/}
+                        {/*)}*/}
+                      {/*</FormItem>*/}
+                    {/*</Col>*/}
                   </Row>
                 </Card>
                 <Card title="影象信息" style={{marginBottom: 24}} bordered={true}>

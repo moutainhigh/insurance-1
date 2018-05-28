@@ -106,7 +106,7 @@ class LoanListDT extends Component {
     loanListList = this;
     LoanListAction.initDataListInfo({page: 1, pageSize: this.props.pagination.pageSize});
     //获取汽车品牌数据
-    LoanListAction.getBandList();
+    LoanListAction.intiData();
   }
 
   handleTableChange = (pagination) => {
