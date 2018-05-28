@@ -1,22 +1,22 @@
 import React, {Component} from "react";
 import Layout from "../common/MenuLayout";
 import {FullWidthHR, MeBreadCrumb} from "../common/Common";
-import DealerUserListSearchBox from "./DealerUserListSearchBox";
-import DealerUserListDT from "./DealerUserListDT";
+import AdminUserListSearchBox from "./AdminUserListSearchBox";
+import AdminUserListDT from "./AdminUserListDT";
 
-class DealerUserList extends Component {
+class AdminUserList extends Component {
 
   render() {
     return (
       <Layout>
         <MeBreadCrumb title="员工管理"/>
         <FullWidthHR/>
-        <DealerUserListSearchBox/>
+        <AdminUserListSearchBox/>
         <FullWidthHR/>
-        <DealerUserListDT/>
+        <AdminUserListDT/>
       </Layout>
     )
   }
 }
 
-export default DealerUserList;
+export default AdminUserList;

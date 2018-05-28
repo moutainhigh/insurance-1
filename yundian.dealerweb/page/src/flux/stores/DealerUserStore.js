@@ -76,7 +76,7 @@ class DealerUserStore {
       }})
   };
   handleUpdateLoan = (data) =>{
-    data.loanId=this.state.loanId;
+    data.userId=this.state.userId;
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("update:"+param);

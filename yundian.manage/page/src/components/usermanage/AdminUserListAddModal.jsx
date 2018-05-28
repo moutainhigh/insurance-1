@@ -1,31 +1,31 @@
 import React, {Component} from "react";
 import {Radio, Form, Checkbox, Input, Modal, Select, Button} from "antd";
-import DealerUserAction from "actions/DealerUserAction";
+import AdminUserAction from "actions/AdminUserAction";
 import {propsToFields, isEmptyObject} from "services/functions";
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const show = (info) => {
-  console.log("jsx DealerUserListAddModal: " + JSON.stringify(info));
+  console.log("jsx AdminUserListAddModal: " + JSON.stringify(info));
 }
 
-class DealerUserListAddModal extends Component {
+class AdminUserListAddModal extends Component {
 
 
   handleAddCancel =(e)=> {
-    DealerUserAction.openAddModal();
+    AdminUserAction.openAddModal();
     this.props.form.resetFields();
   };
   handleOnSave = (e) => {
     this.props.form.validateFieldsAndScroll((err, values) => {
       console.log("handleOnSave:"+JSON.stringify(values))
       if (!err) {
-        if(!isEmptyObject(this.props.dealerUserInfo)){
+        if(!isEmptyObject(this.props.adminUserInfo)){
           //修改
-          DealerUserAction.updateLoan(values);
+          AdminUserAction.updateAdminUser(values);
         }else {
-          DealerUserAction.addLoan(values);
+          AdminUserAction.addAdminUser(values);
         }
         this.props.form.resetFields();
       }
@@ -58,7 +58,7 @@ class DealerUserListAddModal extends Component {
                   )}
                 </FormItem>
 
-                <FormItem label="员工姓名" {...formItemLayout}>
+                <FormItem label="姓名" {...formItemLayout}>
                   {getFieldDecorator('name', { rules: [ {required: true, message: '请输入被保险人姓名'}]} )(
                     <Input/>
                   )}
@@ -81,13 +81,13 @@ class DealerUserListAddModal extends Component {
   }
 
 }
-DealerUserListAddModal = Form.create({
+AdminUserListAddModal = Form.create({
   mapPropsToFields(props){
     show(props)
-    show(isEmptyObject(props.dealerUserInfo))
-    if(!isEmptyObject(props.dealerUserInfo))
+    show(isEmptyObject(props.adminUserInfo))
+    if(!isEmptyObject(props.adminUserInfo))
     {
-      return  propsToFields(props.dealerUserInfo);
+      return  propsToFields(props.adminUserInfo);
 
     }else {
 
@@ -96,6 +96,6 @@ DealerUserListAddModal = Form.create({
 
   }
 
-})(DealerUserListAddModal);
-export default DealerUserListAddModal;
+})(AdminUserListAddModal);
+export default AdminUserListAddModal;
 

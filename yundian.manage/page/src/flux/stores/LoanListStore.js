@@ -118,6 +118,22 @@ class LoanListStore {
 
   };
 
+  handleOpenLoanGrantModal = (data) =>{
+  console.log("handleOpenLoanGrantModal");
+  let visible = !this.state.grantLoanModalVisible;
+  console.log(visible);
+  this.setState({
+    grantLoanModalVisible : visible,
+});
+  xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
+  if (result && result.data) {
+  show("get Info OK");
+  this.setState({loanInfo: result.data,loanId:data.loanId});
+} else{
+  Notify('请求贷款明细数据发生异常', result.msg, 'error');
+}})
+
+};
   handleCancelLoanGrantModal=()=>{
     this.setState({grantLoanModalVisible : false});
   }

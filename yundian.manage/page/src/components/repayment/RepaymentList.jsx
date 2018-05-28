@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import Layout from "../common/MenuLayout";
 import {FullWidthHR, MeBreadCrumb} from "../common/Common";
-import LoanListSearchBox from "./RepaymentSearchBox";
-import LoanListDT from "./RepaymentDT";
+import RepaymentSearchBox from "./RepaymentSearchBox";
+import RepaymentDT from "./RepaymentDT";
 
 class RepaymentList extends Component {
 

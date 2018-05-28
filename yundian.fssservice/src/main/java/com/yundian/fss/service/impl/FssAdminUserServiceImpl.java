@@ -82,6 +82,7 @@ public class FssAdminUserServiceImpl implements FssAdminUserService{
             fssAdminUserModel.setUserPwd(MD5.encodePassword(fssAdminUserModel.getUserPwd()));
             fssAdminUserModel.setCtime(new Date());
             fssAdminUserModel.setMtime(new Date());
+            fssAdminUserModel.setStatus("NORMAL");
             return fssAdminUserModelMapper.insert(fssAdminUserModel);
         } catch (Exception e) {
             log.error(String.format("新增系统用户失败:%s", JSON.toJSONString(fssAdminUserModel)), e);

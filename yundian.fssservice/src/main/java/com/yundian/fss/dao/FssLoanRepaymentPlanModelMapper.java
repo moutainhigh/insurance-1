@@ -24,9 +24,9 @@ public interface FssLoanRepaymentPlanModelMapper {
      * @param param
      * @return
      */
-    List<FssLoanRepaymentPlanModel> getFssLoanRepaymentPlaPaging(
+    List<FssLoanRepaymentPlanModel> getFssLoanRepaymentPlanPaging(
             Map<String, Object> param);
 
-    Integer getFssLoanPagingCount(Map<String, Object> param);
+    Integer getFssLoanRepaymentPlanPagingCount(Map<String, Object> param);
 
 }

@@ -51,7 +51,7 @@ class DealerUserListDT extends Component {
           <a onClick={()=>DealerUserAction.openUpdateModal({userId : record.userId})}>编辑</a>
           <span className="ant-divider" />
           <Popconfirm title={"你确定要重置密码吗?"}
-                      onConfirm={() =>{DealerUserAction.resetPwd(record.userId)}} okText="是" cancelText="取消">
+                      onConfirm={() =>{DealerUserAction.resetPwd({userId : record.userId})}} okText="是" cancelText="取消">
             <a>重置密码</a>
           </Popconfirm>
           </div>)

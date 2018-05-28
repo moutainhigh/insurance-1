@@ -34,7 +34,7 @@ class RepaymentStore {
         showSizeChanger: true,
         showQuickJumper: true,
       },
-      repaymentPlans: {},
+      repaymentPlans: [],
     };
   }
 
@@ -71,7 +71,7 @@ class RepaymentStore {
         Notify('请求贷款明细数据发生异常', result.msg, 'error');
       }})
 
-    xFetch(SERVER_URL + '/repayment/getPlan?loanId='+data.loanId).then(result => {
+    xFetch(SERVER_URL + '/repayment/getPlans?loanId='+data.loanId).then(result => {
       if (result && result.data) {
         show("get Info OK");
         this.setState({repaymentPlans: result.data,loanId:data.loanId});

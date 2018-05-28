@@ -34,6 +34,7 @@
 
 	<dubbo:service ref="fssAdminUserService" interface="com.yundian.fssapi.service.FssAdminUserService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
 	<dubbo:service ref="fssRepaymentService" interface="com.yundian.fssapi.service.FssRepaymentService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 

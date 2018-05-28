@@ -126,8 +126,8 @@ public class FssRepaymentServiceImpl implements FssRepaymentService {
                     (paginator.getPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
             List<FssLoanRepaymentPlanModel> list = fssLoanRepaymentPlanModelMapper.
-                    getFssLoanRepaymentPlaPaging(param);
-            Integer count = fssLoanRepaymentPlanModelMapper.getFssLoanPagingCount(param);
+                    getFssLoanRepaymentPlanPaging(param);
+            Integer count = fssLoanRepaymentPlanModelMapper.getFssLoanRepaymentPlanPagingCount(param);
             return PageProvider.getPage(paginator,count,list,FssLoanRepaymentPlanModel.class);
 
         } catch (Exception e) {
@@ -150,7 +150,7 @@ public class FssRepaymentServiceImpl implements FssRepaymentService {
                     (paginator.getPage() - 1) * paginator.getPageSize());
             BeanUtilsExt.copyPropertiesToMap(paginator.getParam(), param);
             List<FssLoanRepaymentModel> list = fssLoanRepaymentModelMapper.getFssLoanRepaymentPaging(param);
-            Integer count = fssLoanRepaymentPlanModelMapper.getFssLoanPagingCount(param);
+            Integer count = fssLoanRepaymentPlanModelMapper.getFssLoanRepaymentPlanPagingCount(param);
             return PageProvider.getPage(paginator,count,list,FssLoanRepaymentModel.class);
 
         } catch (Exception e) {

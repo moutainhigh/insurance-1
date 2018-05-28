@@ -1,7 +1,7 @@
 
 import alt from 'bases/Alt.js';
 
-class DealerUserAction {
+class AdminUserAction {
   /**
    * 初始化列表
    * @param data
@@ -47,11 +47,11 @@ class DealerUserAction {
     return data;
   };
 
-  addLoan =(data)=> {
+  addAdminUser =(data)=> {
     return data;
   };
 
- updateLoan =(data)=> {
+ updateAdminUser =(data)=> {
     return data;
   };
 
@@ -75,4 +75,4 @@ class DealerUserAction {
   };
 }
 
-export default alt.createActions(DealerUserAction);
+export default alt.createActions(AdminUserAction);

@@ -3,6 +3,9 @@ import connectToStores from "alt-utils/lib/connectToStores";
 import {Table} from "antd";
 import RepaymentAction from "actions/RepaymentAction";
 import LoanListAction from "actions/LoanListAction";
+import RepaymentDetail from "./RepaymentDetail";
+import RepaymentStore from "stores/RepaymentStore";
+
 //************************ 用于打印log的 **************************
 const show = (info) => {
   console.log(" jsx  : " + JSON.stringify(info));
@@ -20,12 +23,10 @@ class RepaymentDT extends Component {
       loading: state.loading,
       pagination: state.pagination,
       dataList: state.dataList,
-      auditModalVisible: state.auditModalVisible,
       showModalVisible:state.showModalVisible,
-      grantLoanModalVisible:state.grantLoanModalVisible,
       loanInfo:state.loanInfo,
       showLoanInfo:state.showLoanInfo,
-      auditLoanInfo:state.auditLoanInfo
+      repaymentPlans:state.repaymentPlans
 
 
     };
@@ -74,13 +75,13 @@ class RepaymentDT extends Component {
 
   componentDidMount() {
     loanListList = this;
-    LoanListAction.initDataListInfo({page: 1, pageSize: this.props.pagination.pageSize});
+    RepaymentAction.initDataListInfo({page: 1, pageSize: this.props.pagination.pageSize});
 
   }
 
   handleTableChange = (pagination) => {
     show(pagination)
-    LoanListAction.setPagination({page: pagination.current, pageSize: pagination.pageSize});
+    RepaymentAction.setPagination({page: pagination.current, pageSize: pagination.pageSize});
   };
 
 

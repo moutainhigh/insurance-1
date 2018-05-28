@@ -3,6 +3,8 @@ package com.yundian.dealerweb.controller;
 import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.domain.FssLoanRepaymentModel;
 import com.yundian.fssapi.domain.FssLoanRepaymentPlanModel;
+import com.yundian.fssapi.enums.FssLoanStatusEnum;
+import com.yundian.fssapi.enums.FssRepaymentStatusEnum;
 import com.yundian.fssapi.service.FssDealerCustomerService;
 import com.yundian.fssapi.service.FssRepaymentService;
 import com.yundian.result.Page;
@@ -44,6 +46,16 @@ public class RepaymentController {
             fssLoanQueryParam.setLoanId(loanId);
             paginator.setParam(fssLoanQueryParam);
             Page<FssLoanRepaymentPlanModel> paginatedResult = fssRepaymentService.getRepaymentPlan(paginator);
+
+            if(paginatedResult.getItems().size()>0) {
+                paginatedResult.getItems().stream().forEach(e -> {
+                    try {
+                        e.setRepaymentStatus(FssRepaymentStatusEnum.valueOf(e.getRepaymentStatus()).getDescription());
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                    }
+                });
+            }
             return Result.success(paginatedResult.getItems());
 
         } catch (Exception ex) {

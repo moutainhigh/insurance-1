@@ -1,7 +1,7 @@
 import alt from 'bases/Alt.js';
 import querystring from "querystring";
 import jsonp from "jsonp";
-import DealerUserAction from '../actions/DealerUserAction';
+import AdminUserAction from '../actions/AdminUserAction';
 import {Notify} from "components/common/Common";
 import {xFetch,xPostFetch} from "../../services/xFetch";
 
@@ -23,17 +23,17 @@ const momentTansfer = (data)=>{
   return data;
 }
 //****************************************************************
-class DealerUserStore {
+class AdminUserStore {
   constructor() {
     this.bindListeners({
-      handleInitDataList: DealerUserAction.initDataListInfo,
-      handleQuerySubmit: DealerUserAction.querySubmit,
-      handlePagination: DealerUserAction.setPagination,
-      handleOpenAddModal: DealerUserAction.openAddModal,
-      handleOpenUpdateModal: DealerUserAction.openUpdateModal,
-      handleAddLoan: DealerUserAction.addLoan,
-      handleUpdateLoan: DealerUserAction.updateLoan,
-      handleResetPwd: DealerUserAction.resetPwd
+      handleInitDataList: AdminUserAction.initDataListInfo,
+      handleQuerySubmit: AdminUserAction.querySubmit,
+      handlePagination: AdminUserAction.setPagination,
+      handleOpenAddModal: AdminUserAction.openAddModal,
+      handleOpenUpdateModal: AdminUserAction.openUpdateModal,
+      handleAddAdminUser: AdminUserAction.addAdminUser,
+      handleUpdateAdminUser: AdminUserAction.updateAdminUser,
+      handleResetPwd: AdminUserAction.resetPwd
 
 
     });
@@ -42,7 +42,7 @@ class DealerUserStore {
       loading: true,
       typeList : [],
       addModalVisible : false,
-      dealerUserInfo:{},
+      adminUserInfo:{},
       userId:null,
       pagination: {
         pageSize: 20,
@@ -62,11 +62,11 @@ class DealerUserStore {
     this.handleQuerySubmit({data: this.state.params, pager: pager});
   };
 
-  handleAddLoan = (data) =>{
+  handleAddAdminUser = (data) =>{
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("add:"+param)
-    xPostFetch(SERVER_URL + '/dealerUser/addUser?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/adminUser/addUser',param).then(result => {
       if (result && result.success) {
         Notify('添加成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -75,12 +75,12 @@ class DealerUserStore {
         Notify('添加发生异常', result.msg, 'error');
       }})
   };
-  handleUpdateLoan = (data) =>{
-    data.loanId=this.state.loanId;
+  handleUpdateAdminUser = (data) =>{
+    data.userId=this.state.userId;
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("update:"+param);
-    xPostFetch(SERVER_URL + '/dealerUser/updateUser?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/adminUser/updateUser',param).then(result => {
       if (result && result.success) {
         Notify('修改成功', result.msg, 'success');
         this.handleOpenAddModal();
@@ -90,13 +90,12 @@ class DealerUserStore {
       }})
   };
   handleResetPwd = (data) =>{
-    data.userId=this.state.userId;
     data = momentTansfer(data);
     let param = querystring.encode(data);
     console.log("update:"+param);
-    xPostFetch(SERVER_URL + '/dealerUser/resetPwd?'+param).then(result => {
+    xPostFetch(SERVER_URL + '/adminUser/resetPwd',param).then(result => {
       if (result && result.success) {
-        Notify('密码重置成功，默认为手机号码后6位', result.msg, 'success');
+        Notify('密码重置成功!', result.msg, 'success');
         this.handleOpenAddModal();
         this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
       } else{
@@ -111,7 +110,7 @@ class DealerUserStore {
     console.log(visible);
     this.setState({
       addModalVisible : visible,
-      dealerUserInfo:{},
+      adminUserInfo:{},
       userId:null
     });
   };
@@ -122,10 +121,10 @@ class DealerUserStore {
     let visible = !this.state.addModalVisible;
     console.log(visible);
     this.setState({addModalVisible : visible});
-    xFetch(SERVER_URL + '/dealerUser/getInfo?userId='+data.userId).then(result => {
+    xFetch(SERVER_URL + '/adminUser/getInfo?userId='+data.userId).then(result => {
       if (result && result.data) {
         show("get Info OK");
-        this.setState({dealerUserInfo: result.data,userId:data.userId});
+        this.setState({adminUserInfo: result.data,userId:data.userId});
       } else{
         Notify('请求经销商用户明细数据发生异常', result.msg, 'error');
       }})
@@ -136,8 +135,8 @@ class DealerUserStore {
   handleQuerySubmit = (data) => {
     this.setState({loading:true});
     let queryParam = querystring.encode(data.data) + "&" + querystring.encode(data.pager);
-    show(SERVER_URL + '/dealerUser/getList?'+queryParam)
-    xFetch(SERVER_URL + '/dealerUser/getList?'+queryParam).then(result => {
+    show(SERVER_URL + '/adminUser/getList?'+queryParam)
+    xFetch(SERVER_URL + '/adminUser/getList?'+queryParam).then(result => {
       if (result && result.data) {
         show("OK");
         this.state.pagination.total = result.data.totalNumber;
@@ -160,4 +159,4 @@ class DealerUserStore {
 
 }
 
-export default alt.createStore(DealerUserStore, 'DealerUserStore');
+export default alt.createStore(AdminUserStore, 'AdminUserStore');

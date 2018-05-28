@@ -3,8 +3,9 @@ import React, {Component} from "react";
 import connectToStores from "alt-utils/lib/connectToStores";
 import {Table} from "antd";
 import LoanListAction from "actions/LoanListAction";
-import LoanListShowModal from "./LoanInfoShowModal";
-import LoanApplyModal from "./LoanGrantModal";
+import LoanInfoShowModal from "./LoanInfoShowModal";
+import LoanGrantModal from "./LoanGrantModal";
+import LoanAuditModal from "./LoanAuditModal";
 //************************ 用于打印log的 **************************
 const show = (info) => {
   console.log(" jsx  : " + JSON.stringify(info));

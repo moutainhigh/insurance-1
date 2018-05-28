@@ -1,21 +1,21 @@
 import React, {Component} from "react";
 import {Form, Input, Button, Select, DatePicker} from "antd";
-import DealerUserAction from "actions/DealerUserAction";
+import AdminUserAction from "actions/AdminUserAction";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const show = (info) => {
   console.log("CustomerListSearchBox jsx " + JSON.stringify(info));
 }
 const {MonthPicker, RangePicker} = DatePicker;
-class DealerUserListSearchBox extends Component {
+class AdminUserListSearchBox extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let fieldValues = this.props.form.getFieldsValue();
-    DealerUserAction.querySubmit({data: fieldValues, pager: {page: 1, pageSize: 20}});
+    AdminUserAction.querySubmit({data: fieldValues, pager: {page: 1, pageSize: 20}});
   };
   handOpenAddModal =(e) =>{
     show("点击添加按钮");
-    DealerUserAction.openAddModal();
+    AdminUserAction.openAddModal();
   };
 
   render() {
@@ -46,5 +46,5 @@ class DealerUserListSearchBox extends Component {
   }
 }
 //
-DealerUserListSearchBox = Form.create()(DealerUserListSearchBox);
-export default DealerUserListSearchBox;
+AdminUserListSearchBox = Form.create()(AdminUserListSearchBox);
+export default AdminUserListSearchBox;

@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import LoanInfo from "../loan/LoanInfo";
-import {Tabs} from "antd";
+import {Tabs,Modal,Button,Table} from "antd";
+import RepaymentAction from "actions/RepaymentAction";
+const TabPane = Tabs.TabPane;
 
 class RepaymentPlan extends Component{
 
@@ -38,7 +40,7 @@ class RepaymentPlan extends Component{
         title: '还款状态', dataIndex: 'repaymentStatus', key: 'repaymentStatus', width: 280
       }
     ];
-
+console.log('plan:'+this.props.repaymentPlans);
     return (
       <div>
         <Table columns={columns}
@@ -62,7 +64,7 @@ class RepaymentPlan extends Component{
 
 class RepaymentDetail extends Component {
   handleShowCancel= ()=>{
-
+    RepaymentAction.closeShowModal();
   }
   render() {
     return (

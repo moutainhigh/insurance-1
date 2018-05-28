@@ -43,6 +43,21 @@ public class DealerUserController {
             return Result.fail("", "修改客户信息异常，请重试");
         }
     }
+    @ResponseBody
+    @RequestMapping(value="/dealerUser/resetPwd",method= RequestMethod.POST)
+    public Result resetPwd(@RequestParam(value="userId") Long userId) {
+
+        try {
+            FssDealerUserModel fssDealerUserModel= fssDealerUserService.getFssDealerUser(userId);
+            fssDealerUserService.resetPwd(userId,fssDealerUserModel.getUserName());
+            return Result.success("");
+        } catch (Exception ex) {
+            log.error(String.format("重置密码成功："), ex);
+            System.out.printf(ex.getMessage());
+            return Result.fail("", "重置密码异常，请重试");
+        }
+    }
+
 
     @ResponseBody
     @RequestMapping(value="/dealerUser/addUser",method= RequestMethod.POST)
