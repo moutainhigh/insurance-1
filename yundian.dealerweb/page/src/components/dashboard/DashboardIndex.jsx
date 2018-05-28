@@ -38,7 +38,6 @@ class DashboardIndex extends Component {
       { label: '弹个车天猫', value: 'tangeche_tmall_user_access' },
       { label: '弹个车车秒贷', value: 'tangeche_white_user_access' },
     ];
-deal
     return (
       <Layout>
         <div>
