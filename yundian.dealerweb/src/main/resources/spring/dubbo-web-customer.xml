@@ -16,6 +16,10 @@
 		
 	<!-- 声明需要引用的服务接口  -->
 	<dubbo:reference id="fssCodeLibraryService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCodeLibraryService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
+
+	<dubbo:reference id="fssDealerService" registry="yundian_center" interface="com.yundian.fssapi.service.FssDealerService"
                      group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
 
 	<dubbo:reference id="fssDealerUserService" registry="yundian_center" interface="com.yundian.fssapi.service.FssDealerUserService"
