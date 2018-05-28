@@ -260,7 +260,7 @@
 
 
 	<build>
-		<finalName>yundian.dealerweb</finalName>
+		<finalName>yundian-dealerweb</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

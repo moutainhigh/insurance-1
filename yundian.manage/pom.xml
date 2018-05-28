@@ -248,7 +248,7 @@
 
 
 	<build>
-		<finalName>yundian.manage</finalName>
+		<finalName>yundian-manage</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
