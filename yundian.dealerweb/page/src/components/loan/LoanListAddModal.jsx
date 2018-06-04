@@ -5,7 +5,7 @@ import { propsToFields,isEmptyObject } from 'services/functions';
 import {banks} from "services/data"
 import PicturesWall from '../common/PicturesWall';
 import SelectData from '../common/SelectData';
-import Moment from 'moment';
+import Moment from 'moment'
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
@@ -86,6 +86,30 @@ handleCascaderOnChange=(value,selectedOptions)=>{
     }
   };
 
+  computLoanMoney = (type,e)=>{
+
+      let  policyTotalAmount = this.props.form.getFieldValue("policyTotalAmount");
+      let  policyCompulsoryInsurance = this.props.form.getFieldValue("policyCompulsoryInsurance");
+      let  policyVehicleTax = this.props.form.getFieldValue("policyVehicleTax");
+      if(type=="policyTotalAmount"){
+        policyTotalAmount = e;
+      }
+      if(type=="policyCompulsoryInsurance"){
+        policyCompulsoryInsurance = e;
+      }
+     if(type=="policyVehicleTax"){
+        policyVehicleTax = e;
+      }
+    console.log('policyTotalAmount'+policyTotalAmount)
+    console.log('policyCompulsoryInsurance'+policyCompulsoryInsurance)
+    console.log('policyVehicleTax'+policyVehicleTax)
+      if(policyTotalAmount!=null&&policyCompulsoryInsurance!=null&&policyVehicleTax!=null){
+        let planLoanAmountValue=policyTotalAmount-policyCompulsoryInsurance-policyVehicleTax;
+        console.log('planLoanAmountValue'+planLoanAmountValue)
+        this.props.form.setFieldsValue({planLoanAmount:planLoanAmountValue});
+      }
+
+  }
 
 
   render() {
@@ -171,14 +195,14 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                         <FormItem label="联系人姓名" {...formItemLayout}>
-                          {getFieldDecorator('insuresLinkName', { rules: [ {required: true, message: '请输入联系人姓名'}]})(
+                          {getFieldDecorator('insuresLinkName')(
                             <Input/>
                           )}
                         </FormItem>
                     </Col>
                       <Col span="8">
                         <FormItem   label="联系电话" {...formItemLayout}>
-                          {getFieldDecorator('insuresLinkPhone', { rules: [ {required: true, message: '请输入联系电话'}, {validator: this.checkMobileLength}]})(
+                          {getFieldDecorator('insuresLinkPhone')(
                             <Input/>
                           )}
                         </FormItem>
@@ -316,7 +340,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                       <FormItem label="投保类型"  {...formItemLayout}>
-                        {getFieldDecorator('policyType')(
+                        {getFieldDecorator('policyType',{initialValue:'first'})(
                           <Select>
                             <Option value="first">首保</Option>
                             <Option value="other">非首保</Option>
@@ -334,7 +358,9 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     <Col span="8">
                       <FormItem label="保险总额" {...formItemLayout}>
                         {getFieldDecorator('policyTotalAmount' ,{ rules: [ {required: true, message: '请输入保险总额'}]})(
-                          <Input/>
+                          <InputNumber onChange={(e)=>{
+                            this.computLoanMoney('policyTotalAmount',e);
+                          }}/>
                         )}
                       </FormItem>
                     </Col>
@@ -343,7 +369,13 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     <Col span="8">
                       <FormItem label="生效日期"  {...formItemLayout}>
                         {getFieldDecorator('policyEffectDate', { rules: [ {required: true, message: '请输入生效日期'}]})(
-                          <DatePicker/>
+                          <DatePicker onChange={(date,dateString)=>{
+                            if(date==null)
+                              return;
+                            let policyExpireDateValue = Moment(dateString);
+                            policyExpireDateValue.add(1,'years').subtract(1,'days');
+                            this.props.form.setFieldsValue({policyExpireDate:policyExpireDateValue});
+                          }}/>
                         )}
                       </FormItem>
                     </Col>
@@ -357,16 +389,20 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   </Row>
                   <Row style={rowLayout}>
                   <Col span="8">
-                    <FormItem label="交强险"  {...formItemLayout}>
-                      {getFieldDecorator('policyCompulsoryInsurance')(
-                        <InputNumber />
+                    <FormItem label="交强险"  {...formItemLayout} >
+                      {getFieldDecorator('policyCompulsoryInsurance',{ rules: [ {required: true, message: '请输入交强险金额'}]})(
+                        <InputNumber onChange={(e)=>{
+                          this.computLoanMoney('policyCompulsoryInsurance',e);
+                        }}/>
                       )}
                     </FormItem>
                   </Col>
                   <Col span="8">
                     <FormItem  label="车船使用税"  {...formItemLayout}>
-                      {getFieldDecorator('policyVehicleTax')(
-                        <InputNumber/>
+                      {getFieldDecorator('policyVehicleTax',{ rules: [ {required: true, message: '请输入车船使用税金额'}]})(
+                        <InputNumber onChange={(e)=>{
+                          this.computLoanMoney('policyVehicleTax',e);
+                        }}/>
                       )}
                     </FormItem>
                   </Col>
@@ -479,8 +515,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                 <Card title="金融方案" style={{marginBottom: 24}} bordered={true}>
                   <Row style={rowLayout}>
                     <Col span="8">
-                      <FormItem label="产品名称"  {...formItemLayout}>
-                        {getFieldDecorator('planId' )(
+                      <FormItem label="方案名称"  {...formItemLayout} >
+                        {getFieldDecorator('planId' ,{ rules: [ {required: true, message: '请选择方案名称'}]})(
                           <Select>
                             {planOptions}
                           </Select>
