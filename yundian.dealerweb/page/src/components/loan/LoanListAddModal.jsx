@@ -209,8 +209,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                       </Col>
                         <Col span="8">
                         <FormItem  label="客户类型" {...formItemLayout}>
-                          {getFieldDecorator('insuresType')(
-                            <Select initialValue="personal">
+                          {getFieldDecorator('insuresType',{initialValue:"personal"})(
+                            <Select >
                               <Option value="personal">个人</Option>
                               <Option value="enterprise">企业</Option>
                             </Select>
@@ -270,8 +270,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem  label="车辆类型" {...formItemLayout}>
-                        {getFieldDecorator('carType')(
-                          <Select initialValue="1">
+                        {getFieldDecorator('carType',{initialValue:"1"})(
+                          <Select>
                             <Option value="1">新车</Option>
                             <Option value="2">二手车</Option>
                           </Select>
@@ -282,8 +282,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                       <FormItem label="购买方式" {...formItemLayout}>
-                        {getFieldDecorator('carBuyType')(
-                          <Select initialValue="1">
+                        {getFieldDecorator('carBuyType',{initialValue:"1"})(
+                          <Select >
                             <Option value="1">分期</Option>
                             <Option value="2">全款</Option>
                           </Select>
@@ -326,8 +326,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem  label="车"  {...formItemLayout}>
-                        {getFieldDecorator('carImports')(
-                          <RadioGroup initialValue="1">
+                        {getFieldDecorator('carImports',{initialValue:"1"})(
+                          <RadioGroup>
                             <Radio value="1">国产</Radio>
                             <Radio value="2">进口</Radio>
                           </RadioGroup>
@@ -525,8 +525,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem label="贷款期限" {...formItemLayout}>
-                        {getFieldDecorator('planPeriod', { rules: [ {required: true, message: '请选择贷款期限'}]} )(
-                          <Select initialValue="12">
+                        {getFieldDecorator('planPeriod', { initialValue:'12',rules: [ {required: true, message: '请选择贷款期限'}]} )(
+                          <Select >
                             <Option value="12">12期</Option>
                             <Option value="24">24期</Option>
                             <Option value="36">36期</Option>
@@ -538,8 +538,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                       <FormItem label="融资类目"  {...formItemLayout}>
-                        {getFieldDecorator('planFinancingType')(
-                          <CheckboxGroup options={planFinancingTypeOptions} initialValue={['A','C']}/>
+                        {getFieldDecorator('planFinancingType',{initialValue:['A']})(
+                          <CheckboxGroup options={planFinancingTypeOptions} />
 
                           )}
                       </FormItem>
