@@ -93,6 +93,9 @@ public class LoanController {
             LoanInfoModel loanInfoModel = new LoanInfoModel();
             loanInfoModel.setFssLoanModel(fssLoanModel);
             loanInfoModel.setLoanId(fssLoanModel.getLoanId());
+            List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
+            List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
+            loanInfoModel.setFssLoanDocumentModels(fssLoanDocumentModelList);
 
             fssLoanService.submitLoan(loanInfoModel,"操作人");
             return Result.success("");
