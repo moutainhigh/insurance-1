@@ -58,7 +58,7 @@ class RepaymentDT extends Component {
     },
 
     {
-      title: '订单状态', dataIndex: 'auditStatus', key: 'auditStatus', width: 200
+      title: '订单状态', dataIndex: 'auditStatusName', key: 'auditStatusName', width: 200
     }, {
       title: '操作', dataIndex: 'handle', key: 'handle', width: 120,
       render(text, record, index){
