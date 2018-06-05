@@ -209,16 +209,13 @@ public class FssLoanServiceImpl implements FssLoanService {
                 loanId = insertFssLoan(loanInfoModel.getFssLoanModel());
                 loanInfoModel.setLoanId(loanId);
                 if(loanInfoModel.getFssLoanDocumentModels()!=null) {
-                    loanInfoModel.getFssLoanDocumentModels().stream().forEach(
-                            e -> e.setLoanId(loanInfoModel.getLoanId()));
                     insertFssLoanDocument(loanId,loanInfoModel.getFssLoanDocumentModels());
                 }
 
             } else {
                 fssLoanModelMapper.updateByPrimaryKeySelective(loanInfoModel.getFssLoanModel());
                 if(loanInfoModel.getFssLoanDocumentModels()!=null) {
-                    loanInfoModel.getFssLoanDocumentModels().stream().forEach(
-                            e -> fssLoanDocumentModelMapper.updateByPrimaryKeySelective(e));
+                    insertFssLoanDocument(loanInfoModel.getLoanId(),loanInfoModel.getFssLoanDocumentModels());
                 }
             }
         } catch (Exception e) {
