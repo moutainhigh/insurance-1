@@ -28,7 +28,7 @@ class LoanGrantModal extends Component {
     LoanListAction.cancelLoanGrantModal();
   };
   handleOnGrant = () => {
-    LoanListAction.handleGrantLoan({});
+    LoanListAction.grantLoan({});
   }
 
   render() {

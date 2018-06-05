@@ -78,7 +78,7 @@ class LoanListDT extends Component {
             <div>
               <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
               <span className="ant-divider" />
-              <a onClick={()=>LoanListAction.openLoanApplyModal({loanId : record.loanId})}>放款</a>
+              <a onClick={()=>LoanListAction.openLoanGrantModal({loanId : record.loanId})}>放款</a>
             </div>
           )
         }
