@@ -100,12 +100,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
      if(type=="policyVehicleTax"){
         policyVehicleTax = e;
       }
-    console.log('policyTotalAmount'+policyTotalAmount)
-    console.log('policyCompulsoryInsurance'+policyCompulsoryInsurance)
-    console.log('policyVehicleTax'+policyVehicleTax)
       if(policyTotalAmount!=null&&policyCompulsoryInsurance!=null&&policyVehicleTax!=null){
         let planLoanAmountValue=policyTotalAmount-policyCompulsoryInsurance-policyVehicleTax;
-        console.log('planLoanAmountValue'+planLoanAmountValue)
         this.props.form.setFieldsValue({planLoanAmount:planLoanAmountValue});
       }
 
@@ -158,6 +154,11 @@ handleCascaderOnChange=(value,selectedOptions)=>{
     }
     const contentLayout = {
       span: 5
+    }
+
+    const moneyFormatter={
+      // formatter:(value)=>{'￥'+value.replace('/\B(?=(\d{3})+(?!\d))/g', ',')},
+      // parser:(value) => {value.replace('/\￥\s?|(,*)/g', '')}
     }
     return (
       <div>
@@ -360,7 +361,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                         {getFieldDecorator('policyTotalAmount' ,{ rules: [ {required: true, message: '请输入保险总额'}]})(
                           <InputNumber onChange={(e)=>{
                             this.computLoanMoney('policyTotalAmount',e);
-                          }}/>
+                          }} {...moneyFormatter}
+                          />
                         )}
                       </FormItem>
                     </Col>
@@ -368,7 +370,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                   <Row style={rowLayout}>
                     <Col span="8">
                       <FormItem label="生效日期"  {...formItemLayout}>
-                        {getFieldDecorator('policyEffectDate', { rules: [ {required: true, message: '请输入生效日期'}]})(
+                        {getFieldDecorator('policyEffectDate', { rules: [ {required: true, message: '请输入保险生效日期'}]})(
                           <DatePicker onChange={(date,dateString)=>{
                             if(date==null)
                               return;
@@ -381,7 +383,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem  label="到期日期"  {...formItemLayout}>
-                        {getFieldDecorator('policyExpireDate', { rules: [ {required: true, message: '请输入到期日期'}]})(
+                        {getFieldDecorator('policyExpireDate', { rules: [ {required: true, message: '请输入保险到期日期'}]})(
                           <DatePicker/>
                         )}
                       </FormItem>
@@ -393,7 +395,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                       {getFieldDecorator('policyCompulsoryInsurance',{ rules: [ {required: true, message: '请输入交强险金额'}]})(
                         <InputNumber onChange={(e)=>{
                           this.computLoanMoney('policyCompulsoryInsurance',e);
-                        }}/>
+                        }} {...moneyFormatter} />
                       )}
                     </FormItem>
                   </Col>
@@ -402,7 +404,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                       {getFieldDecorator('policyVehicleTax',{ rules: [ {required: true, message: '请输入车船使用税金额'}]})(
                         <InputNumber onChange={(e)=>{
                           this.computLoanMoney('policyVehicleTax',e);
-                        }}/>
+                        }} {...moneyFormatter}/>
                       )}
                     </FormItem>
                   </Col>
@@ -547,14 +549,14 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     <Col span="8">
                     <FormItem  label="贷款总额"  {...formItemLayout}>
                       {getFieldDecorator('planLoanAmount' , { rules: [ {required: true, message: '请输入贷款总额'}]})(
-                        <InputNumber/>
+                        <InputNumber {...moneyFormatter}/>
                       )}
                     </FormItem>
                   </Col>
                     <Col span="8">
                       <FormItem  label="服务费"  {...formItemLayout}>
                         {getFieldDecorator('loanFee')(
-                          <InputNumber/>
+                          <InputNumber {...moneyFormatter}/>
                         )}
                       </FormItem>
                     </Col>
@@ -573,7 +575,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem label="还款卡号" {...formItemLayout}>
-                        {getFieldDecorator('repaymentCard' , { rules: [ {required: true, message: '请选择还款卡号'}]})(
+                        {getFieldDecorator('repaymentCard' , { rules: [ {required: true, message: '请选择代扣银行卡号卡号'}]})(
                           <Input/>
                         )}
                       </FormItem>

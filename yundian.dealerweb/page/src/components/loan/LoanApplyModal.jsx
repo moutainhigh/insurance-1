@@ -88,13 +88,13 @@ class LoanApplyModal extends Component {
                   <Row style={rowLayout}>
                     <Col span="2"><FormItem label="贷款合同" ></FormItem></Col>
                     <Col span="6">
-                      {getFieldDecorator('withholdingAgreementPic' , { rules: [ {required: true, message: '请上传贷款合同照片'}]})(
+                      {getFieldDecorator('loanContractPic' , { rules: [ {required: true, message: '请上传贷款合同照片'}]})(
                           <PicturesWall  {...picturesWallprops}/>
                       )}
                     </Col>
                     <Col span="2"><FormItem label="委托代扣协议" /></Col>
                     <Col span="6">
-                      {getFieldDecorator('commercialInsurancePic' , { rules: [ {required: true, message: '请上传委托代扣协议照片'}]})(
+                      {getFieldDecorator('withholdingAgreementPic' , { rules: [ {required: true, message: '请上传委托代扣协议照片'}]})(
                         <PicturesWall  {...picturesWallprops}/>
                       )}
                     </Col>
@@ -115,7 +115,7 @@ LoanApplyModal = Form.create({
       if(props.loanInfo.fssLoanDocs!=null){
         let docs = props.loanInfo.fssLoanDocs;
         loan.withholdingAgreementPic = docs.withholdingAgreementPic;
-        loan.commercialInsurancePic = docs.commercialInsurancePic;
+        loan.loanContractPic = docs.loanContractPic;
       }
       let fields = propsToFields(loan);
       return fields;

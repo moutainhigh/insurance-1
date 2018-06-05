@@ -321,7 +321,7 @@ public class FssLoanModel implements Serializable {
      * 状态:INIT待提交、AUDITING审核中、APPLY_LOAN申请放款、WAITING_REVISED待资料修改、WAITING_LOAN待放款、HAVE_LOAN已放款、CLOSED已关闭
      */
     private String auditStatus;
-
+    private String auditStatusName;
     /**
      * 上一个状态
      */
@@ -351,6 +351,11 @@ public class FssLoanModel implements Serializable {
      *提报人
      */
     private String submitPerson;
+
+    /**
+     * 提报时间
+     */
+    private Date submitDate;
     /**
      *
      *
@@ -944,5 +949,21 @@ public class FssLoanModel implements Serializable {
 
     public void setAgreeRepaymentDate(Integer agreeRepaymentDate) {
         this.agreeRepaymentDate = agreeRepaymentDate;
+    }
+
+    public String getAuditStatusName() {
+        return this.auditStatusName;
+    }
+
+    public void setAuditStatusName(String auditStatusName) {
+        this.auditStatusName = auditStatusName;
+    }
+
+    public Date getSubmitDate() {
+        return this.submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
     }
 }

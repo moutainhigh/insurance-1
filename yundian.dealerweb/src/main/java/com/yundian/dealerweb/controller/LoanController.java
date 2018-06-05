@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -80,6 +81,15 @@ public class LoanController {
                 fssLoanModel.setPolicyTotalAmount(fssLoanModel.getPolicyTotalAmount()*100);
             }
 
+            if(fssLoanModel.getPolicyCompulsoryInsurance()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyCompulsoryInsurance(fssLoanModel.getPolicyCompulsoryInsurance()*100);
+            }
+            if(fssLoanModel.getPolicyVehicleTax()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyVehicleTax(fssLoanModel.getPolicyVehicleTax()*100);
+            }
+            fssLoanModel.setSubmitDate(new Date());
             LoanInfoModel loanInfoModel = new LoanInfoModel();
             loanInfoModel.setFssLoanModel(fssLoanModel);
             loanInfoModel.setLoanId(fssLoanModel.getLoanId());
@@ -108,6 +118,14 @@ public class LoanController {
             if(fssLoanModel.getPolicyTotalAmount()!=null){
                 //金额元——>分
                 fssLoanModel.setPolicyTotalAmount(fssLoanModel.getPolicyTotalAmount()*100);
+            }
+            if(fssLoanModel.getPolicyCompulsoryInsurance()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyCompulsoryInsurance(fssLoanModel.getPolicyCompulsoryInsurance()*100);
+            }
+            if(fssLoanModel.getPolicyVehicleTax()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyVehicleTax(fssLoanModel.getPolicyVehicleTax()*100);
             }
             fssLoanService.insertFssLoanDocument(fssLoanModel.getLoanId(),fssLoanDocumentModelList);
             fssLoanService.updateFssLoan(fssLoanModel);
@@ -138,6 +156,14 @@ public class LoanController {
             if(fssLoanModel.getPolicyTotalAmount()!=null){
                 //金额元——>分
                 fssLoanModel.setPolicyTotalAmount(fssLoanModel.getPolicyTotalAmount()*100);
+            }
+            if(fssLoanModel.getPolicyCompulsoryInsurance()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyCompulsoryInsurance(fssLoanModel.getPolicyCompulsoryInsurance()*100);
+            }
+            if(fssLoanModel.getPolicyVehicleTax()!=null){
+                //金额元——>分
+                fssLoanModel.setPolicyVehicleTax(fssLoanModel.getPolicyVehicleTax()*100);
             }
             List<LoanDocumentVo> loanDocumentVoList = getUploadDocumentVos(fssLoanModel);
             List<FssLoanDocumentModel> fssLoanDocumentModelList =LoanDocumentVoMatch.reverseMatchList(loanDocumentVoList);
@@ -172,6 +198,14 @@ public class LoanController {
             if(loanInfoModel.getFssLoanModel().getPolicyTotalAmount()!=null){
                 //金额分——>元
                 loanInfoModel.getFssLoanModel().setPolicyTotalAmount(loanInfoModel.getFssLoanModel().getPolicyTotalAmount()/100);
+            }
+            if(loanInfoModel.getFssLoanModel().getPolicyCompulsoryInsurance()!=null){
+                //金额元——>分
+                loanInfoModel.getFssLoanModel().setPolicyCompulsoryInsurance(loanInfoModel.getFssLoanModel().getPolicyCompulsoryInsurance()/100);
+            }
+            if(loanInfoModel.getFssLoanModel().getPolicyVehicleTax()!=null){
+                //金额元——>分
+                loanInfoModel.getFssLoanModel().setPolicyVehicleTax(loanInfoModel.getFssLoanModel().getPolicyVehicleTax()/100);
             }
             LoanInfoVo loanInfoVo= new LoanInfoVo();
             loanInfoVo.setFssLoanModel(loanInfoModel.getFssLoanModel());
@@ -221,7 +255,7 @@ public class LoanController {
             if(paginatedResult.getItems().size()>0) {
                 paginatedResult.getItems().stream().forEach(e -> {
                     try {
-                        e.setAuditStatus(FssLoanStatusEnum.valueOf(e.getAuditStatus()).desc());
+                        e.setAuditStatusName(FssLoanStatusEnum.valueOf(e.getAuditStatus()).desc());
                     } catch (Exception ex) {
                         log.error(ex.getMessage());
                     }

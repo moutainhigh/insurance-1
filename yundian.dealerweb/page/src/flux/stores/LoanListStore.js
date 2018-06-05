@@ -214,15 +214,15 @@ class LoanListStore {
 
     let withholdingAgreementPic = data.withholdingAgreementPic;
     delete data.withholdingAgreementPic;
-    let commercialInsurancePic = data.commercialInsurancePic;
-    delete data.commercialInsurancePic;
+    let loanContractPic = data.loanContractPic;
+    delete data.loanContractPic;
 
     let param = querystring.encode(data);
     if(!isEmptyObject(withholdingAgreementPic)) {
       param = param + "&withholdingAgreementPic=" + JSON.stringify(withholdingAgreementPic);
     }
-    if(!isEmptyObject(commercialInsurancePic)) {
-      param =  param+"&commercialInsurancePic="+JSON.stringify(commercialInsurancePic);
+    if(!isEmptyObject(loanContractPic)) {
+      param =  param+"&loanContractPic="+JSON.stringify(loanContractPic);
     }
     console.log("submit:"+param);
     xPostFetch(SERVER_URL + '/loan/applyLoan',param).then(result => {

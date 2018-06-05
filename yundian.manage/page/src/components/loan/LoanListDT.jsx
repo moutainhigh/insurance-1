@@ -60,7 +60,7 @@ class LoanListDT extends Component {
     },
 
     {
-      title: '订单状态', dataIndex: 'auditStatus', key: 'auditStatus', width: 200
+      title: '订单状态', dataIndex: 'auditStatusName', key: 'auditStatusName', width: 200
     }, {
       title: '操作', dataIndex: 'handle', key: 'handle', width: 120,
       render(text, record, index){
@@ -69,7 +69,7 @@ class LoanListDT extends Component {
             <div>
               <a onClick={()=>LoanListAction.openShowModal({loanId : record.loanId})}>查看</a>
               <span className="ant-divider" />
-              <a onClick={()=>LoanListAction.openUpdateModal({loanId : record.loanId})}>审核</a>
+              <a onClick={()=>LoanListAction.openAuditModal({loanId : record.loanId})}>审核</a>
             </div>
           )
         }

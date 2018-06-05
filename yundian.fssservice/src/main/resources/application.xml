@@ -87,6 +87,23 @@
 	<property name="connectionFactory"   ref="connectionFactory" />
 	</bean>
 
+
+	<!--<bean name="securityService" class="com.kjtpay.gateway.common.util.security.SecurityService">-->
+		<!--&lt;!&ndash; 快捷通公钥 &ndash;&gt;-->
+		<!--<constructor-arg index="0">-->
+		<!--<value>${certPath}</value>-->
+		<!--</constructor-arg>-->
+		<!--&lt;!&ndash; 商户私钥 &ndash;&gt;-->
+		<!--<constructor-arg index="1">-->
+		<!--<value>${pfxPath}</value>-->
+		<!--</constructor-arg>-->
+		<!--&lt;!&ndash; 商户私钥密码 &ndash;&gt;-->
+		<!--快捷通支付服务有限公司 - 12 - -->
+		<!--<constructor-arg index="2">-->
+			<!--<value>${pfxKey}</value>-->
+		<!--</constructor-arg>-->
+	<!--</bean>-->
+
 	<import resource="dubbo-provider.xml"/>
 	<import resource="dubbo-customer.xml"/>
     

@@ -13,7 +13,7 @@ public enum FssLoanStatusEnum {
 
 	AUDITING("AUDITING","审核中"),
 
-	APPLY_LOAN("APPLY_LOAN","申请放款"),
+	APPLY_LOAN("APPLY_LOAN","待申请放款"),
 
 	WAITING_REVISED("WAITING_REVISED","待资料修改"),
 

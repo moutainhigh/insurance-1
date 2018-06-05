@@ -26,7 +26,7 @@ class PicturesWall extends React.Component {
       maxFileSize: this.props.maxFileSize ? this.props.maxFileSize : 2,
       fileList: this.props.value instanceof Array ? this.props.value : [],
       data:{source:1020010},
-      action: "http://localhost:9001/uploadfileforaliyun?source=1020010100",
+      action: "/uploadfileforaliyun?source=1020010100",
       value:this.props.value instanceof Array ? this.props.value : [],
 
     };

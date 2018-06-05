@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +102,8 @@ public class FssLoanServiceImpl implements FssLoanService {
             fssLoanModel.setAuditStatus(FssLoanStatusEnum.INIT.code());
             fssLoanModel.setAuditStatusPre(FssLoanStatusEnum.INIT.code());
             fssLoanModel.setLoanCode("L"+ RandomUtil.getRandomCode());
+            fssLoanModel.setCtime(new Date());
+            fssLoanModel.setMtime(new Date());
              fssLoanModelMapper.insert(fssLoanModel);
             return fssLoanModel.getLoanId();
         } catch (Exception e) {
@@ -268,9 +271,9 @@ public class FssLoanServiceImpl implements FssLoanService {
     public void auditPass(Long loanId,String operater) {
         FlowDataModel flowDataModel = new FlowDataModel();
         flowDataModel.setLoanId(loanId);
-        flowDataModel.setFlowToStatus(FssLoanStatusEnum.WAITING_LOAN);
+        flowDataModel.setFlowToStatus(FssLoanStatusEnum.APPLY_LOAN);
         flowDataModel.setOperater(operater);
-        flowDataModel.setContent(FssLoanStatusEnum.WAITING_LOAN.desc());
+        flowDataModel.setContent(FssLoanStatusEnum.APPLY_LOAN.desc());
         fssFlowManage.flow(flowDataModel);
     }
     @Override

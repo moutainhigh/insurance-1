@@ -60,13 +60,13 @@ class LoanListDT extends Component {
       title: '到期日期', dataIndex: 'policyExpireDate', key: 'policyExpireDate', width: 120
     },
     {
-      title: '提报时间', dataIndex: 'ctime', key: 'ctime', width: 120
+      title: '提报时间', dataIndex: 'submitDate', key: 'submitDate', width: 120
     },
     {
       title: '提报人', dataIndex: 'submitPerson', key: 'submitPerson', width: 180
     },
     {
-      title: '订单状态', dataIndex: 'auditStatus', key: 'auditStatus', width: 200
+      title: '订单状态', dataIndex: 'auditStatusName', key: 'auditStatusName', width: 200
     }, {
       title: '操作', dataIndex: 'handle', key: 'handle', width: 120,
       render(text, record, index){

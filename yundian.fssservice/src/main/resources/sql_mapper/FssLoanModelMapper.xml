@@ -72,6 +72,8 @@
     <result column="audit_name" property="auditName" jdbcType="VARCHAR" />
     <result column="loan_time" property="loanTime" jdbcType="TIMESTAMP" />
     <result column="submit_person" property="submitPerson" jdbcType="VARCHAR" />
+    <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP" />
+
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -88,7 +90,7 @@
     policy_seat_passenger, policy_scratch, policy_glass_breakage, policy_disregard_contributing, 
     policy_seat_driver, policy_wading, plan_id, plan_name, plan_period, plan_financing_type, 
     plan_loan_amount, loan_rate,loan_fee,repayment_bank_code, repayment_bank_name, repayment_card, sign_time,
-    audit_status,audit_status_pre,closed_reason, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark,agree_repayment_date
+    audit_status,audit_status_pre,closed_reason, audit_time, audit_name, loan_time, submit_person, ctime, mtime, remark,agree_repayment_date,submit_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -123,7 +125,7 @@
       repayment_bank_code, repayment_bank_name, repayment_card, 
       sign_time, audit_status, audit_status_pre,closed_reason,audit_time,
       audit_name, loan_time, submit_person, 
-      ctime, mtime, remark,loan_fee,loan_rate,agree_repayment_date
+      ctime, mtime, remark,loan_fee,loan_rate,agree_repayment_date,submit_date
       )
     values ( #{fundId,jdbcType=INTEGER}, #{fundName,jdbcType=VARCHAR},
       #{dealerId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{dealerName,jdbcType=VARCHAR}, 
@@ -147,7 +149,7 @@
       #{repaymentBankCode,jdbcType=VARCHAR}, #{repaymentBankName,jdbcType=VARCHAR}, #{repaymentCard,jdbcType=VARCHAR}, 
       #{signTime,jdbcType=TIMESTAMP}, #{auditStatus,jdbcType=VARCHAR},#{auditStatusPre,jdbcType=VARCHAR},#{closedReason,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP},
       #{auditName,jdbcType=VARCHAR}, #{loanTime,jdbcType=TIMESTAMP}, #{submitPerson,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},#{loanFee,jdbcType=INTEGER},#{loanRate,jdbcType=INTEGER},#{agreeRepaymentDate,jdbcType=INTEGER}
+      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},#{loanFee,jdbcType=INTEGER},#{loanRate,jdbcType=INTEGER},#{agreeRepaymentDate,jdbcType=INTEGER},#{submitDate,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" keyProperty="loanId" useGeneratedKeys="true" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
@@ -366,6 +368,10 @@
       <if test="agreeRepaymentDate != null" >
         agree_repayment_date,
       </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="loanId != null" >
@@ -581,6 +587,10 @@
       <if test="agreeRepaymentDate != null" >
         #{agreeRepaymentDate,jdbcType=INTEGER},
       </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssLoanModel" >
@@ -799,6 +809,9 @@
       <if test="agreeRepaymentDate != null" >
         agree_repayment_date =#{agreeRepaymentDate,jdbcType=INTEGER},
       </if>
+      <if test="submitDate != null" >
+        submit_date =#{submitDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where loan_id = #{loanId,jdbcType=BIGINT}
   </update>
@@ -872,7 +885,8 @@
       ctime = #{ctime,jdbcType=TIMESTAMP},
       mtime = #{mtime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR},
-      agree_repayment_date =#{agreeRepaymentDate,jdbcType=INTEGER}
+      agree_repayment_date =#{agreeRepaymentDate,jdbcType=INTEGER},
+      submit_date =#{submitDate,jdbcType=TIMESTAMP},
     where loan_id = #{loanId,jdbcType=BIGINT}
   </update>
 

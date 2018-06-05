@@ -18,12 +18,38 @@
 	</properties>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.59</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcmail-jdk15on -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcmail-jdk15on</artifactId>
+			<version>1.59</version>
+		</dependency>
+		<!--&lt;!&ndash;快捷通工具包&ndash;&gt;-->
 		<!--<dependency>-->
-			<!--<groupId>com.alibaba</groupId>-->
-			<!--<artifactId>druid</artifactId>-->
-			<!--<version>1.0.25</version>-->
+			<!--<groupId>gateway</groupId>-->
+			<!--<artifactId>common</artifactId>-->
+			<!--<scope>system</scope>-->
+			<!--<version>0.0.1-SNAPSHOT</version>-->
+			<!--<systemPath>${basedir}/lib/gateway-common-0.0.1-SNAPSHOT.jar</systemPath>-->
 		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>gateway</groupId>-->
+			<!--<artifactId>domain</artifactId>-->
+			<!--<scope>system</scope>-->
+			<!--<version>0.0.1-SNAPSHOT</version>-->
+			<!--<systemPath>${basedir}/lib/gateway-domain-0.0.1-SNAPSHOT.jar</systemPath>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcmail-jdk15on</artifactId>
+			<version>1.59</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.javassist</groupId>
@@ -110,65 +136,5 @@
 			<url>http://10.10.13.5:8081/artifactory/libs-release/</url>
 		</repository>
 	</distributionManagement>
-	<!--<profiles>-->
-		<!--<profile>-->
-			<!--<id>local</id>-->
-			<!--<properties>-->
-				<!--<jdbc.yundian.url>jdbc:mysql://10.10.13.6:3306/fss?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true</jdbc.yundian.url>-->
-				<!--<jdbc.yundian.username>devuser</jdbc.yundian.username>-->
-				<!--<jdbc.yundian.password>devuser</jdbc.yundian.password>-->
-				<!--<dubbo.yundian.address>zookeeper://10.10.13.6:2181</dubbo.yundian.address>-->
-				<!--<dubbo.yundian.port>20783</dubbo.yundian.port>-->
-				<!--<dubbo.yundian.group>${user.name}</dubbo.yundian.group>-->
-				<!--<dubbo.yundian.version>1.0.0</dubbo.yundian.version>-->
-				<!--<dubbo.credit.address>zookeeper://10.10.13.6:2181</dubbo.credit.address>-->
-				<!--<dubbo.credit.port>21783</dubbo.credit.port>-->
-				<!--<dubbo.credit.group>${user.name}</dubbo.credit.group>-->
-				<!--<dubbo.credit.version>1.0.0</dubbo.credit.version>-->
-			<!--</properties>-->
-			<!---->
-		<!--</profile>-->
-		<!--<profile>-->
-			<!--<id>dev</id>-->
-			<!--<properties>-->
-				<!--<jdbc.yundian.url>jdbc:mysql://172.17.40.253:3306/test1?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true</jdbc.yundian.url>-->
-				<!--<jdbc.yundian.username>root</jdbc.yundian.username>-->
-				<!--<jdbc.yundian.password>456123</jdbc.yundian.password>-->
-				<!--<dubbo.yundian.address>zookeeper://127.0.0.1:2181</dubbo.yundian.address>-->
-				<!--<dubbo.yundian.port>20783</dubbo.yundian.port>-->
-				<!--<dubbo.yundian.group>jnxia</dubbo.yundian.group>-->
-				<!--<dubbo.yundian.version>1.0.0</dubbo.yundian.version>-->
-			<!--</properties>-->
-			<!--<activation>-->
-				<!--<activeByDefault>true</activeByDefault>-->
-			<!--</activation>-->
-		<!--</profile>-->
-		<!--<profile>-->
-			<!--<id>test</id>-->
-			<!--<properties>-->
-				<!--<jdbc.yundian.url>jdbc:mysql://10.10.13.6:3306/fss?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true</jdbc.yundian.url>-->
-				<!--<jdbc.yundian.username>devuser</jdbc.yundian.username>-->
-				<!--<jdbc.yundian.password>devuser</jdbc.yundian.password>-->
-				<!--<dubbo.yundian.address>zookeeper://10.10.13.11:2181</dubbo.yundian.address>-->
-				<!--<dubbo.yundian.port>20783</dubbo.yundian.port>-->
-				<!--<dubbo.yundian.group>test</dubbo.yundian.group>-->
-				<!--<dubbo.yundian.version>1.0.1</dubbo.yundian.version>-->
 
-			<!--</properties>-->
-
-		<!--</profile>-->
-		<!--<profile>-->
-			<!--<id>product</id>-->
-			<!--<properties>-->
-				<!--<jdbc.yundian.url>jdbc:mysql://10.10.13.6:3306/fss?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true</jdbc.yundian.url>-->
-				<!--<jdbc.yundian.username>devuser</jdbc.yundian.username>-->
-				<!--<jdbc.yundian.password>devuser</jdbc.yundian.password>-->
-				<!--<dubbo.yundian.address>zookeeper://CheGuo-Registry:2181</dubbo.yundian.address>-->
-				<!--<dubbo.yundian.port>10783</dubbo.yundian.port>-->
-				<!--<dubbo.yundian.group>cgw</dubbo.yundian.group>-->
-				<!--<dubbo.yundian.version>1.3.0</dubbo.yundian.version>-->
-
-			<!--</properties>-->
-		<!--</profile>-->
-	<!--</profiles>-->
 </project>

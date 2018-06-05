@@ -49,61 +49,61 @@ public class UploadController {
 
         //{"success":true,"data":{"thumbUrl":"http://cheguo-image.cheguo.com/files/2018-05-07/20180507162405770L4mW.jpg","url":"http://cdn-file.cheguo.com/files/2018-05-07/20180507162405770L4mW.jpg"},"msg":"success","code":"200"}
 
-        JSONObject jsonObject = JSON.parseObject("{\"thumbUrl\":\"http://cheguo-image.cheguo.com/files/2018-05-07/20180507162405770L4mW.jpg\",\"url\":\"http://cdn-file.cheguo.com/files/2018-05-07/20180507162405770L4mW.jpg\"}");
-       return Result.success(jsonObject);
-//        String key = null;
-//        Result strReulst = null;
-//        String filesource = request.getParameter("source");
-//        //启用水印
-//        String hasWaterMarks = request.getParameter("hasWaterMarks");
-//        log.info("=======================请求文件上传====================");
-//        log.info("source："+filesource);
-//        log.info("hasWaterMarks："+hasWaterMarks);
-//
-//        if(StringUtil.isBlank(filesource)){
-//            return getFailedResult("未找到验证参数");
-//        }
-//        try{
-//                 // 设置临时文件存储位置
-//                key = "files" + FILE_SEPARATOR + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-//                key = key + FILE_SEPARATOR + new SimpleDateFormat("yyyyMMddHHmmssSSS") .format(new Date());
-//                key += RandomUtil.generatePassword(4);
-//                DiskFileItemFactory factory = new DiskFileItemFactory();
-//                // 设置内存缓冲区，超过后写入临时文件
-//                factory.setSizeThreshold(SIZE_THRESHOLD);
-//                ServletFileUpload upload = new ServletFileUpload(factory);
-//                List<?> items = upload.parseRequest(request);
-//                FileItem item = null;
-//                String fileName = null;
-//                if(items.size()==0){
-//                    return getFailedResult("文件不存在");
-//                }
-//                    for (int i = 0; i < items.size(); i++) {
-//                        byte[] picByte = null;
-//                        item = (FileItem) items.get(i);
-//                        if (item.getName() == null) {
-//                            continue;
-//                        } else {
-//                            // 文件大小
-//                            fileName = item.getName();
-//                            int index = fileName.lastIndexOf(".");
-//                            if (index > -1) {
-//                                key += fileName.substring(index);
-//                            } else {
-//                                key += ".jpg";
-//                            }
-//                            if (aliOssFileUpload.uploadToAliImgServer(key, picByte == null ? item.get() : picByte)) {
-//                                return getSuccessResult(key, aliOssFileUpload.getCdnName(), aliOssFileUpload.getThumbnailName());
-//                            } else {
-//                                return  getFailedResult("文件上传失败");
-//                            }
-//                        }
-//                    }
-//        }catch(Exception e){
-//            log.error(e.getMessage(),e);
-//            return getFailedResult("上传文件处理异常");
-//        }
-//        return getFailedResult("上传文件处理异常");
+//        JSONObject jsonObject = JSON.parseObject("{\"thumbUrl\":\"http://cheguo-image.cheguo.com/files/2018-05-07/20180507162405770L4mW.jpg\",\"url\":\"http://cdn-file.cheguo.com/files/2018-05-07/20180507162405770L4mW.jpg\"}");
+//       return Result.success(jsonObject);
+        String key = null;
+        Result strReulst = null;
+        String filesource = request.getParameter("source");
+        //启用水印
+        String hasWaterMarks = request.getParameter("hasWaterMarks");
+        log.info("=======================请求文件上传====================");
+        log.info("source："+filesource);
+        log.info("hasWaterMarks："+hasWaterMarks);
+
+        if(StringUtil.isBlank(filesource)){
+            return getFailedResult("未找到验证参数");
+        }
+        try{
+                 // 设置临时文件存储位置
+                key = "files" + FILE_SEPARATOR + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                key = key + FILE_SEPARATOR + new SimpleDateFormat("yyyyMMddHHmmssSSS") .format(new Date());
+                key += RandomUtil.generatePassword(4);
+                DiskFileItemFactory factory = new DiskFileItemFactory();
+                // 设置内存缓冲区，超过后写入临时文件
+                factory.setSizeThreshold(SIZE_THRESHOLD);
+                ServletFileUpload upload = new ServletFileUpload(factory);
+                List<?> items = upload.parseRequest(request);
+                FileItem item = null;
+                String fileName = null;
+                if(items.size()==0){
+                    return getFailedResult("文件不存在");
+                }
+                    for (int i = 0; i < items.size(); i++) {
+                        byte[] picByte = null;
+                        item = (FileItem) items.get(i);
+                        if (item.getName() == null) {
+                            continue;
+                        } else {
+                            // 文件大小
+                            fileName = item.getName();
+                            int index = fileName.lastIndexOf(".");
+                            if (index > -1) {
+                                key += fileName.substring(index);
+                            } else {
+                                key += ".jpg";
+                            }
+                            if (aliOssFileUpload.uploadToAliImgServer(key, picByte == null ? item.get() : picByte)) {
+                                return getSuccessResult(key, aliOssFileUpload.getCdnName(), aliOssFileUpload.getThumbnailName());
+                            } else {
+                                return  getFailedResult("文件上传失败");
+                            }
+                        }
+                    }
+        }catch(Exception e){
+            log.error(e.getMessage(),e);
+            return getFailedResult("上传文件处理异常");
+        }
+        return getFailedResult("上传文件处理异常");
     }
 
     private Result<?> getFailedResult(String message){

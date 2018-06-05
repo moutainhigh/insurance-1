@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yundian.fss.dao.FssRepaymentOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssRepaymentOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="loan_id" property="loanId" jdbcType="BIGINT" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="bank_trade_no" property="bankTradeNo" jdbcType="VARCHAR" />
+    <result column="bank_account_name" property="bankAccountName" jdbcType="VARCHAR" />
+    <result column="certificates_number" property="certificatesNumber" jdbcType="VARCHAR" />
+    <result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="payee_identity" property="payeeIdentity" jdbcType="VARCHAR" />
+    <result column="trade_status" property="tradeStatus" jdbcType="VARCHAR" />
+    <result column="trade_pre_status" property="tradePreStatus" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="return_time" property="returnTime" jdbcType="TIMESTAMP" />
+    <result column="trade_remark" property="tradeRemark" jdbcType="VARCHAR" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_id, period, pay_amount, trade_no, bank_trade_no, bank_account_name, certificates_number, 
+    bank_card_no, bank_code, payee_identity, trade_status, trade_pre_status, pay_time, 
+    return_time, trade_remark, ctime, mtime, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fss_repayment_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fss_repayment_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+    insert into fss_repayment_order (id, loan_id, period, 
+      pay_amount, trade_no, bank_trade_no, 
+      bank_account_name, certificates_number, bank_card_no, 
+      bank_code, payee_identity, trade_status, 
+      trade_pre_status, pay_time, return_time, 
+      trade_remark, ctime, mtime, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{loanId,jdbcType=BIGINT}, #{period,jdbcType=INTEGER}, 
+      #{payAmount,jdbcType=INTEGER}, #{tradeNo,jdbcType=VARCHAR}, #{bankTradeNo,jdbcType=VARCHAR}, 
+      #{bankAccountName,jdbcType=VARCHAR}, #{certificatesNumber,jdbcType=VARCHAR}, #{bankCardNo,jdbcType=VARCHAR}, 
+      #{bankCode,jdbcType=VARCHAR}, #{payeeIdentity,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, 
+      #{tradePreStatus,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{returnTime,jdbcType=TIMESTAMP}, 
+      #{tradeRemark,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+    insert into fss_repayment_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanId != null" >
+        loan_id,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="bankTradeNo != null" >
+        bank_trade_no,
+      </if>
+      <if test="bankAccountName != null" >
+        bank_account_name,
+      </if>
+      <if test="certificatesNumber != null" >
+        certificates_number,
+      </if>
+      <if test="bankCardNo != null" >
+        bank_card_no,
+      </if>
+      <if test="bankCode != null" >
+        bank_code,
+      </if>
+      <if test="payeeIdentity != null" >
+        payee_identity,
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status,
+      </if>
+      <if test="tradePreStatus != null" >
+        trade_pre_status,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="returnTime != null" >
+        return_time,
+      </if>
+      <if test="tradeRemark != null" >
+        trade_remark,
+      </if>
+      <if test="ctime != null" >
+        ctime,
+      </if>
+      <if test="mtime != null" >
+        mtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanId != null" >
+        #{loanId,jdbcType=BIGINT},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTradeNo != null" >
+        #{bankTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountName != null" >
+        #{bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificatesNumber != null" >
+        #{certificatesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeIdentity != null" >
+        #{payeeIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tradePreStatus != null" >
+        #{tradePreStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnTime != null" >
+        #{returnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeRemark != null" >
+        #{tradeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+    update fss_repayment_order
+    <set >
+      <if test="loanId != null" >
+        loan_id = #{loanId,jdbcType=BIGINT},
+      </if>
+      <if test="period != null" >
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTradeNo != null" >
+        bank_trade_no = #{bankTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountName != null" >
+        bank_account_name = #{bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificatesNumber != null" >
+        certificates_number = #{certificatesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNo != null" >
+        bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeIdentity != null" >
+        payee_identity = #{payeeIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null" >
+        trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tradePreStatus != null" >
+        trade_pre_status = #{tradePreStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnTime != null" >
+        return_time = #{returnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeRemark != null" >
+        trade_remark = #{tradeRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mtime != null" >
+        mtime = #{mtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+    update fss_repayment_order
+    set loan_id = #{loanId,jdbcType=BIGINT},
+      period = #{period,jdbcType=INTEGER},
+      pay_amount = #{payAmount,jdbcType=INTEGER},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      bank_trade_no = #{bankTradeNo,jdbcType=VARCHAR},
+      bank_account_name = #{bankAccountName,jdbcType=VARCHAR},
+      certificates_number = #{certificatesNumber,jdbcType=VARCHAR},
+      bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      payee_identity = #{payeeIdentity,jdbcType=VARCHAR},
+      trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      trade_pre_status = #{tradePreStatus,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      return_time = #{returnTime,jdbcType=TIMESTAMP},
+      trade_remark = #{tradeRemark,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

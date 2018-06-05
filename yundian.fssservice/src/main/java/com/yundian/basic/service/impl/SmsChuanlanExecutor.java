@@ -5,6 +5,8 @@ import com.yundian.basic.tools.SmsPropertiesUtil;
 import com.yundian.toolkit.utils.HttpClientUtil;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SmsChuanlanExecutor implements ISmsExecutor{
 
@@ -22,12 +24,12 @@ public class SmsChuanlanExecutor implements ISmsExecutor{
 	 * 密码
 	 */
 	private String pswd = SmsPropertiesUtil.readValue("sms.cl.password");//"Tch123456";
-	
+
 	/**
 	  *  语音账号
 	  */
 	private String account_sound = SmsPropertiesUtil.readValue("sms.cl.sound.username");//"yuyin-clcs-16";
-	
+
 	/**
 	 * 语音账号密码
 	 */
@@ -49,49 +51,60 @@ public class SmsChuanlanExecutor implements ISmsExecutor{
 
 	/**
 	 * 短信发送
-	 * 
+	 *
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
 	public String[] sendSms(String phone, String sms) throws Exception {
-		
-		StringBuffer builder = new StringBuffer();
-		builder.append("account=" + account);
-		builder.append("&pswd="
-				+ pswd);
-		builder.append("&mobile=" + phone);
-		builder.append("&msg=" + URLEncoder.encode(sms, "UTF-8"));
-		builder.append("&needstatus=" + needstatus);
-		builder.append("&product=" + product);
-		builder.append("&extno="+extno);
-		String result= HttpClientUtil.sendGet(url, builder.toString(), "utf-8");
+
+//		StringBuffer builder = new StringBuffer();
+//		builder.append("account=" + account);
+//		builder.append("&pswd="
+//				+ pswd);
+//		builder.append("&mobile=" + phone);
+//		builder.append("&msg=" + URLEncoder.encode(sms, "UTF-8"));
+//		builder.append("&needstatus=" + needstatus);
+//		builder.append("&product=" + product);
+//		builder.append("&extno="+extno);
+		Map<String,String> param = new HashMap<>();
+        param.put("account",account);
+        param.put("pswd","");
+        param.put("mobile",phone);
+        param.put("msg",URLEncoder.encode(sms, "UTF-8"));
+        param.put("needstatus",needstatus);
+        param.put("product",product);
+        param.put("extno",extno);
+
+
+		String result= HttpClientUtil.sendGet(url, param);
 		//20151209112013,0\n
 		//1001209112013849000\n
 		String msgid = result.split("\n").length>1?result.split("\n")[1]:"";
 		return new String[]{result,msgid,getChannel()};
 	}
-	
+
 	@Override
 	public String[] sendSoundSms(String phone, String sms) throws Exception {
-		StringBuffer builder = new StringBuffer();
-		builder.append("account=" + account_sound);
-		builder.append("&pswd=" + pswd_sound);
-		builder.append("&mobile=" + phone);
-		builder.append("&msg=" + URLEncoder.encode(sms, "UTF-8"));
-		builder.append("&needstatus=" + needstatus);
-		builder.append("&product=" + product);
-		builder.append("&extno=" + extno);
-		String result = HttpClientUtil.sendGet(url, builder.toString(), "utf-8");
+
+        Map<String,String> param = new HashMap<>();
+        param.put("account",account_sound);
+        param.put("pswd",pswd_sound);
+        param.put("mobile",phone);
+        param.put("msg",URLEncoder.encode(sms, "UTF-8"));
+        param.put("needstatus",needstatus);
+        param.put("product",product);
+        param.put("extno",extno);
+        String result= HttpClientUtil.sendGet(url, param);
 		String msgid = result.split("\n").length > 1 ? result.split("\n")[1] : "";
 		return new String[] { result, msgid, getChannel() };
 	}
-	
+
 	@Override
 	public String[] smsReport(String report) {
 		return null;
 	}
- 
+
 	@Override
 	public String getChannel() {
 		 return SmsChannel.CHANNEL_CHUANLAN;
@@ -107,7 +120,7 @@ public class SmsChuanlanExecutor implements ISmsExecutor{
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public String getUrl() {
 		return url;
 	}
@@ -132,7 +145,7 @@ public class SmsChuanlanExecutor implements ISmsExecutor{
 		this.pswd = pswd;
 	}
 
-	 
+
 
 	public String getNeedstatus() {
 		return needstatus;
@@ -142,7 +155,7 @@ public class SmsChuanlanExecutor implements ISmsExecutor{
 		this.needstatus = needstatus;
 	}
 
-	 
+
 
 	public String getProduct() {
 		return product;
@@ -175,5 +188,5 @@ public class SmsChuanlanExecutor implements ISmsExecutor{
 	public void setPswd_sound(String pswd_sound) {
 		this.pswd_sound = pswd_sound;
 	}
-	
+
 }

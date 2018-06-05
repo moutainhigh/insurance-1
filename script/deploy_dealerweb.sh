@@ -10,6 +10,8 @@ cd /home/luoyiuser/data/www/yundian.dealerweb
 rm -rf *
 jar -xvf /home/luoyiuser/source/insurance/yundian.dealerweb/target/yundian-dealerweb.war
 
+cp /home/luoyiuser/data/www/conf/aliyunoss.properties /home/luoyiuser/data/www/yundian.dealerweb/WEB-INF/classes/aliyunoss.properties
+
 
 echo ‘………………重启yundian.dealerweb……………………’
 

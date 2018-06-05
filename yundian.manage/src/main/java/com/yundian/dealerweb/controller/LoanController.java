@@ -10,6 +10,7 @@ import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.fssapi.domain.vo.LoanDocumentVo;
 import com.yundian.fssapi.domain.vo.LoanInfoVo;
 import com.yundian.fssapi.domain.vo.match.LoanDocumentVoMatch;
+import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.service.FssLoanService;
 import com.yundian.result.Page;
 import com.yundian.result.Paginator;
@@ -40,7 +41,7 @@ public class LoanController {
     @RequestMapping(value="/loan/audit",method= RequestMethod.POST)
     public Result submitLoan(@RequestParam("loanId") Long loanId,
                              @RequestParam("type") String auditType,
-                             @RequestParam("reason") String reason,HttpSession session) {
+                             @RequestParam(defaultValue = "", value = "reason") String reason,HttpSession session) {
 
         try {
 
@@ -48,13 +49,13 @@ public class LoanController {
             String operater = fssAdminUserModel.getName();
             switch (auditType)
             {
-                case "auditOk":
+                case "PASS":
                     fssLoanService.auditPass(loanId,operater);
                     break;
-                case "auditReject":
+                case "REJECT":
                     fssLoanService.auditReject(loanId,reason,operater);
                     break;
-                case "auditReturn":
+                case "RETURN":
                     fssLoanService.returnLoan(loanId,operater);
                     break;
             }
@@ -92,7 +93,22 @@ public class LoanController {
                 return Result.fail("", "参数错误，请重试");
             }
             LoanInfoModel loanInfoModel= fssLoanService.getFssLoan(loanId);
-
+            if(loanInfoModel.getFssLoanModel().getPlanLoanAmount()!=null){
+                //金额分——>元
+                loanInfoModel.getFssLoanModel().setPlanLoanAmount(loanInfoModel.getFssLoanModel().getPlanLoanAmount()/100);
+            }
+            if(loanInfoModel.getFssLoanModel().getPolicyTotalAmount()!=null){
+                //金额分——>元
+                loanInfoModel.getFssLoanModel().setPolicyTotalAmount(loanInfoModel.getFssLoanModel().getPolicyTotalAmount()/100);
+            }
+            if(loanInfoModel.getFssLoanModel().getPolicyCompulsoryInsurance()!=null){
+                //金额元——>分
+                loanInfoModel.getFssLoanModel().setPolicyCompulsoryInsurance(loanInfoModel.getFssLoanModel().getPolicyCompulsoryInsurance()/100);
+            }
+            if(loanInfoModel.getFssLoanModel().getPolicyVehicleTax()!=null){
+                //金额元——>分
+                loanInfoModel.getFssLoanModel().setPolicyVehicleTax(loanInfoModel.getFssLoanModel().getPolicyVehicleTax()/100);
+            }
             LoanInfoVo loanInfoVo= new LoanInfoVo();
             loanInfoVo.setFssLoanModel(loanInfoModel.getFssLoanModel());
             List<LoanDocumentVo> loanDocumentVoList = LoanDocumentVoMatch.matchList(loanInfoModel.getFssLoanDocumentModels());
@@ -123,6 +139,15 @@ public class LoanController {
             paginator.setPageSize(pageSize);
             paginator.setParam(fssLoanQueryParam);
             Page<FssLoanModel> paginatedResult = fssLoanService.getPaginatorFssLoan(paginator);
+            if(paginatedResult.getItems().size()>0) {
+                paginatedResult.getItems().stream().forEach(e -> {
+                    try {
+                        e.setAuditStatusName(FssLoanStatusEnum.valueOf(e.getAuditStatus()).desc());
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                    }
+                });
+            }
             return Result.success(paginatedResult);
 
         } catch (Exception ex) {
