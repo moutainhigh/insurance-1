@@ -56,6 +56,7 @@ export function xFetch(url ,options) {
     };
   }
   options.credentials = 'include';
+  options.headers={ 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With':'fetch'};
 
   //
   // if(url.endsWith('.json')){

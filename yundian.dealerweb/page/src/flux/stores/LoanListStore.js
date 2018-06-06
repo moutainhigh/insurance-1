@@ -299,7 +299,6 @@ class LoanListStore {
     this.setState({addModalVisible : visible});
     xFetch(SERVER_URL + '/loan/getInfo?loanId='+data.loanId).then(result => {
       if (result && result.data) {
-        show("get Info OK");
         let fssLoanModel = result.data.fssLoanModel;
         if(fssLoanModel.carBrand!="") {
           let childrenOptions = [{
@@ -313,7 +312,6 @@ class LoanListStore {
             }
           })
         }
-        show(carOptions);
         this.setState({carOptions:carOptions,loanInfo: result.data,loanId:data.loanId});
       } else{
         Notify('请求贷款明细数据发生异常', result.msg, 'error');

@@ -13,7 +13,8 @@ public class Result<T> implements  Serializable{
 	private T data = null;
 	private String msg = "";
 	private String code = "500";
-
+	//权限拒绝
+	private static String authorityRejectCode="403";
 	public Result() {
 	}
 
@@ -34,6 +35,21 @@ public class Result<T> implements  Serializable{
 		return r;
 	}
 
+	/**
+	 * 权限状态
+	 * @param msg
+	 * @param data
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> Result<T> fail403(String msg,T data) {
+		Result r = new Result();
+		r.setSuccess(false);
+		r.setCode(authorityRejectCode);
+		r.setMsg(msg);
+		r.setData(data);
+		return r;
+	}
 	public boolean isSuccess() {
 		return this.success;
 	}
