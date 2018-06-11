@@ -62,7 +62,6 @@ class CustomerListDT extends Component {
       render(text, record, index){
         return(
           <div>
-            <a>查看</a>
             <span className="ant-divider" />
             <a onClick={()=>CustomerAction.openUpdateModal({id : record.id})}>编辑</a>
           </div>

@@ -91,6 +91,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
       let  policyTotalAmount = this.props.form.getFieldValue("policyTotalAmount");
       let  policyCompulsoryInsurance = this.props.form.getFieldValue("policyCompulsoryInsurance");
       let  policyVehicleTax = this.props.form.getFieldValue("policyVehicleTax");
+      let  planFinancingType = this.props.form.getFieldValue("planFinancingType");
+
       if(type=="policyTotalAmount"){
         policyTotalAmount = e;
       }
@@ -100,8 +102,21 @@ handleCascaderOnChange=(value,selectedOptions)=>{
      if(type=="policyVehicleTax"){
         policyVehicleTax = e;
       }
+    // if(type=="planFinancingType"){
+    //   planFinancingType = e;
+    // }
+      console.log('planFinancingType:'+planFinancingType)
       if(policyTotalAmount!=null&&policyCompulsoryInsurance!=null&&policyVehicleTax!=null){
-        let planLoanAmountValue=policyTotalAmount-policyCompulsoryInsurance-policyVehicleTax;
+        let planLoanAmountValue=policyTotalAmount;
+       if(planFinancingType!=null){
+         console.log('indexOfB:'+planFinancingType.indexOf('B'))
+         if(planFinancingType.indexOf('B')==-1){
+           planLoanAmountValue = planLoanAmountValue-policyCompulsoryInsurance;
+         }
+         if(planFinancingType.indexOf('C')==-1){
+           planLoanAmountValue = planLoanAmountValue-policyVehicleTax;
+         }
+       }
         this.props.form.setFieldsValue({planLoanAmount:planLoanAmountValue});
       }
 
@@ -247,7 +262,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem label="车牌号" {...formItemLayout}>
-                        {getFieldDecorator('carPlateNumber', { rules: [ {required: true, message: '请输入车牌号'}]} )(
+                        {getFieldDecorator('carPlateNumber' )(
                           <Input/>
                         )}
                       </FormItem>
@@ -352,7 +367,7 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     <Col span="8">
                       <FormItem label="保险公司" {...formItemLayout}>
                         {getFieldDecorator('policyInsuranceCompany')(
-                          <Input/>
+                          <SelectData codeType="InsuranceCompany" attachOption="false"/>
                         )}
                       </FormItem>
                     </Col>
@@ -541,7 +556,9 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     <Col span="8">
                       <FormItem label="融资类目"  {...formItemLayout}>
                         {getFieldDecorator('planFinancingType',{initialValue:['A']})(
-                          <CheckboxGroup options={planFinancingTypeOptions} />
+                          <CheckboxGroup onChanage={(e)=>{
+                            this.computLoanMoney('planFinancingType',e);
+                          }}   options={planFinancingTypeOptions} />
 
                           )}
                       </FormItem>

@@ -142,6 +142,8 @@ public class LoanController {
             if(paginatedResult.getItems().size()>0) {
                 paginatedResult.getItems().stream().forEach(e -> {
                     try {
+                        e.setPlanLoanAmount(e.getPlanLoanAmount()/100);
+                        e.setPolicyTotalAmount(e.getPolicyTotalAmount()/100);
                         e.setAuditStatusName(FssLoanStatusEnum.valueOf(e.getAuditStatus()).desc());
                     } catch (Exception ex) {
                         log.error(ex.getMessage());
