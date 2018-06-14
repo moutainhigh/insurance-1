@@ -62,17 +62,16 @@ class CustomerListSearchBox extends Component {
               <Input size="large" placeholder="手机号码" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}
           </FormItem>
-      </Row>
-          <Row style={rowLayout}>
           <FormItem label="客户类型">
             {getFieldDecorator('insuresType')(
               <Select initialValue="personal" style={{width:"80px"}}>
                 <Option value="personal">个人</Option>
                 <Option value="enterprise">企业</Option>
               </Select>
-              )}
+            )}
           </FormItem>
-
+      </Row>
+          <Row style={rowLayout}>
             <FormItem label="保险购买方式">
               {getFieldDecorator('policyBuyType')(
                 <Select initialValue="1" style={{width:"80px"}}>
@@ -101,7 +100,7 @@ class CustomerListSearchBox extends Component {
                 </Button>
               </Upload>
             </FormItem>
-            <FormItem><a href="/resources/assets/客户导入模板.xls" target="_blank">下载模型</a></FormItem>
+            <FormItem><a href="/resources/assets/客户导入模板.xls" target="_blank">下载模板</a></FormItem>
           </Row>
 
         </Form>

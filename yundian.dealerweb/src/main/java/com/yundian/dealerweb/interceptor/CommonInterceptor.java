@@ -58,7 +58,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		} else {
 			// 同步请求过期数据需要重新登录
 			response.getWriter()
-					.write("<script language=\"javascript\">alert('登录超时，请重新登录！');"
+					.write(""
 							+ "top.location.href='"
 							+ contextPath
 							+ "/"

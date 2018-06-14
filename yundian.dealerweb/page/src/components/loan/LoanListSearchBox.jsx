@@ -22,12 +22,14 @@ class LoanListSearchBox extends Component {
 
   render() {
     const {getFieldDecorator} = this.props.form;
-
+    const rowLayout = {
+      marginTop: 8
+    }
     return (
       <div>
         <Form inline>
-
-          <FormItem label="车价号">
+<Row style={rowLayout}>
+          <FormItem label="车架号">
             {getFieldDecorator('carVin')(
               <Input size="large" placeholder="车架号" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}
@@ -50,15 +52,14 @@ class LoanListSearchBox extends Component {
               <Input size="large" placeholder="车牌号码" style={{width: 100}} onPressEnter={this.handleSubmit}/>
             )}
           </FormItem>
-
-          <FormItem label="保险公司">
-            {getFieldDecorator('policyInsuranceCompany')(
-              <Input size="large" placeholder="保险公司" style={{width: 120}} onPressEnter={this.handleSubmit}/>
-            )}
-          </FormItem>
-
-          <Row>
-          <FormItem label="车品牌">
+</Row>
+          <Row style={rowLayout}>
+            <FormItem label="保险公司">
+              {getFieldDecorator('policyInsuranceCompany')(
+                <Input size="large" placeholder="保险公司" style={{width: 120}} onPressEnter={this.handleSubmit}/>
+              )}
+            </FormItem>
+          <FormItem label="品牌">
             {getFieldDecorator('carBrandName')(
               <Input size="large" placeholder="车型" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}

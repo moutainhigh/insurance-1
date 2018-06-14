@@ -68,7 +68,6 @@ class MenuLayout extends Component {
 
   render() {
     return (
-      <div>
         <Layout style={{ minHeight: '100vh'}}>
           <Sider style={{overflow: 'auto', background: 'black'}}>
             <div style={{marginTop:10}}>
@@ -100,16 +99,13 @@ class MenuLayout extends Component {
                 <Breadcrumb.Item>乐意保险</Breadcrumb.Item>
                 <Breadcrumb.Item>{this.props.title}</Breadcrumb.Item>
               </Breadcrumb>
-              <div style={{ padding: 24, background: '#fff', minHeight: 480 }}>
+              <div style={{ padding: 20, background: '#fff', minHeight: 590 }}>
                 {this.props.children}
               </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>
-               ©2018 Created
-            </Footer>
+
           </Layout>
         </Layout>
-      </div>
     )
   }
 }
