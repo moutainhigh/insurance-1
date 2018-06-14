@@ -19,7 +19,7 @@ public class FssDealerCustomerModel implements Serializable{
     private String name;
     @XLSValue("手机号码")
     private String phone;
-    @XLSValue("被保险人姓名")
+    @XLSValue("客户姓名")
     private String insuresName;
     @XLSValue("身份证")
     private String insuresIdcard;
