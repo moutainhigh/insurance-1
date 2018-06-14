@@ -8,9 +8,7 @@ class DealerUserList extends Component {
 
   render() {
     return (
-      <Layout>
-        <MeBreadCrumb title="员工管理"/>
-        <FullWidthHR/>
+      <Layout title="员工管理">
         <DealerUserListSearchBox/>
         <FullWidthHR/>
         <DealerUserListDT/>

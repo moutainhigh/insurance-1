@@ -37,7 +37,14 @@ class CustomerAction {
   openAddModal =()=> {
     return null;
   };
-
+  /**
+   * 导入数据
+   * @param data
+   * @returns {*}
+   */
+  importCustomer =(data)=>{
+    return data;
+  }
   /**
    * 打开修改模态框
    * @param data

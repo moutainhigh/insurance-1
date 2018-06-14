@@ -74,25 +74,26 @@ public class FssRepaymentServiceImpl implements FssRepaymentService {
                 planModel.setPeriodCount(fssLoanModel.getPlanPeriod());
 
 
-                double monthRate = BigDecimalUtil.div(fssLoanModel.getLoanRate(), 12)/100;
-                //月供，单位 分
-                Integer paymentMonth = PaymentsUtils.getPaymentsForMonth(fssLoanModel.getPlanLoanAmount(),
-                        monthRate,
-                        fssLoanModel.getPlanPeriod());
-                Integer monthInterestMoney = PaymentsUtils.getMonthInterestMoney(fssLoanModel.getPlanLoanAmount(),
-                        monthRate,
-                        i,
-                        fssLoanModel.getPlanPeriod()
-                );
+//                double monthRate = BigDecimalUtil.div(fssLoanModel.getLoanRate(), 12)/100;
+//                //月供，单位 分
+//                Integer paymentMonth = PaymentsUtils.getPaymentsForMonth(fssLoanModel.getPlanLoanAmount(),
+//                        monthRate,
+//                        fssLoanModel.getPlanPeriod());
+//                Integer monthInterestMoney = PaymentsUtils.getMonthInterestMoney(fssLoanModel.getPlanLoanAmount(),
+//                        monthRate,
+//                        i,
+//                        fssLoanModel.getPlanPeriod()
+//                );
                 //利息
-                planModel.setPlanInterestAmount(monthInterestMoney);
+                planModel.setPlanInterestAmount(0);
                 //月供
-                planModel.setPlanAmount(paymentMonth);
+                Integer monthAmout = PaymentsUtils.getMonthMoney(fssLoanModel.getPlanLoanAmount(),fssLoanModel.getPlanPeriod());
+                planModel.setPlanAmount(monthAmout);
 
                 //本金
-                planModel.setPlanCaptialAmount(paymentMonth - monthInterestMoney);
+                planModel.setPlanCaptialAmount(monthAmout);
                 //实际要还款
-                planModel.setPayAmount(paymentMonth);
+                planModel.setPayAmount(monthAmout);
 
                 planModel.setRepaymentStatus(FssRepaymentStatusEnum.PENDINGREPAYMENT.name());
                 fssLoanRepaymentPlanModelList.add(planModel);

@@ -180,8 +180,8 @@ handleCascaderOnChange=(value,selectedOptions)=>{
         <Modal width={1000} visible={this.props.addModalVisible} title="保险分期" onCancel={this.handleAddCancel}
                footer={[
                  <Button key="back" type="ghost" size="large" onClick={this.handleAddCancel}>取消</Button>,
-                 <Button key="submit" type="primary" size="large" onClick={this.handleOnSave}>保存</Button>,
-                 <Button key="submitTJ" type="primary" size="large" onClick={this.handleOnSubmit}>提交审核</Button>
+                 <Button key="submit" loading={this.props.buttonLoading} type="primary" size="large" onClick={this.handleOnSave}>保存</Button>,
+                 <Button key="submitTJ" loading={this.props.buttonLoading} type="primary" size="large" onClick={this.handleOnSubmit}>提交审核</Button>
                ]}>
               <Form layout="horizontal">
                 <Card title="被保险人信息" style={{marginBottom: 24}} bordered={true}>

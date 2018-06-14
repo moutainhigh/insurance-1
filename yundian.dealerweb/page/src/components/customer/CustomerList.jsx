@@ -8,9 +8,7 @@ class CustomerList extends Component {
 
   render() {
     return (
-      <Layout>
-        <MeBreadCrumb title="客户管理"/>
-        <FullWidthHR/>
+      <Layout title="保险客户">
         <CustomerListSearchBox/>
         <FullWidthHR/>
         <CustomerListDT/>

@@ -33,7 +33,8 @@ class CustomerStore {
       handleOpenUpdateModal: CustomerAction.openUpdateModal,
 
       handleAddLoan: CustomerAction.addLoan,
-      handleUpdateLoan: CustomerAction.updateLoan
+      handleUpdateLoan: CustomerAction.updateLoan,
+      handleImportCustomer:CustomerAction.importCustomer
 
 
     });
@@ -44,6 +45,7 @@ class CustomerStore {
       addModalVisible : false,
       customerInfo:{},
       id:null,
+      successCount:0,
       pagination: {
         pageSize: 20,
         showSizeChanger: true,
@@ -100,6 +102,22 @@ class CustomerStore {
       id:null
     });
   };
+
+  /**
+   * 导入客户
+   * @param data
+   */
+  handleImportCustomer =(data)=>{
+    xPostFetch(SERVER_URL + '/customer/importXsl','xslPath='+data.xslPath).then(result => {
+      if (result && result.success) {
+        show("get Info OK");
+        // this.setState({successCount: result.data});
+        Notify('客户导入成功', '总共导入:'+result.data+'条客户数据', 'success');
+      } else{
+        Notify('导入客户数据发生异常', result.msg, 'error');
+      }})
+
+  }
   //打开修改窗口
   handleOpenUpdateModal =(data) =>{
 

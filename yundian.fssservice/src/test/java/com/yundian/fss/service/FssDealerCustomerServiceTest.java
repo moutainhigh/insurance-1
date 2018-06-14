@@ -7,9 +7,12 @@ import com.yundian.fssapi.service.FssDealerCustomerService;
 import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
+import com.yundian.toolkit.excel.ExcelUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * aa
@@ -60,4 +63,13 @@ public class FssDealerCustomerServiceTest extends AbstractJUnit {
         Assert.assertTrue(true);
 
     }
+    @Test
+    public void importXlsDealerCustom(){
+//        String xlsPath="http://luoyioss.oss-cn-hangzhou.aliyuncs.com/files/2018-06-14/20180614174920775cTnQ.xls";
+//        long dealerId=100;
+//        fssDealerCustomerService.importXlsDealerCustomer(xlsPath,dealerId);
+
+    }
+
+
 }

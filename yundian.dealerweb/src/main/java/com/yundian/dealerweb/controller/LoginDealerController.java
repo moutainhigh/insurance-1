@@ -7,6 +7,7 @@ import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.enums.FssDealerUserStatusEnum;
 import com.yundian.fssapi.service.FssDealerService;
 import com.yundian.fssapi.service.FssDealerUserService;
+import com.yundian.result.Result;
 import com.yundian.toolkit.utils.MD5;
 import com.yundian.toolkit.utils.WebUtil;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -53,6 +54,13 @@ public class LoginDealerController {
 		return "login";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/getLoginInfo", method = RequestMethod.GET)
+	public Result getLoginInfo(HttpSession session) {
+		FssDealerUserModel fssDealerUserModelManage =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
+		return Result.success(fssDealerUserModelManage);
+
+	}
 	/**
 	 * 登录成功后跳转到主页面
 	 * 
@@ -66,7 +74,7 @@ public class LoginDealerController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-	public JSONObject doLogin(@RequestParam("username") String loginName,
+	public Result doLogin(@RequestParam("username") String loginName,
 							  @RequestParam("password") String loginPassword,
 							  HttpSession session, HttpServletResponse httpResponse) {
 		try {
@@ -79,7 +87,7 @@ public class LoginDealerController {
 			if (null != fssDealerUserModel) {
 				// 判断该用户是否被停用
 				  if (fssDealerUserModel.getStatus() == FssDealerUserStatusEnum.DISABLE.code()){
-				  	return WebUtil.getFailureJsonObject("账号无效");
+				  	return Result.fail("","账号无效");
 				  }
 				fssDealerUserModel.setUserPwd("");
 				FssDealerModel fssDealerModel = fssDealerService.getFssDealer(fssDealerUserModel.getDealerId());
@@ -88,14 +96,14 @@ public class LoginDealerController {
 				session.setAttribute(
 						DealerWebConstants.SYS.WEB_USER_SESSION, fssDealerUserModel);
 				 // 记录本次登陆的时间
-				return WebUtil.getSuccessJsonObject();
+				return Result.success(null);
 			} else {
-				return WebUtil.getFailureJsonObject("用户名或密码错误");
+				return Result.fail("","用户名或密码错误");
 			}
 		} catch (Exception ex) {
 			logger.error("登录出错" + ExceptionUtils.getFullStackTrace(ex));
 			ex.printStackTrace();
-			return WebUtil.getFailureJsonObject("登录出错" + ex.getMessage());
+			return Result.fail("","登录异常，稍后再试" + ex.getMessage());
 		}
 	}
 
@@ -104,9 +112,10 @@ public class LoginDealerController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
+	@ResponseBody
+	@RequestMapping(value = "/loginOut", method = RequestMethod.GET)
+	public Result logout(HttpSession session) {
 		session.removeAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
-		return "redirect:/login.html";
+		return Result.success(true);
 	}
 }

@@ -8,9 +8,7 @@ class LoanList extends Component {
 
   render() {
     return (
-      <Layout>
-        <MeBreadCrumb title="保险分期"/>
-        <FullWidthHR/>
+      <Layout title="分期">
         <LoanListSearchBox/>
         <FullWidthHR/>
         <LoanListDT/>

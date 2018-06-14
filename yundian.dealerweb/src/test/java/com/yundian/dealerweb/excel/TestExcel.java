@@ -17,8 +17,8 @@ public class TestExcel {
 
     public static void main(String[] args){
 
-        String xlsPath="/Users/jnx/Documents/客户.xls";
-        List<FssDealerCustomerModel> list = ExcelUtil.xlsToModel(xlsPath, FssDealerCustomerModel.class);
-        System.out.printf(JSON.toJSONString(list));
+//        String xlsPath="/Users/jnx/Documents/客户.xls";
+//        List<FssDealerCustomerModel> list = ExcelUtil.xlsToModel(xlsPath, FssDealerCustomerModel.class);
+//        System.out.printf(JSON.toJSONString(list));
     }
 }

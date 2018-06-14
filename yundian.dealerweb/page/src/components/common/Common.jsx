@@ -36,7 +36,7 @@ export class MeBreadCrumb extends Component {
         <Row type="flex" justify="start">
           <Col span="6" className={styles.title}>
             <Breadcrumb>
-              <Breadcrumb.Item>风险决策平台</Breadcrumb.Item>
+              <Breadcrumb.Item>保险分期</Breadcrumb.Item>
               <Breadcrumb.Item>{this.props.title}</Breadcrumb.Item>
             </Breadcrumb>
           </Col>

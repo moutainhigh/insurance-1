@@ -56,6 +56,7 @@ class LoanListStore {
       loanId:null,
       fssLoanModel:{},
       fssLoanDocs:{},
+      buttonLoading:false,
       pagination: {
         pageSize: 20,
         showSizeChanger: true,
@@ -75,6 +76,7 @@ class LoanListStore {
   };
 
   handleAddLoan = (data) =>{
+    this.setState({buttonLoading : true});
     data = momentTansfer(data);
     let arrayCarModel = data.arrayCarModel;
 
@@ -117,9 +119,12 @@ class LoanListStore {
         this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
       } else{
         Notify('添加发生异常', result.msg, 'error');
-      }})
+      }
+      this.setState({buttonLoading : false});
+    })
   };
   handleUpdateLoan = (data) =>{
+    this.setState({buttonLoading : true});
     data.loanId=this.state.loanId;
     let arrayCarModel = data.arrayCarModel;
 
@@ -160,10 +165,13 @@ class LoanListStore {
         this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
       } else{
         Notify('添加发生异常', result.msg, 'error');
-      }})
+      }
+      this.setState({buttonLoading : false});
+    })
   };
 
   handleSubmitLoan = (data) =>{
+    this.setState({buttonLoading : true});
     data = momentTansfer(data);
     data.loanId=this.state.loanId;
     let arrayCarModel = data.arrayCarModel;
@@ -205,7 +213,9 @@ class LoanListStore {
         this.handleQuerySubmit({data: this.state.params, pager: {page:this.state.page,pageSize:this.state.pageSize}});
       } else{
         Notify('添加发生异常', result.msg, 'error');
-      }})
+      }
+      this.setState({buttonLoading : false});
+    })
   };
 
   handleApplyLoan = (data) =>{

@@ -79,8 +79,6 @@ class PicturesWall extends React.Component {
             return file;
         });
         this.setState({fileList: fileList,value:fileList});
-      console.log("pictures handleUpload "+fileList);
-      show(fileList);
         return fileList;
     };
 

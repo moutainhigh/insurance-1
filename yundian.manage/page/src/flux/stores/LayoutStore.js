@@ -14,12 +14,14 @@ class LayoutStore {
     this.state = {
       menus: {},
       current: "11",
+
     }
   }
 
   handleSetCurrent = (data) => {
     this.setState({ current: data});
   }
+
 
   handleGetMenus = (obj) => {
   //   var _cb = obj.cb;

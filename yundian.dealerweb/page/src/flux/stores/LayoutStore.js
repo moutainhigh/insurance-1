@@ -1,7 +1,8 @@
 import alt from 'bases/Alt.js';
 import LayoutAction from '../actions/LayoutAction.js';
 import jsonp from "jsonp";
-
+import {Notify} from "components/common/Common";
+import {xFetch} from "../../services/xFetch";
 class LayoutStore {
 
   constructor() {
@@ -9,38 +10,44 @@ class LayoutStore {
     this.bindListeners({
       handleGetMenus: LayoutAction.getMenus,
       handleSetCurrent: LayoutAction.setCurrent,
+      handleGetLoginInfo:LayoutAction.getLoginInfo,
+      handleLoginOut:LayoutAction.loginOut,
     });
 
     this.state = {
       menus: {},
       current: "11",
+      dealerUser:{name:'',dealerName:''}
     }
   }
 
+  handleGetMenus=(data)=>{
+
+  }
   handleSetCurrent = (data) => {
     this.setState({ current: data});
   }
 
-  handleGetMenus = (obj) => {
-  //   var _cb = obj.cb;
-  //   // console.log(SERVER_URL)
-  //   // console.log("99999" + _cb)
-  //   jsonp(SERVER_URL + '/UserMenuApi/getMenuList.jsonp', (err, result) => {
-  //     // console.log('Get Server Order Data:', result);
-  //     if (err) {
-  //       Notify('获取菜单信息异常', result.msg, 'error');
-  //     }
-  //     if (result.code == '200' && result.success) {
-  //       // console.log("后台返回数据：" + result.loader);
-  //       this.setState({
-  //         menus: result.loader
-  //       });
-  //       _cb(result.loader);
-  //     } else {
-  //       Notify('获取菜单信息异常', result.msg, 'error');
-  //     }
-  //   });
+  handleGetLoginInfo = () => {
+    console.log('handleGetLoginInfo:/getLoginInfo')
+      xFetch(SERVER_URL + '/getLoginInfo').then(result => {
+      if (result && result.success) {
+        console.log(JSON.stringify(result));
+        this.setState({dealerUser: result.data});
+      } else{
+        Notify('请求明细数据发生异常', result.msg, 'error');
+      }})
   }
+
+  handleLoginOut=()=>{
+    xFetch(SERVER_URL + '/loginOut').then(result => {
+      if (result && result.success) {
+        location.href="/login.html";
+      } else{
+        Notify('退出登录失败', result.msg, 'error');
+      }})
+  }
+
 
 }
 

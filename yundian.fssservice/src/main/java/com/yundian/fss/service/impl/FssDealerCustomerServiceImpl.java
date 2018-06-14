@@ -8,7 +8,9 @@ import com.yundian.fssapi.domain.FssLoanModel;
 import com.yundian.fssapi.exception.FssDealerException;
 import com.yundian.fssapi.service.FssDealerCustomerService;
 import com.yundian.result.*;
+import com.yundian.toolkit.excel.ExcelUtil;
 import com.yundian.toolkit.utils.BeanUtilsExt;
+import com.yundian.toolkit.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ import java.util.List;
  */
 @Slf4j
 @Service("fssDealerCustomerService")
-public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
+public class FssDealerCustomerServiceImpl implements FssDealerCustomerService {
 
     @Autowired
     FssDealerCustomerModelMapper fssDealerCustomerModelMapper;
@@ -62,7 +64,7 @@ public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
     @Override
     public Integer updateFssDealerCustomer(FssDealerCustomerModel fssDealerCustomerModel) {
         try {
-            log.info("修改客户信息："+JSON.toJSONString(fssDealerCustomerModel));
+            log.info("修改客户信息：" + JSON.toJSONString(fssDealerCustomerModel));
             fssDealerCustomerModel.setMtime(new Date());
             return fssDealerCustomerModelMapper.updateByPrimaryKeySelective(fssDealerCustomerModel);
 
@@ -84,7 +86,7 @@ public class FssDealerCustomerServiceImpl implements FssDealerCustomerService{
             List<FssDealerCustomerModel> list = this.fssDealerCustomerModelMapper
                     .getFssDealerCustomerPaging(param);
             Integer count = fssDealerCustomerModelMapper.getFssDealerCustomerPagingCount(param);
-            return PageProvider.getPage(paginator,count,list,FssDealerCustomerModel.class);
+            return PageProvider.getPage(paginator, count, list, FssDealerCustomerModel.class);
 
         } catch (Exception e) {
             log.error(

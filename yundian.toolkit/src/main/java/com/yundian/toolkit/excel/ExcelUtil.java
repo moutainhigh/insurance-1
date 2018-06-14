@@ -123,6 +123,70 @@ public class ExcelUtil {
 		return str;
 	}
 
+
+	/**
+	 * 读取Excel数据内容
+	 * @param is 文件流
+	 * @param sheetNo sheet 页号
+	 * @return Map 包含单元格数据内容的Map对象
+	 */
+	public static List<Map<String,Object>> readExcelForStream(InputStream is,int sheetNo) {
+
+		POIFSFileSystem fs;
+		HSSFWorkbook wb=null;
+		HSSFSheet sheet;
+		HSSFRow row;
+
+		System.out.println("开始解析xls...");
+		sheetNo--;//从1开始及从0开始
+
+		Map<String,Object> dataMap = null;
+		List<Map<String,Object>> dataList= new ArrayList<>();
+		String value = "";
+		try {
+			fs = new POIFSFileSystem(is);
+			wb = new HSSFWorkbook(fs);
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		sheet = wb.getSheetAt(sheetNo);
+		row = sheet.getRow(0);
+		// 标题总列数
+		int colNum = row.getPhysicalNumberOfCells();
+		String[] keyArray = new String[colNum];
+		for (int i = 0; i < colNum; i++) {
+			keyArray[i] = getCellFormatValue(row.getCell((short) i));
+		}
+		int rowNum = sheet.getLastRowNum();
+		// 正文内容应该从第二行开始,第一行为表头的标题
+		for (int i = 2; i <= rowNum; i++) {
+			dataMap= new HashMap<>();
+			row = sheet.getRow(i);
+			if(row!=null){
+				int j = 0;
+				while (j < colNum) {
+					//这里把列循环到Map
+					if(row.getCell((short) j)!=null){
+						value = getCellFormatValue(row.getCell((short) j)).trim();
+						dataMap.put(keyArray[j],value);
+					}
+					j++;
+				}
+				value = "";
+				dataList.add(dataMap);
+			}
+		}
+		System.out.println("解析xls完成...");
+		try {
+			if(is!=null){
+				is.close();
+			}
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		return dataList;
+	}
+
 	/**
 	 * 读取Excel数据内容
 	 * @param fileFullPath 文件类型
@@ -236,8 +300,8 @@ public class ExcelUtil {
 	}
 
 
-	public static  <T> List<T> xlsToModel(String xlsPath,Class<T> modelClass){
-		List<Map<String,Object>> xlsList = readExcel(xlsPath,1);
+	public static  <T> List<T> xlsToModel(InputStream is,Class<T> modelClass){
+		List<Map<String,Object>> xlsList = readExcelForStream(is,1);
 		List<T> modelList = new ArrayList<T>();
 
 		for(Map<String,Object> item :xlsList){
@@ -270,7 +334,7 @@ public class ExcelUtil {
 						&&StringUtil.isNotBlank(xlsValue.value())
 						&&map.containsKey(xlsValue.value())){
 
-					field.set(obj,map.get(xlsValue.value()));
+					field.set(obj,transfer(map.get(xlsValue.value()),field.getType()));
 				}
 			}catch (Exception e){
 				System.out.printf("toPropField error"+e.getMessage());
@@ -280,6 +344,23 @@ public class ExcelUtil {
 		return obj;
 	}
 
+	private static Object transfer(Object value,Class type){
+		if(StringUtil.isBlank(value)){
+			return null;
+		}
+		Object result=null;
+		switch (type.getTypeName()){
+			case "java.lang.Integer":
+				result = Integer.parseInt(value.toString());
+				break;
+			case "java.lang.Double":
+				result = Double.parseDouble(value.toString());
+				break;
+				default:
+					result = value.toString();
+		}
+		return result;
+	}
 	public static void main(String... args) {
 
 		String filePath="/Users/jnx/Documents/客户.xls";

@@ -9,6 +9,13 @@ class LayoutAction {
   setCurrent(data){
     return data;
   }
+
+  getLoginInfo(){
+    return null;
+  }
+  loginOut(){
+    return null;
+  }
 }
 
 export default alt.createActions(LayoutAction);

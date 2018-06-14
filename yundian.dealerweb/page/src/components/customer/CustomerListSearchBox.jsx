@@ -1,13 +1,20 @@
 import React, {Component} from "react";
-import {Row,Col, Form, Input, Button, Select, DatePicker} from "antd";
+import {Row, Form, Input, Button, Select, DatePicker,Upload,Icon} from "antd";
 import CustomerAction from "actions/CustomerAction";
-import {Link} from "react-router";
+import {Notify} from "components/common/Common";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const show = (info) => {
   console.log("CustomerListSearchBox jsx " + JSON.stringify(info));
 }
 const {MonthPicker, RangePicker} = DatePicker;
+
+
+
+const props = {
+  action: '/customer/importXls'
+  };
+
 class CustomerListSearchBox extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -18,33 +25,45 @@ class CustomerListSearchBox extends Component {
     show("点击添加按钮");
     CustomerAction.openAddModal();
   };
+  handleImport =({ file, fileList }) =>{
+    show("导入按钮");
+    if (file.status == 'done') {
+      console.log(file, fileList);
+      let successCount=file.response.data.successCount;
+      Notify('客户导入成功', '总共导入:'+successCount+'条客户数据', 'success');
+    }
+    else if(file.status == 'error'){
+      Notify('客户导入成功！请重试');
+    }
 
+
+  };
   render() {
     const {getFieldDecorator} = this.props.form;
-
+    const rowLayout = {
+      marginTop: 8
+    }
     return (
       <div>
         <Form inline>
-<Row>
+        <Row style={rowLayout}>
           <FormItem label="客户姓名">
             {getFieldDecorator('insuresName')(
               <Input size="large" placeholder="客户姓名" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}
           </FormItem>
-
           <FormItem label="身份证">
             {getFieldDecorator('insuresIdcard')(
               <Input size="large" placeholder="身份证" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}
           </FormItem>
-
           <FormItem label="手机号码">
             {getFieldDecorator('insuresPhone')(
               <Input size="large" placeholder="手机号码" style={{width: 120}} onPressEnter={this.handleSubmit}/>
             )}
           </FormItem>
-</Row>
-          <Row>
+      </Row>
+          <Row style={rowLayout}>
           <FormItem label="客户类型">
             {getFieldDecorator('insuresType')(
               <Select initialValue="personal" style={{width:"80px"}}>
@@ -75,6 +94,14 @@ class CustomerListSearchBox extends Component {
             <FormItem >
               <Button type="primary" onClick={this.handOpenAddModal}>添加</Button>
             </FormItem>
+            <FormItem >
+              <Upload {...props} onChange={this.handleImport}>
+                <Button>
+                  <Icon type="upload" /> 导入客户
+                </Button>
+              </Upload>
+            </FormItem>
+            <FormItem><a href="/resources/assets/客户导入模板.xls" target="_blank">下载模型</a></FormItem>
           </Row>
 
         </Form>
