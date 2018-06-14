@@ -76,14 +76,17 @@ class MenuLayout extends Component {
             </div>
             <Menu  style={{marginTop:10}} theme="dark" onSelect={this.selectClick} selectedKeys={[this.props.current]}
                    mode="inline" defaultOpenKeys={['1','2','3','31','4','5']}>
-              <SubMenu key="2" title={<span><Icon type="folder" />投保管理</span>}>
+              <SubMenu key="2" title={<span><Icon type="bank" />投保管理</span>}>
                 <Menu.Item key="21"><Link to="/loanlist">分期管理</Link></Menu.Item>
               </SubMenu>
-              <SubMenu key="3" title={<span><Icon type="folder" />客户管理</span>}>
+              <SubMenu key="3" title={<span><Icon type="contacts" />客户管理</span>}>
                 <Menu.Item key="31"><Link to="/customerlist">保险客户</Link></Menu.Item>
-
               </SubMenu>
-              <SubMenu key="4" title={<span><Icon type="folder" />系统管理</span>}>
+              <SubMenu key="5" title={<span><Icon type="laptop" />活动管理</span>}>
+                <Menu.Item key="51"><Link to="#">店内活动</Link></Menu.Item>
+                <Menu.Item key="52"><Link to="#">活动核销</Link></Menu.Item>
+              </SubMenu>
+              <SubMenu key="4" title={<span><Icon type="wallet" />系统管理</span>}>
                 <Menu.Item key="41"><Link to="/dealeruserlist">员工管理</Link></Menu.Item>
                 {/*<Menu.Item key="42"><Link to="/#">角色管理</Link></Menu.Item>*/}
               </SubMenu>
