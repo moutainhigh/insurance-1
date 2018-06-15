@@ -49,10 +49,24 @@ class CustomerListDT extends Component {
       title: '保险公司', dataIndex: 'policyInsuranceCompany', key: 'policyInsuranceCompany', width: 150
     },
     {
-      title: '客户类型', dataIndex: 'insuresType', key: 'insuresType', width: 120
+      title: '客户类型', dataIndex: 'insuresType', key: 'insuresType', width: 120,
+      render(text, record){
+        if(record.insuresType=='personal') {
+          return <div><span>个人</span></div>
+        }else{
+          return <div><span>企业</span></div>
+        }
+      }
     },
     {
-      title: '保险购买方式', dataIndex: 'policyBuyType', key: 'policyBuyType', width: 180
+      title: '保险购买方式', dataIndex: 'policyBuyType', key: 'policyBuyType', width: 180,
+      render(text, record){
+        if(record.policyBuyType=='1') {
+          return <div><span>分期</span></div>
+        }else{
+          return <div><span>全款</span></div>
+        }
+      }
     },
     {
       title: '到期日期', dataIndex: 'policyExpireDate', key: 'policyExpireDate', width: 120

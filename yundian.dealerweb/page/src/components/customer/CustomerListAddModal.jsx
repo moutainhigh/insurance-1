@@ -100,7 +100,7 @@ class CustomerListAddModal extends Component {
                     <Col span="2"><FormItem label="联系人姓名" /></Col>
                     <Col span="6">
                         <FormItem  {...formItemLayout}>
-                          {getFieldDecorator('insuresLinkName', { rules: [ {required: true, message: '请输入联系人姓名'}]})(
+                          {getFieldDecorator('insuresLinkName')(
                             <Input/>
                           )}
                         </FormItem>
@@ -108,7 +108,7 @@ class CustomerListAddModal extends Component {
                     <Col span="2"><FormItem label="联系电话" /></Col>
                       <Col span="6">
                         <FormItem   {...formItemLayout}>
-                          {getFieldDecorator('insuresLinkPhone', { rules: [ {required: true, message: '请输入联系电话'}, {validator: this.checkMobileLength}]})(
+                          {getFieldDecorator('insuresLinkPhone')(
                             <Input/>
                           )}
                         </FormItem>
