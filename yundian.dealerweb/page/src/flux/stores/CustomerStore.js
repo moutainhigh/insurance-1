@@ -11,7 +11,7 @@ const show = (info) => {
 }
 const momentTansfer = (data)=>{
   let format="YYYY-MM-DD";
-  if(data.carBuyDate!=null) {
+  if(data.carBuyDate!=null&&data.carBuyDate!='') {
     data.carBuyDate = data.carBuyDate.format(format);
   }
   if(data.policyEffectDate!=null) {
