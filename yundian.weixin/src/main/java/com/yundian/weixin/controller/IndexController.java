@@ -7,11 +7,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 
-	
-	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 
-			return "Loan";
+		return "Login";
+
+	}
+	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
+	public String indexHtml() {
+
+			return "Login";
 		
 	}
 	
