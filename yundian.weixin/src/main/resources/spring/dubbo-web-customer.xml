@@ -9,7 +9,7 @@
          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
 	
-	<dubbo:application name="guaranteeweb_consumer"/>
+	<dubbo:application name="weixin_consumer"/>
 	<!-- 使用zookeeper注册中心暴露服务地址  -->
 	<dubbo:registry id="yundian_center" protocol="dubbo" address="${dubbo.yundian.address}" />
 	<dubbo:consumer group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" registry="yundian_center" check="false" />
