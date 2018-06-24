@@ -10,6 +10,7 @@ import com.yundian.fssapi.service.FssDealerUserService;
 import com.yundian.result.Result;
 import com.yundian.toolkit.utils.MD5;
 import com.yundian.toolkit.utils.WebUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,9 @@ public class LoginDealerController {
 							  @RequestParam("password") String loginPassword,
 							  HttpSession session, HttpServletResponse httpResponse) {
 		try {
+
+			loginName = StringUtils.trim(loginName);
+			loginPassword = StringUtils.trim(loginPassword);
 //			// 判断是否存在该用户
 			FssDealerUserModel fssDealerUserModel = fssDealerUserService
 					.fssFssDealerUserLogin(loginName,

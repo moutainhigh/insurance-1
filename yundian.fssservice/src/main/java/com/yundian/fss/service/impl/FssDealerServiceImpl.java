@@ -3,6 +3,7 @@ package com.yundian.fss.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.yundian.fss.dao.FssDealerModelMapper;
 import com.yundian.fss.dao.FssDealerUserModelMapper;
+import com.yundian.fss.service.support.PasswordUtils;
 import com.yundian.fssapi.domain.FssDealerModel;
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanModel;
@@ -56,9 +57,10 @@ public class FssDealerServiceImpl implements FssDealerService {
 
             FssDealerUserModel fssDealerUserModel = new FssDealerUserModel();
             fssDealerUserModel.setDealerId(fssDealerModel.getDealerId());
-            fssDealerUserModel.setUserName(fssDealerModel.getPhone());
+            fssDealerUserModel.setUserName(fssDealerModel.getPhone().trim());
             fssDealerUserModel.setRoleId("ADMIN");
-            fssDealerUserModel.setUserPwd(MD5.encodePassword(fssDealerModel.getPhone()));
+            String userpwd =PasswordUtils.getPhone6Pwd(fssDealerModel.getPhone().trim());
+            fssDealerUserModel.setUserPwd(MD5.encodePassword(userpwd));
             fssDealerUserModel.setName(fssDealerModel.getContactor());
             fssDealerUserModel.setCtime(new Date());
             fssDealerUserModel.setMtime(new Date());

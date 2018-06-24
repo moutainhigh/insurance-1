@@ -12,6 +12,7 @@ import com.yundian.fssapi.domain.vo.LoanInfoVo;
 import com.yundian.fssapi.domain.vo.match.LoanDocumentVoMatch;
 import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.service.FssLoanService;
+import com.yundian.fssapi.service.FssUserService;
 import com.yundian.result.Page;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
@@ -37,6 +38,9 @@ public class LoanController {
 
     @Autowired
     FssLoanService fssLoanService;
+
+    @Autowired
+    FssUserService fssUserService;
     @ResponseBody
     @RequestMapping(value="/loan/audit",method= RequestMethod.POST)
     public Result submitLoan(@RequestParam("loanId") Long loanId,
@@ -73,7 +77,6 @@ public class LoanController {
 
         try {
             FssAdminUserModel fssAdminUserModel =(FssAdminUserModel) session.getAttribute(AdminWebConstants.SYS.WEB_ADMIN_USER_SESSION);
-
             fssLoanService.makeloan(loanId,fssAdminUserModel.getName());
             return Result.success("");
         } catch (Exception ex) {

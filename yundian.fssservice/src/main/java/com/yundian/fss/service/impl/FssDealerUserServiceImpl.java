@@ -132,13 +132,11 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
 
     @Override
     public FssDealerUserModel fssFssDealerUserLogin(String userName,String password) {
+        System.out.println("userName = [" + userName + "], password = [" + password + "]");
         String md5Password = MD5.encodePassword(password);
         log.info("md5:"+md5Password);
             FssDealerUserModel userModel = this.fssDealerUserModelMapper
                     .getFssDealerUserByUserAndPwd(userName, md5Password);
-            if(userModel==null){
-                throw new FssDealerException(ResultCodeContants.FAILED, "用户名或密码错误");
-            }
             return userModel;
 
     }
