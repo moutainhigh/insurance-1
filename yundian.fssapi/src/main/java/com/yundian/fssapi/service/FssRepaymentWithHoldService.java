@@ -1,5 +1,8 @@
 package com.yundian.fssapi.service;
 
+import com.yundian.fssapi.haier.request.RefundNotifyRequest;
+import com.yundian.fssapi.haier.request.WitholdingNotifyRequest;
+
 import java.util.Map;
 
 /**
@@ -35,16 +38,16 @@ public interface FssRepaymentWithHoldService {
  /**
   * 查询
   */
- void tradeQuery();
+ void tradeQuery(String kjtTradeCode);
 
  /**
   * 通知代扣
   */
- void notifyWithHold();
+ void notifyWithHold(WitholdingNotifyRequest notifyRequest);
 
  /**
   * 通知退款
   */
- void notifyRefund();
+ void notifyRefund(RefundNotifyRequest refundNotifyRequest);
 
 }

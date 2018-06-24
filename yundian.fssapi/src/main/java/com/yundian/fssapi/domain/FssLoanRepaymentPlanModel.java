@@ -39,6 +39,11 @@ public class FssLoanRepaymentPlanModel implements Serializable {
 
     private String repaymentStatus;
 
+    /**
+     * 1：代扣中
+     */
+    private Integer inPaymnet;
+
     private Date ctime;
 
     private Date mtime;
@@ -179,5 +184,13 @@ public class FssLoanRepaymentPlanModel implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getInPaymnet() {
+        return this.inPaymnet;
+    }
+
+    public void setInPaymnet(Integer inPaymnet) {
+        this.inPaymnet = inPaymnet;
     }
 }

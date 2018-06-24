@@ -17,6 +17,8 @@
     <result column="city_name" property="cityName" jdbcType="VARCHAR" />
     <result column="area_name" property="areaName" jdbcType="VARCHAR" />
     <result column="street" property="street" jdbcType="VARCHAR" />
+    <result column="sale_tel" property="saleTel" jdbcType="VARCHAR" />
+    <result column="after_sales_tel" property="afterSalesTel" jdbcType="VARCHAR" />
     <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
     <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
     <result column="bank_account_name" property="bankAccountName" jdbcType="VARCHAR" />
@@ -29,7 +31,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     dealer_id, dealer_name, dealer_code, contactor, phone, businessentity, organize_code, 
-    license_code, province, city, area, province_name, city_name, area_name, street, 
+    license_code, province, city, area, province_name, city_name, area_name, street, sale_tel,after_sales_tel,
     bank_code, bank_name, bank_account_name, bank_account, verify_status, verify_time, 
     ctime, mtime, remark
   </sql>
@@ -48,7 +50,7 @@
       contactor, phone, businessentity, 
       organize_code, license_code, province, 
       city, area, province_name, 
-      city_name, area_name, street, 
+      city_name, area_name, street, sale_tel,after_sales_tel,
       bank_code, bank_name, bank_account_name, 
       bank_account, verify_status, verify_time, 
       ctime, mtime, remark
@@ -57,7 +59,7 @@
       #{contactor,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{businessentity,jdbcType=VARCHAR}, 
       #{organizeCode,jdbcType=VARCHAR}, #{licenseCode,jdbcType=VARCHAR}, #{province,jdbcType=INTEGER}, 
       #{city,jdbcType=INTEGER}, #{area,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
-      #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{street,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{street,jdbcType=VARCHAR},  #{saleTel,jdbcType=VARCHAR},  #{afterSalesTel,jdbcType=VARCHAR},
       #{bankCode,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankAccountName,jdbcType=VARCHAR}, 
       #{bankAccount,jdbcType=VARCHAR}, #{verifyStatus,jdbcType=VARCHAR}, #{verifyTime,jdbcType=TIMESTAMP}, 
       #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
@@ -285,6 +287,12 @@
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="saleTel != null" >
+        sale_tel = #{saleTel,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSalesTel != null" >
+        after_sales_tel = #{afterSalesTel,jdbcType=VARCHAR},
       </if>
     </set>
     where dealer_id = #{dealerId,jdbcType=BIGINT}

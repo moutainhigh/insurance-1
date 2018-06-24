@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yundian.fss.dao.FssRepaymentOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssRepaymentOrder" >
+  <resultMap id="BaseResultMap" type="com.yundian.fssapi.domain.FssRepaymentOrderModel" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="loan_id" property="loanId" jdbcType="BIGINT" />
     <result column="period" property="period" jdbcType="INTEGER" />
@@ -37,7 +37,7 @@
     delete from fss_repayment_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+  <insert id="insert" parameterType="com.yundian.fssapi.domain.FssRepaymentOrderModel" >
     insert into fss_repayment_order (id, loan_id, period, 
       pay_amount, trade_no, bank_trade_no, 
       bank_account_name, certificates_number, bank_card_no, 
@@ -53,7 +53,7 @@
       #{tradeRemark,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+  <insert id="insertSelective" parameterType="com.yundian.fssapi.domain.FssRepaymentOrderModel" >
     insert into fss_repayment_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -174,7 +174,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.yundian.fssapi.domain.FssRepaymentOrderModel" >
     update fss_repayment_order
     <set >
       <if test="loanId != null" >
@@ -234,7 +234,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssRepaymentOrder" >
+  <update id="updateByPrimaryKey" parameterType="com.yundian.fssapi.domain.FssRepaymentOrderModel" >
     update fss_repayment_order
     set loan_id = #{loanId,jdbcType=BIGINT},
       period = #{period,jdbcType=INTEGER},

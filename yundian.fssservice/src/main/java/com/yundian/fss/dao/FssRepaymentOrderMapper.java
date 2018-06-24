@@ -1,17 +1,17 @@
 package com.yundian.fss.dao;
 
-import com.yundian.fssapi.domain.FssRepaymentOrder;
+import com.yundian.fssapi.domain.FssRepaymentOrderModel;
 
 public interface FssRepaymentOrderMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(FssRepaymentOrder record);
+    int insert(FssRepaymentOrderModel record);
 
-    int insertSelective(FssRepaymentOrder record);
+    int insertSelective(FssRepaymentOrderModel record);
 
-    FssRepaymentOrder selectByPrimaryKey(Long id);
+    FssRepaymentOrderModel selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(FssRepaymentOrder record);
+    int updateByPrimaryKeySelective(FssRepaymentOrderModel record);
 
-    int updateByPrimaryKey(FssRepaymentOrder record);
+    int updateByPrimaryKey(FssRepaymentOrderModel record);
 }

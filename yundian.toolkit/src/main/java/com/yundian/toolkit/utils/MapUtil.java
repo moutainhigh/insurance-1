@@ -16,7 +16,7 @@ public class MapUtil {
 		 
 		StringBuffer buffer = new StringBuffer();
 		for (String key : map.keySet()) {
-			buffer.append(key+"="+map.get(key).toString());
+			buffer.append(key+"="+map.get(key));
 			buffer.append(separator);
 		}
 		if(buffer.length()>0)

@@ -16,13 +16,15 @@
     <result column="plan_interest_amount" property="planInterestAmount" jdbcType="INTEGER" />
     <result column="overdue_days" property="overdueDays" jdbcType="INTEGER" />
     <result column="repayment_status" property="repaymentStatus" jdbcType="VARCHAR" />
+    <result column="in_payment" property="inPayment" jdbcType="INTEGER" />
+
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="mtime" property="mtime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, loan_id, period, agreed_repayment_date, pay_amount, pay_fee, plan_amount, plan_captial_amount, 
-    plan_interest_amount, overdue_days, repayment_status, ctime, mtime, remark,period_count,repayment_date,repayment_time
+    plan_interest_amount, overdue_days,in_payment, repayment_status, ctime, mtime, remark,period_count,repayment_date,repayment_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -205,6 +207,9 @@
       </if>
       <if test="repaymentTime != null" >
         repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inPayment != null" >
+        in_payment = #{inPayment,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

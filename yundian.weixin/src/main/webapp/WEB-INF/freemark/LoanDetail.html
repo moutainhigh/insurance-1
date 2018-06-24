@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>乐意分期</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" />
+    <style type="text/css">
+        .header {
+            height: 150px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .header>img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .header>h4 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .header>p {
+            font-size: 14px;
+            color: #999;
+            margin-top: 15px;
+        }
+
+        .weui-media-box__bd {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 51px;
+        }
+
+        .weui-media-box__title {
+            white-space: normal;
+            font-size: 13px;
+        }
+
+        .weui-media-box_appmsg .weui-media-box__hd {
+            width: 72px;
+            height: 51px;
+        }
+
+        .footer {
+            flex-direction: column;
+            align-items: flex-start;
+            color: #999;
+            font-size: 14px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-top: 10px;
+        }
+
+        .footer div {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body style="background-color:rgb(245, 245, 245);">
+    <div class="weui-panel weui-panel_access header">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg==">
+        <h4>${loanInfo.auditStatusName!""}</h4>
+        <#if loanInfo.auditStatus!='HAVE_LOAN'&&loanInfo.auditStatus!='CLOSED'>
+            <p>已提交申请，请耐心等待</p>
+        </#if>
+
+
+
+    </div>
+    <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__bd">
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd car_image">
+                    <img class="weui-media-box__thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAeFBMVEUAwAD///+U5ZTc9twOww7G8MYwzDCH4YcfyR9x23Hw+/DY9dhm2WZG0kbT9NP0/PTL8sux7LFe115T1VM+zz7i+OIXxhes6qxr2mvA8MCe6J6M4oz6/frr+us5zjn2/fa67rqB4IF13XWn6ad83nxa1loqyirn+eccHxx4AAAC/klEQVRo3u2W2ZKiQBBF8wpCNSCyLwri7v//4bRIFVXoTBBB+DAReV5sG6lTXDITiGEYhmEYhmEYhmEYhmEY5v9i5fsZGRx9PyGDne8f6K9cfd+mKXe1yNG/0CcqYE86AkBMBh66f20deBc7wA/1WFiTwvSEpBMA2JJOBsSLxe/4QEEaJRrASP8EVF8Q74GbmevKg0saa0B8QbwBdjRyADYxIhqxAZ++IKYtciPXLQVG+imw+oo4Bu56rjEJ4GYsvPmKOAB+xlz7L5aevqUXuePWVhvWJ4eWiwUQ67mK51qPj4dFDMlRLBZTqF3SDvmr4BwtkECu5gHWPkmDfQh02WLxXuvbvC8ku8F57GsI5e0CmUwLz1kq3kD17R1In5816rGvQ5VMk5FEtIiWislTffuDpl/k/PzscdQsv8r9qWq4LRWX6tQYtTxvI3XyrwdyQxChXioOngH3dLgOFjk0all56XRi/wDFQrGQU3Os5t0wJu1GNtNKHdPqYaGYQuRDfbfDf26AGLYSyGS3ZAK4S8XuoAlxGSdYMKwqZKM9XJMtyqXi7HX/CiAZS6d8bSVUz5J36mEMFDTlAFQzxOT1dzLRljjB6+++ejFqka+mXIe6F59mw22OuOw1F4T6lg/9VjL1rLDoI9Xzl1MSYDNHnPQnt3D1EE7PrXjye/3pVpr1Z45hMUdcACc5NVQI0bOdS1WA0wuz73e7/5TNqBPhQXPEFGJNV2zNqWI7QKBd2Gn6AiBko02zuAOXeWIXjV0jNqdKegaE/kJQ6Bfs4aju04lMLkA2T5wBSYPKDGF3RKhFYEa6A1L1LG2yacmsaZ6YPOSAMKNsO+N5dNTfkc5Aqe26uxHpx7ZirvgCwJpWq/lmX1hA7LyabQ34tt5RiJKXSwQ+0KU0V5xg+hZrd4Bn1n4EID+WkQdgLfRNtvil9SPfwy+WQ7PFBWQz6dGWZBLkeJFXZGCfLUjCgGgqXo5TuSu3cugdcTv/HjqnBTEMwzAMwzAMwzAMwzAMw/zf/AFbXiOA6frlMAAAAABJRU5ErkJggg=="
+                        alt="">
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title">${(loanInfo.carBrandName)!""} ${(loanInfo.carVehicleName)!""} ${(loanInfo.carModelName)!""}</h4>
+                    <p class="weui-media-box__desc">${(loanInfo.car_buy_date)!""} | </p>
+                </div>
+            </a>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>保险融资总额</p>
+                </div>
+                <div class="weui-cell__ft">${(loanInfo.planLoanAmount)!""}元</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>贷款期限</p>
+                </div>
+                <div class="weui-cell__ft">${(loanInfo.planPeriod)!"0"}期</div>
+            </div>
+            <!--<div class="weui-cell">-->
+                <!--<div class="weui-cell__bd">-->
+                    <!--<p>保证金</p>-->
+                <!--</div>-->
+                <!--<div class="weui-cell__ft">¥1111</div>-->
+            <!--</div>-->
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>还款卡号</p>
+                </div>
+                <div class="weui-cell__ft">${(loanInfo.repaymentCard)!""}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>开户行</p>
+                </div>
+                <div class="weui-cell__ft">${(loanInfo.repaymentBankName)!""}</div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-panel">
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_small-appmsg">
+                <div class="weui-cells">
+
+                    <a class="weui-cell weui-cell_access" href="/loanPlan.html?loanId=${(loanInfo.loanId)!''}">
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <p>还款计划</p>
+                        </div>
+                        <span class="weui-cell__ft"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>订单编号：${(loanInfo.loanCode)!""}</div>
+        <div>申请时间：
+            <#if loanInfo.submitDate??>
+                ${loanInfo.submitDate?string("yyyy-MM-dd HH:mm:ss")}
+            </#if></div>
+        <div>经销商：<a href="/dealer.html?dealerId=${loanInfo.dealerId!''}">${loanInfo.dealerName!""}</a></div>
+    </div>
+
+</body>
+
+</html>

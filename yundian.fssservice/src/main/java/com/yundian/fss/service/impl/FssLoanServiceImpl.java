@@ -74,6 +74,16 @@ public class FssLoanServiceImpl implements FssLoanService {
         }
 
     }
+    @Override
+    public FssLoanModel getFssLoanModel(Long loanId) {
+        try {
+            return fssLoanModelMapper.selectByPrimaryKey(loanId);
+
+        } catch (Exception e) {
+            log.error(String.format("获取保险分期失败:%s", loanId), e);
+            throw new FssLoanException(ResultCodeContants.FAILED, "获取保险分期失败", e);
+        }
+    }
 
     @Override
     public LoanInfoModel getFssLoan(Long loanId) {
@@ -89,8 +99,8 @@ public class FssLoanServiceImpl implements FssLoanService {
             loanInfoModel.setFssLoanDocumentModels(fssLoanDocumentModels);
             return loanInfoModel;
         } catch (Exception e) {
-            log.error(String.format("新增保险分期失败:%s", loanId), e);
-            throw new FssLoanException(ResultCodeContants.FAILED, "新增保险分期失败", e);
+            log.error(String.format("获取保险分期失败:%s", loanId), e);
+            throw new FssLoanException(ResultCodeContants.FAILED, "获取保险分期失败", e);
         }
 
     }
@@ -180,7 +190,19 @@ public class FssLoanServiceImpl implements FssLoanService {
         }
     }
 
+    @Override
+    public List<FssLoanModel> getFssLoanListByIdCardNo(String  idCardNo){
 
+        try {
+            return fssLoanModelMapper.getFssLoanListByIdCardNo(idCardNo);
+        } catch (Exception e) {
+            log.error(
+                    String.format("获取身份证对应的贷款列表失败！"), e);
+
+            throw new FssLoanException(ResultCodeContants.FAILED,
+                    "获取身份证对应的贷款列表失败", e);
+        }
+    }
 
     @Override
     public Long saveLoan(LoanInfoModel loanInfoModel) {

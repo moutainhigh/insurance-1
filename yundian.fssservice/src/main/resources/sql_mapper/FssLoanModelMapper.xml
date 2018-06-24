@@ -940,4 +940,12 @@
     <include refid="getFssLoanPagingWhere"/>
   </select>
 
+  <select id="getFssLoanListByIdCardNo" parameterType="java.lang.String"
+          resultMap="BaseResultMap">
+    select * from fss_loan
+    where insures_idcard =#{idCardNo}
+    order by loan_id desc
+
+  </select>
+
 </mapper>

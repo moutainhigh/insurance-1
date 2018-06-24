@@ -40,5 +40,9 @@
 
 	<dubbo:service ref="fssCarService" interface="com.yundian.fssapi.service.FssCarService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+	<!--用户服务 -->
+	<dubbo:service ref="fssUserService" interface="com.yundian.fssapi.service.FssUserService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
+
 
 </beans>

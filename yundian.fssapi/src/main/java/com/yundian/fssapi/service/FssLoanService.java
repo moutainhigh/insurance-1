@@ -8,6 +8,7 @@ import com.yundian.fssapi.domain.statistics.LoanInfoModel;
 import com.yundian.result.Page;
 import com.yundian.result.PaginatedResult;
 import com.yundian.result.Paginator;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,6 +25,13 @@ public interface FssLoanService {
      * @return
      */
 	LoanInfoModel getFssLoan(Long loanId);
+
+	/**
+	 * 获取保险分期详细信息
+	 * @param loanId
+	 * @return
+	 */
+	FssLoanModel getFssLoanModel(Long loanId);
 
 	/**
      * 新增保险分期
@@ -53,6 +61,13 @@ public interface FssLoanService {
 	 */
 	Page<FssLoanModel> getPaginatorFssLoan(
             Paginator<FssLoanModel> paginator);
+
+	/**
+	 *
+	 * @param idCardNo 身份证号码
+	 * @return
+	 */
+	List<FssLoanModel> getFssLoanListByIdCardNo(String  idCardNo);
 
 	/**
 	 * 分期资料保存

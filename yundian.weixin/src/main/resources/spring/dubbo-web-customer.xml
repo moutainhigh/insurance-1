@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+         http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd">
+	
+	<dubbo:application name="guaranteeweb_consumer"/>
+	<!-- 使用zookeeper注册中心暴露服务地址  -->
+	<dubbo:registry id="yundian_center" protocol="dubbo" address="${dubbo.yundian.address}" />
+	<dubbo:consumer group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" registry="yundian_center" check="false" />
+
+
+	<dubbo:reference id="fssDealerService" registry="yundian_center" interface="com.yundian.fssapi.service.FssDealerService"
+                     group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
+	<dubbo:reference id="fssLoanService" registry="yundian_center" interface="com.yundian.fssapi.service.FssLoanService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
+	<dubbo:reference id="fssUserService" registry="yundian_center" interface="com.yundian.fssapi.service.FssUserService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
+	<dubbo:reference id="fssRepaymentService" registry="yundian_center" interface="com.yundian.fssapi.service.FssRepaymentService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
+</beans>

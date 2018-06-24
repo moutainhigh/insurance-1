@@ -2,6 +2,7 @@ package com.yundian.fss.dao;
 
 import com.yundian.fssapi.domain.FssDealerUserModel;
 import com.yundian.fssapi.domain.FssLoanModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +28,7 @@ public interface FssLoanModelMapper {
             Map<String, Object> param);
 
     Integer getFssLoanPagingCount(Map<String, Object> param);
+
+
+    List<FssLoanModel> getFssLoanListByIdCardNo(@Param("idCardNo") String  idCardNo);
 }

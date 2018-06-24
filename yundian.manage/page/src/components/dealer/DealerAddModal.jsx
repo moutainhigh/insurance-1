@@ -74,6 +74,16 @@ class DealerAddModal extends Component {
                     <Input/>
                   )}
                 </FormItem>
+                <FormItem label="售前电话" {...formItemLayout}>
+                  {getFieldDecorator('saleTel')(
+                    <Input/>
+                  )}
+                </FormItem>
+                <FormItem label="维修电话" {...formItemLayout}>
+                  {getFieldDecorator('afterSalesTel')(
+                    <Input/>
+                  )}
+                </FormItem>
                 <FormItem label="开户人姓名" {...formItemLayout}>
                   {getFieldDecorator('contactor', { rules: [ {required: true, message: '请输入开户人姓名'}]} )(
                     <Input/>

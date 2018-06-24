@@ -44,9 +44,9 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		  destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/fss?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true" />
+		<property name="username" value="root" />
+		<property name="password" value="sa123" />
 		<property name="validationQuery" value="select 1 " />
 		<property name="defaultAutoCommit" value="true" />
 		<property name="logAbandoned" value="false" />
@@ -88,21 +88,17 @@
 	</bean>
 
 
-	<!--<bean name="securityService" class="com.kjtpay.gateway.common.util.security.SecurityService">-->
-		<!--&lt;!&ndash; 快捷通公钥 &ndash;&gt;-->
-		<!--<constructor-arg index="0">-->
-		<!--<value>${certPath}</value>-->
-		<!--</constructor-arg>-->
-		<!--&lt;!&ndash; 商户私钥 &ndash;&gt;-->
-		<!--<constructor-arg index="1">-->
-		<!--<value>${pfxPath}</value>-->
-		<!--</constructor-arg>-->
-		<!--&lt;!&ndash; 商户私钥密码 &ndash;&gt;-->
-		<!--快捷通支付服务有限公司 - 12 - -->
-		<!--<constructor-arg index="2">-->
-			<!--<value>${pfxKey}</value>-->
-		<!--</constructor-arg>-->
-	<!--</bean>-->
+
+	<bean name="securityService" class="com.kjtpay.gateway.common.util.security.SecurityService">
+		<!-- 商户私钥 -->
+		<constructor-arg index="0">
+		<value>${kjt.privateKey}</value>
+		</constructor-arg>
+		<!-- 快捷通公钥 -->
+		<constructor-arg index="1">
+		<value>${kjt.kjtPublicKey}</value>
+	</constructor-arg>
+	</bean>
 
 	<import resource="dubbo-provider.xml"/>
 	<import resource="dubbo-customer.xml"/>

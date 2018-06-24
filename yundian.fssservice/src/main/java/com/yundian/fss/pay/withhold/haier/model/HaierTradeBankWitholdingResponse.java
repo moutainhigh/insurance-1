@@ -10,8 +10,7 @@ public class HaierTradeBankWitholdingResponse {
 
     private String out_trade_no;
     private String trade_no;
-    private String pay_time;
-    private String return_time;
+    private String status;
 
 
     public String getOut_trade_no() {
@@ -30,19 +29,11 @@ public class HaierTradeBankWitholdingResponse {
         this.trade_no = trade_no;
     }
 
-    public String getPay_time() {
-        return this.pay_time;
+    public String getStatus() {
+        return this.status;
     }
 
-    public void setPay_time(String pay_time) {
-        this.pay_time = pay_time;
-    }
-
-    public String getReturn_time() {
-        return this.return_time;
-    }
-
-    public void setReturn_time(String return_time) {
-        this.return_time = return_time;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

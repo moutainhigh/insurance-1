@@ -1,8 +1,9 @@
 package com.yundian.fssapi.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class FssUserModel {
+public class FssUserModel implements Serializable{
     private Long userId;
 
     private Long dealerId;
@@ -12,6 +13,8 @@ public class FssUserModel {
     private String userPwd;
 
     private String phone;
+
+    private String idCardNo;
 
     private String name;
 
@@ -107,6 +110,14 @@ public class FssUserModel {
 
     public String getRemark() {
         return remark;
+    }
+
+    public String getIdCardNo() {
+        return this.idCardNo;
+    }
+
+    public void setIdCardNo(String idCardNo) {
+        this.idCardNo = idCardNo;
     }
 
     public void setRemark(String remark) {

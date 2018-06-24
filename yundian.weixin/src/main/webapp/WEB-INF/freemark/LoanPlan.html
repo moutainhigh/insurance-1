@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>乐意分期</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" />
+    <style type="text/css">
+        .header {
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header .title {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .header .total {
+            font-size: 28px;
+            color: rgb(212, 109, 69);
+            margin-top: 5px;
+        }
+
+        .header .interest {
+            font-size: 12px;
+            color: #999
+        }
+    </style>
+</head>
+
+<body style="background-color:rgb(245, 245, 245);">
+    <div class="weui-panel weui-panel_access header">
+        <div class="title">还款总额（元）</div>
+        <div class="total">${loanAmount?string('0.00')}</div>
+        <div class="interest">含总利息约0元</div>
+    </div>
+    <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__bd">
+            <#list planList as plan>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>${(plan.agreedRepaymentDate)!""}</p>
+                </div>
+                <div class="weui-cell__ft">${(plan.payAmount!"")?string('0.00')}元</div>
+            </div>
+            </#list>
+        </div>
+    </div>
+
+</body>
+
+</html>

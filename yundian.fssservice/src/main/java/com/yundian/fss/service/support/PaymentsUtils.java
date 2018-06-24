@@ -1,6 +1,7 @@
 package com.yundian.fss.service.support;
 
 import com.yundian.toolkit.utils.BigDecimalUtil;
+import com.yundian.toolkit.utils.NumberUtil;
 
 /**
  * 还款月供计算
@@ -45,12 +46,29 @@ public class PaymentsUtils {
 
     }
 
+    /**
+     * 计算月供，total/periodCount,向上取整
+     * @param totalMoney
+     * @param periodCount
+     * @return
+     */
     public static Integer getMonthMoney(int totalMoney,int periodCount){
         double monthDouble =totalMoney/periodCount;
         //向上取整
         Double monthDoubleObj = Math.floor(totalMoney/100)*100;
 
         return monthDoubleObj.intValue();
+    }
+
+    /**
+     * 分为单位的金额，转换为元，保留小时2位
+     * @param money
+     * @return
+     */
+    public static String moneyFormat(Integer money){
+
+        double f = money/100;
+        return NumberUtil.format2Str(f);
     }
     public static void main(String[] args){
 

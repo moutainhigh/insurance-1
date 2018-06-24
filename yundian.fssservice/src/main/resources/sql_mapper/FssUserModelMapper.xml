@@ -8,6 +8,7 @@
     <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="idcard_no" property="idCardNo" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
@@ -15,7 +16,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, dealer_id, user_name, user_pwd, phone, name, sex, register_time, ctime, 
+    user_id, dealer_id, user_name, user_pwd, phone, name,idcard_no, sex, register_time, ctime,
     mtime, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -29,12 +30,12 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.yundian.fssapi.domain.FssUserModel" >
-    insert into fss_user (user_id, dealer_id, user_name, 
-      user_pwd, phone, name, 
+    insert into fss_user (user_id, dealer_id, user_name,
+      user_pwd, phone, name, idcard_no,
       sex, register_time, ctime, 
       mtime, remark)
     values (#{userId,jdbcType=BIGINT}, #{dealerId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{userPwd,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{userPwd,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR},
       #{sex,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{ctime,jdbcType=TIMESTAMP}, 
       #{mtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
@@ -58,6 +59,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="idCardNo != null" >
+        idcard_no,
       </if>
       <if test="sex != null" >
         sex,
@@ -94,6 +98,9 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="idCardNo != null" >
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
       <if test="sex != null" >
         #{sex,jdbcType=VARCHAR},
       </if>
@@ -129,6 +136,10 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="idCardNo != null" >
+        idcard_no =#{idCardNo,jdbcType=VARCHAR},
+      </if>
+
       <if test="sex != null" >
         sex = #{sex,jdbcType=VARCHAR},
       </if>
@@ -154,6 +165,7 @@
       user_pwd = #{userPwd,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      idcard_no =#{idCardNo,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       register_time = #{registerTime,jdbcType=TIMESTAMP},
       ctime = #{ctime,jdbcType=TIMESTAMP},
@@ -161,4 +173,55 @@
       remark = #{remark,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+
+
+  <select id="getFssUserByUserAndPwd" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from fss_user
+    where user_name =#{userName}
+    and user_pwd=#{userPwd}
+  </select>
+
+
+  <update id="resetPwd" parameterType="map" >
+    update fss_user
+    set user_pwd=#{userPwd,jdbcType=VARCHAR},
+    mtime=now()
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <sql id="getFssUserPagingWhere">
+
+    <if test="dealerId != null and dealerId != ''">
+      and dealer_id =#{dealerId}
+    </if>
+
+    <if test="name != null and name != ''">
+      and name like concat('%',#{name},'%')
+    </if>
+    <if test="userName != null and userName != ''">
+      and user_name =#{userName}
+    </if>
+  </sql>
+
+  <select id="getFssUserPaging" parameterType="map"
+          resultMap="BaseResultMap">
+    select * from fss_user
+    where 1=1
+    <include refid="getFssUserPagingWhere"/>
+    order by user_id desc
+    limit #{_offset}, #{_limit}
+
+  </select>
+  <select id="getFssUserPagingCount" resultType="java.lang.Integer" parameterType="map">
+    select
+    count(*)
+    from fss_user
+    where 1=1
+    <include refid="getFssUserPagingWhere"/>
+  </select>
+
+
 </mapper>

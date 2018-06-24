@@ -1,19 +1,19 @@
 package com.yundian.fss.dao;
 
-import com.yundian.fssapi.domain.FssRepaymentOrderNotify;
+import com.yundian.fssapi.domain.FssRepaymentOrderNotifyModel;
 
 public interface FssRepaymentOrderNotifyMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(FssRepaymentOrderNotify record);
+    int insert(FssRepaymentOrderNotifyModel record);
 
-    int insertSelective(FssRepaymentOrderNotify record);
+    int insertSelective(FssRepaymentOrderNotifyModel record);
 
-    FssRepaymentOrderNotify selectByPrimaryKey(Long id);
+    FssRepaymentOrderNotifyModel selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(FssRepaymentOrderNotify record);
+    int updateByPrimaryKeySelective(FssRepaymentOrderNotifyModel record);
 
-    int updateByPrimaryKeyWithBLOBs(FssRepaymentOrderNotify record);
+    int updateByPrimaryKeyWithBLOBs(FssRepaymentOrderNotifyModel record);
 
-    int updateByPrimaryKey(FssRepaymentOrderNotify record);
+    int updateByPrimaryKey(FssRepaymentOrderNotifyModel record);
 }

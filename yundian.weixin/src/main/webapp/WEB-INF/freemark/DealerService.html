@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>乐意分期</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" />
+    <style type="text/css">
+    </style>
+</head>
+
+<body style="background-color:rgb(245, 245, 245); padding-top: 25px;">
+    <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__bd">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>经销商</p>
+                </div>
+                <div class="weui-cell__ft">${dealer.dealerName!""}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>公司地址</p>
+                </div>
+                <div class="weui-cell__ft">${dealer.provinceName!""}${dealer.cityName!""}${dealer.street!""}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>售前咨询电话</p>
+                </div>
+                <div class="weui-cell__ft">${dealer.saleTel!""}</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>售后保养电话</p>
+                </div>
+                <div class="weui-cell__ft">${dealer.afterSalesTel!""}</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

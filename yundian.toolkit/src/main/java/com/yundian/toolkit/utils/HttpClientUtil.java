@@ -20,10 +20,8 @@ import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.net.*;
+import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -252,6 +250,7 @@ public class HttpClientUtil {
 	}
 
 	public static String sendSSLPost2(String url, Map<String, String> params) throws Exception {
+		String defaultCharst="utf-8";
 		CloseableHttpClient httpClient = createSSLClientDefault();
 		HttpPost httpPost = new HttpPost(url);
 		CloseableHttpResponse response = null;
@@ -261,7 +260,8 @@ public class HttpClientUtil {
 			for (String key : params.keySet()) {
 				paramsList.add(new BasicNameValuePair(key, String.valueOf(params.get(key))));
 			}
-			httpPost.setEntity(new UrlEncodedFormEntity(paramsList, "utf-8"));
+			httpPost.setEntity(new UrlEncodedFormEntity(paramsList, defaultCharst));
+
 			RequestConfig defaultRequestConfig = RequestConfig.custom()
 					.setSocketTimeout(CONN_TIME_OUT)
 					.setConnectTimeout(CONN_TIME_OUT)
@@ -270,7 +270,7 @@ public class HttpClientUtil {
 			response = httpClient.execute(httpPost);
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode == HttpStatus.SC_OK) {
-				httpStr = EntityUtils.toString(response.getEntity(), "utf-8");
+				httpStr = EntityUtils.toString(response.getEntity(), defaultCharst);
 			}
 		} catch (Exception e) {
 			throw e;

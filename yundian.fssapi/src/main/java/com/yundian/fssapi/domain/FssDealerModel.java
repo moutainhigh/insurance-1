@@ -32,6 +32,10 @@ public class FssDealerModel implements Serializable {
 
     private String areaName;
 
+    private String saleTel;
+
+    private String afterSalesTel;
+
     private String street;
 
     private String bankCode;
@@ -242,5 +246,21 @@ public class FssDealerModel implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getSaleTel() {
+        return this.saleTel;
+    }
+
+    public void setSaleTel(String saleTel) {
+        this.saleTel = saleTel;
+    }
+
+    public String getAfterSalesTel() {
+        return this.afterSalesTel;
+    }
+
+    public void setAfterSalesTel(String afterSalesTel) {
+        this.afterSalesTel = afterSalesTel;
     }
 }
