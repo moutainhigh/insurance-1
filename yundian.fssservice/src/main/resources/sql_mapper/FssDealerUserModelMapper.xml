@@ -166,7 +166,7 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 
-  <select id="getFssDealerUserByUserAndPwd" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="getFssDealerUserByUserAndPwd" parameterType="map"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from fss_dealer_user
