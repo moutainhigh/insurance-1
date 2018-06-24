@@ -7,6 +7,11 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>web.weixin.root</param-value>
+	</context-param>
+
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath*:spring/applicationContext.xml
