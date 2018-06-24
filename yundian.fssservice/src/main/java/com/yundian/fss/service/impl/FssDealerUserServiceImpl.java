@@ -137,6 +137,9 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
         log.info("md5:"+md5Password);
             FssDealerUserModel userModel = this.fssDealerUserModelMapper
                     .getFssDealerUserByUserAndPwd(userName, md5Password);
+            if(userModel==null){
+                log.info("result:[]");
+            }
             return userModel;
 
     }
