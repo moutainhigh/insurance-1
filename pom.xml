@@ -13,6 +13,7 @@
         <module>yundian.toolkit</module>
         <module>yundian.fssapi</module>
         <module>yundian.result</module>
+        <module>yundian.weixin</module>
         <module>yundian.dealerweb</module>
         <module>yundian.manage</module>
     </modules>

@@ -2,7 +2,6 @@ git pull
 echo ‘………………..打包项目……………………’
 
 cd /home/luoyiuser/source/insurance/yundian.dealerweb
-
 mvn clean install -DskipTests=true
 
 echo ‘………………..部署yundian.dealerweb……………………’
@@ -11,6 +10,16 @@ rm -rf *
 jar -xvf /home/luoyiuser/source/insurance/yundian.dealerweb/target/yundian-dealerweb.war
 
 cp /home/luoyiuser/data/www/conf/aliyunoss.properties /home/luoyiuser/data/www/yundian.dealerweb/WEB-INF/classes/aliyunoss.properties
+
+
+cd /home/luoyiuser/source/insurance/yundian.weixin
+mvn clean install -DskipTests=true
+
+echo ‘………………..部署yundian.dealerweb……………………’
+cd /home/luoyiuser/data/www/yundian.weixin
+rm -rf *
+jar -xvf /home/luoyiuser/source/insurance/yundian.weixin/target/yundian-weixin.war
+
 
 
 echo ‘………………重启yundian.dealerweb……………………’
