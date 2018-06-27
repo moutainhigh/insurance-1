@@ -11,6 +11,7 @@ rm -rf *
 jar -xvf /home/luoyiuser/source/insurance/yundian.fssservice/target/yundian-fssservice.war
 
 cp /home/luoyiuser/data/www/conf/db.properties /home/luoyiuser/data/www/yundian.fssservice/WEB-INF/classes/db.properties
+cp /home/luoyiuser/data/www/conf/kjt.properties /home/luoyiuser/data/www/yundian.fssservice/WEB-INF/classes/kjt.properties
 
 echo ‘………………重启yundian.fssservice……………………’
 ps  -ef |grep yundian.fssservice/ |awk '{print "kill -9 " $2}' |sh
