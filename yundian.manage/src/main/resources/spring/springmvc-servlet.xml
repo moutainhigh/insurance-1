@@ -95,8 +95,8 @@
 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
-
-
+<!--swagger 配置 -->
+<!--<bean class="com.yundian.dealerweb.swagger.config.SwaggerConfig" />-->
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>

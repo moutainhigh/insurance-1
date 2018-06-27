@@ -47,11 +47,7 @@ public class MD5 {
     
     public static void main(String[] args)
     {
-    	String s="0000c3af42fc31103f1fdc0151fa747ff87349a4714df7cc52ea464e12dcd4e9";
-    	
-    	byte[] b = s.getBytes();
-
-    	
-    	System.out.println(binary(b,2));
+    	String s="902999";
+        System.out.printf(encodePassword(s));
     }
 }
