@@ -42,7 +42,7 @@ public class FssLoanRepaymentPlanModel implements Serializable {
     /**
      * 1：代扣中
      */
-    private Integer inPaymnet;
+    private Integer inPayment;
 
     private Date ctime;
 
@@ -186,11 +186,11 @@ public class FssLoanRepaymentPlanModel implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getInPaymnet() {
-        return this.inPaymnet;
+    public Integer getInPayment() {
+        return this.inPayment;
     }
 
-    public void setInPaymnet(Integer inPaymnet) {
-        this.inPaymnet = inPaymnet;
+    public void setInPayment(Integer inPayment) {
+        this.inPayment = inPayment;
     }
 }

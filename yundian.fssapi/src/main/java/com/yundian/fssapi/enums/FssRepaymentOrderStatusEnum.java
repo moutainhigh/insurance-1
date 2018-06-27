@@ -15,7 +15,11 @@ public enum FssRepaymentOrderStatusEnum {
 	F("订单受理失败"),
 	TRADE_SUCCESS("付款成功"),
 	TRADE_FINISHED("交易成功"),
-	TRADE_CLOSED("交易关闭");
+	TRADE_CLOSED("交易关闭"),
+	REFUND_REQUEST("退款初始"),
+	REFUND_REQUEST_SUCCESS("退款受理成功"),
+	REFUND_SUCCESS("退款成功"),
+	REFUND_FAIL("退款失败");
 
 	private String description;
 

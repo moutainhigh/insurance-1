@@ -1,10 +1,12 @@
 import React, {Component} from "react";
 import LoanInfo from "../loan/LoanInfo";
 import {Tabs,Modal,Button,Table} from "antd";
+import {Notify} from "../common/Common";
 import RepaymentAction from "actions/RepaymentAction";
 const TabPane = Tabs.TabPane;
-
+const confirm = Modal.confirm;
 class RepaymentPlan extends Component{
+
 
   render(){
 
@@ -38,7 +40,39 @@ class RepaymentPlan extends Component{
 
       {
         title: '还款状态', dataIndex: 'repaymentStatus', key: 'repaymentStatus', width: 280
-      }
+      }, {
+       title: '操作', dataIndex: 'handle', key: 'handle', width: 120,
+       render(text, record, index){
+         if(record.repaymentStatus == 'HASREPAYMENT') {
+           return (<div></div>)
+         }else if(record.inPayment == 1&&record.repaymentStatus != 'HASREPAYMENT'){
+           return (<div>已提交代扣</div>)
+         }
+         else {
+           return (
+             <div>
+               <Button onClick={() => {
+                 console.log('触发代扣！');
+                 confirm({
+                   title: '确认要发起代扣吗?',
+                   content: '发起代扣后，会马上在用户卡上代扣相应金额！',
+                   onOk() {
+                     if (record.inPayment == 1 || record.repaymentStatus == 'HASREPAYMENT') {
+                       Notify('触发代扣失败!', '计划状态为代扣中或已还款，无法发起代扣！', 'error')
+                     } else {
+                       RepaymentAction.witholding({planId: record.id});
+                     }
+                   },
+                   onCancel() {
+                     console.log('Cancel');
+                   },
+                 });
+               }}>触发代扣</Button>
+             </div>
+           )
+         }
+       }
+     }
     ];
 console.log('plan:'+this.props.repaymentPlans);
     return (

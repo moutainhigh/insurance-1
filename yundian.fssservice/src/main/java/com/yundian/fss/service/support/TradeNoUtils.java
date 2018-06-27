@@ -23,6 +23,11 @@ public class TradeNoUtils {
         return tradeNo;
     }
 
+    public static String generateRefundTradeNo(){
+
+        String tradeNo = "R"+DateUtils.formatString(new Date(),"yyyyMMddHHmmss")+ RandomUtil.generateRandomNumber(6);
+        return tradeNo;
+    }
     public static String generateRequestNo(){
         return DateUtils.formatString(new Date(),"yyyyMMddHHmmssSS")+ RandomUtil.generateRandomNumber(4);
 

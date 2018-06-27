@@ -7,16 +7,14 @@ import com.yundian.fssapi.enums.FssLoanStatusEnum;
 import com.yundian.fssapi.enums.FssRepaymentStatusEnum;
 import com.yundian.fssapi.service.FssDealerCustomerService;
 import com.yundian.fssapi.service.FssRepaymentService;
+import com.yundian.fssapi.service.FssRepaymentWithHoldService;
 import com.yundian.result.Page;
 import com.yundian.result.Paginator;
 import com.yundian.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,7 +28,21 @@ public class RepaymentController {
 
     @Autowired
     FssRepaymentService fssRepaymentService;
+    @Autowired
+    FssRepaymentWithHoldService fssRepaymentWithHoldService;
 
+
+    @ResponseBody
+    @RequestMapping(value="/repayment/witholding",method= RequestMethod.POST)
+    public Result withoding(@RequestParam("planId") long planId){
+
+        try {
+            fssRepaymentWithHoldService.tradeWithHolding(planId);
+            return Result.success("");
+        }catch (Exception e){
+            return Result.fail("",e.getMessage());
+        }
+    }
     @ResponseBody
     @RequestMapping(value = "/repayment/getPlans")
     public Result listAjax	(

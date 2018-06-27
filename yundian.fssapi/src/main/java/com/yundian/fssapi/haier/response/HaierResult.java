@@ -1,4 +1,4 @@
-package com.yundian.fss.pay.withhold.haier;
+package com.yundian.fssapi.haier.response;
 
 /**
  * 返回结果对象

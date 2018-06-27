@@ -1,23 +1,16 @@
 package com.yundian.fss.service;
 
 import com.alibaba.fastjson.JSON;
-import com.yundian.fss.pay.withhold.haier.HaierResult;
-import com.yundian.fss.pay.withhold.haier.HaierTradeBankWitholdingRequest;
-import com.yundian.fss.pay.withhold.haier.HaierTradeQueryRequest;
-import com.yundian.fss.pay.withhold.haier.HaierTradeRefundRequest;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeBankWitholdingResponse;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeQueryResponse;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeRefundResponse;
+import com.yundian.fss.service.support.TradeNoUtils;
 import com.yundian.fss.test.AbstractJUnit;
-import com.yundian.fssapi.domain.FssCarBrandModel;
-import com.yundian.fssapi.domain.FssCarModelsModel;
-import com.yundian.fssapi.domain.FssCarSeriesModel;
-import com.yundian.fssapi.service.FssCarService;
-import org.junit.Assert;
+import com.yundian.fssapi.haier.notify.param.RefundNotifyParam;
+import com.yundian.fssapi.haier.notify.param.WitholdingNotifyParam;
+import com.yundian.fssapi.haier.response.HaierResult;
+import com.yundian.fssapi.haier.response.HaierTradeQueryResponse;
+import com.yundian.fssapi.haier.response.HaierTradeRefundResponse;
+import com.yundian.fssapi.service.FssRepaymentWithHoldService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * 代扣测试
@@ -28,41 +21,77 @@ import java.util.List;
 public class FssHaierWitholdingTest extends AbstractJUnit{
 
     @Autowired
-    HaierTradeBankWitholdingRequest haierTradeBankWitholdingRequest;
-
-    @Autowired
-    HaierTradeQueryRequest haierTradeQueryRequest;
+    FssRepaymentWithHoldService fssRepaymentWithHoldService;
 
 
-    @Autowired
-    HaierTradeRefundRequest haierTradeRefundRequest;
+
+
     @Test
     public void witholding() {
-        String outTradeNo="luoyi2018062110553000004";
-        String bankAccountName="金宁夏";
-        String bankCardNo="6212264100011335373";
-        String bankCode="ICBC";
-        String certificatesNumber="330327198312251714";
-        String payableAmount="0.11";
-        HaierResult<HaierTradeBankWitholdingResponse> responseHaierResult = haierTradeBankWitholdingRequest.invoke("",outTradeNo,bankAccountName,
-                bankCardNo,bankCode,certificatesNumber,payableAmount);
-        System.out.printf("witholding:"+JSON.toJSONString(responseHaierResult));
+
+        Long planId=37L;
+        fssRepaymentWithHoldService.tradeWithHolding(planId);
+
     }
 
 
     @Test
     public void query() {
-        String tradeNo="101152958090002381353";
-        HaierResult<HaierTradeQueryResponse> haierTradeQueryResponseHaierResult =haierTradeQueryRequest.invoke(tradeNo);
+        String tradeNo="103153001086649611208";
+        HaierResult<HaierTradeQueryResponse> haierTradeQueryResponseHaierResult =fssRepaymentWithHoldService.tradeQuery(tradeNo);
         System.out.printf("query:"+JSON.toJSONString(haierTradeQueryResponseHaierResult));
     }
 
     @Test
     public void refund() {
-        String outTradeNo="luoyirefund2018062110553000003";
-        String orgTradeNo="luoyi2018062110553000004";
-        HaierResult<HaierTradeRefundResponse> result =haierTradeRefundRequest.invoke(outTradeNo,orgTradeNo,"0.11");
-        System.out.printf("query:"+JSON.toJSONString(result));
+
+        Long repaymentOrderId= 5L;
+         fssRepaymentWithHoldService.tradeRefund(repaymentOrderId);
+    }
+
+
+    @Test
+    public void notifyWitholding(){
+        String param ="{\n" +
+                "    \"notify_time\":\"20170414105550\",\n" +
+                "    \"sign_type\":\"RSA\",\n" +
+                "    \"notify_type\":\"trade_status_sync\",\n" +
+                "    \"gmt_payment\":\"20170414105318\",\n" +
+                "    \"trade_status\":\"TRADE_SUCCESS\",\n" +
+                "    \"version\":\"1.0\",\n" +
+                "    \"sign\":\"70d6f06f6e4f68c2de2435b3047743a4\",\n" +
+                "    \"gmt_create\":\"20170414105318\",\n" +
+                "    \"_input_charset\":\"UTF-8\",\n" +
+                "    \"outer_trade_no\":\"w20180626184411330681\",\n" +
+                "    \"trade_amount\":1,\n" +
+                "    \"inner_trade_no\":\"101153000985394811200\",\n" +
+                "    \"notify_id\":\"71b6ec69cbce4b2eab309340d7081bad\"\n" +
+                "}";
+
+        WitholdingNotifyParam witholdingNotifyParam =JSON.parseObject(param, WitholdingNotifyParam.class);
+        fssRepaymentWithHoldService.notifyWithHold(witholdingNotifyParam);
+    }
+
+    @Test
+    public void notifyRefund(){
+        String param ="{\n" +
+                "    \"notify_time\":\"20170414105550\",\n" +
+                "    \"sign_type\":\"RSA\",\n" +
+                "    \"notify_type\":\"redund_status_sync\",\n" +
+                "    \"refund_status\":\"REFUND_SUCCESS\",\n" +
+                "    \"version\":\"1.0\",\n" +
+                "    \"orig_outer_trade_no\":\"w20180626184411330681\",\n" +
+                "    \"sign\":\"70d6f06f6e4f68c2de2435b3047743a4\",\n" +
+                "    \"gmt_refund\":\"20170414105318\",\n" +
+                "    \"_input_charset\":\"UTF-8\",\n" +
+                "    \"outer_trade_no\":\"R20180626190105479008\",\n" +
+                "    \"trade_amount\":1,\n" +
+                "    \"inner_trade_no\":\"103153001086649611208\",\n" +
+                "    \"notify_id\":\"71b6ec69cbce4b2eab309340d7081bad\"\n" +
+                "}";
+
+        RefundNotifyParam refundNotifyParam =JSON.parseObject(param, RefundNotifyParam.class);
+        fssRepaymentWithHoldService.notifyRefund(refundNotifyParam);
     }
 
 }

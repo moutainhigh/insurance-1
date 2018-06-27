@@ -8,6 +8,7 @@ import com.yundian.fssapi.enums.FssRepaymentOrderStatusEnum;
  */
 public interface FssRepaymentOrderBizService {
 
+    FssRepaymentOrderModel getRepaymentOrderById(Long orderId);
     /**
      *
      * @param tradeNo
@@ -19,7 +20,7 @@ public interface FssRepaymentOrderBizService {
      * 初始还款订单
      * @param fssRepaymentOrderModel
      */
-    Long initRepaymentOrder(FssRepaymentOrderModel fssRepaymentOrderModel);
+    Integer initRepaymentOrder(FssRepaymentOrderModel fssRepaymentOrderModel);
 
     /**
      * 更新还款订单状态
@@ -30,5 +31,4 @@ public interface FssRepaymentOrderBizService {
     void updateRepaymentOrderStatus(Long id, FssRepaymentOrderStatusEnum orderStatus,String tradeRemark);
 
 
-    void updateRepaymentOrderStatusByTradeNo(String tradeNo,FssRepaymentOrderStatusEnum orderStatus,String tradeRemark);
 }

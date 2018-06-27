@@ -1,16 +1,13 @@
 package com.yundian.fss.pay.withhold.haier;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.yundian.fss.pay.withhold.haier.annotation.AnnotationValue;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeQueryResponse;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeRefundResponse;
-import com.yundian.toolkit.utils.DateUtils;
-import com.yundian.toolkit.utils.RandomUtil;
+import com.yundian.fssapi.haier.response.HaierResult;
+import com.yundian.fssapi.haier.response.HaierTradeRefundResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * 交易退款接口
@@ -57,10 +54,12 @@ public class HaierTradeRefundRequest extends HaierRequestBase {
         return "trade_refund";
     }
 
+    private String requestNo;
+
     @Override
     public String getRequestNo() {
 
-        return DateUtils.formatString(new Date(),"yyyyMMddHHmmssSS")+ RandomUtil.generateRandomNumber(4);
+        return requestNo;
     }
 
     /**
@@ -70,13 +69,15 @@ public class HaierTradeRefundRequest extends HaierRequestBase {
      * @param refundAmount 退款金额，小数2位
      * @return
      */
-    public HaierResult<HaierTradeRefundResponse> invoke(String outTradeNo,String origOutTradeNo,String refundAmount){
+    public HaierResult<HaierTradeRefundResponse> invoke(String requestNo, String outTradeNo, String origOutTradeNo, String refundAmount) throws  Exception{
         System.out.println("outTradeNo = [" + outTradeNo + "], origOutTradeNo = [" + origOutTradeNo + "], refundAmount = [" + refundAmount + "]");
+        this.requestNo = requestNo;
         this.outTradeNo = outTradeNo;
         this.origOutTradeNo = origOutTradeNo;
         this.refundAmount=refundAmount;
-        HaierResult<HaierTradeRefundResponse> haierResult= post();
-        log.info("返回结果："+ JSON.toJSONString(haierResult));
+        String httpResult = post();
+        HaierResult<HaierTradeRefundResponse> haierResult= JSON.parseObject(httpResult, new TypeReference<HaierResult<HaierTradeRefundResponse>>(){});
+        log.info("返回结果："+ httpResult);
         return haierResult;
     }
 

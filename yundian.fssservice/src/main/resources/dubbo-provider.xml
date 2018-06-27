@@ -43,6 +43,8 @@
 	<!--用户服务 -->
 	<dubbo:service ref="fssUserService" interface="com.yundian.fssapi.service.FssUserService"
 				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
-
+<!--代扣 -->
+	<dubbo:service ref="fssRepaymentWithHoldService" interface="com.yundian.fssapi.service.FssRepaymentWithHoldService"
+				   group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" retries="0"/>
 
 </beans>

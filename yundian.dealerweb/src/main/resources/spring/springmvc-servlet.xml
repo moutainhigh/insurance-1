@@ -107,6 +107,7 @@
 			<mvc:exclude-mapping path="/resources/1.0.0/**"/>
 			<mvc:exclude-mapping path="/resources/fonts/**"/>
 			<mvc:exclude-mapping path="/favicon.ico"/>
+			<mvc:exclude-mapping path="/notify/**"/>
 
 			<mvc:exclude-mapping path="/login.html"/>
 			<mvc:exclude-mapping path="/doLogin"/>

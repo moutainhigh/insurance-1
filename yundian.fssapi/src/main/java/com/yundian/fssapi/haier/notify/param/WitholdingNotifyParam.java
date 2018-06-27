@@ -1,13 +1,16 @@
-package com.yundian.fssapi.haier.request;
+package com.yundian.fssapi.haier.notify.param;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 快捷通代扣异步通知对象
  * @author jnx
  * @create 2018/6/22
  */
-public class WitholdingNotifyRequest implements Serializable{
+public class WitholdingNotifyParam implements Serializable{
 
     /**
      * 通知的唯一标识
@@ -79,6 +82,27 @@ public class WitholdingNotifyRequest implements Serializable{
      */
     private String failReason;
 
+
+    /**
+     * 获取参与验签的参数
+     * @return
+     */
+    public Map<String,String> getSignMap(){
+        Map<String,String> map = new HashMap<>(5);
+        Field[] fields = this.getClass().getDeclaredFields();
+        for(Field field:fields){
+            field.setAccessible(true);
+            try {
+                if(!field.getName().equals("sign")&&!field.getName().equals("sign_type")) {
+                    map.put(field.getName(), field.get(this) == null ? "" : field.get(this).toString());
+                }
+            }catch (IllegalAccessException e){
+                System.out.println("WitholdingNotifyRequest getSignMap error, "+e.getMessage());
+            }
+
+        }
+        return map;
+    }
 
     public String getNotify_id() {
         return this.notify_id;

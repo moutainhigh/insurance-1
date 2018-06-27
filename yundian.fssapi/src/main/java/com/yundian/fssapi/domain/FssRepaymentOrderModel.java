@@ -15,6 +15,12 @@ public class FssRepaymentOrderModel implements Serializable {
 
     private String tradeNo;
 
+    /**
+     * 订单类型：witholding,refund
+     */
+    private String tradeType;
+    private String orgTradeNo;
+
     private String bankTradeNo;
 
     private String requestNo;
@@ -210,5 +216,21 @@ public class FssRepaymentOrderModel implements Serializable {
 
     public void setPlanId(Long planId) {
         this.planId = planId;
+    }
+
+    public String getTradeType() {
+        return this.tradeType;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
+    }
+
+    public String getOrgTradeNo() {
+        return this.orgTradeNo;
+    }
+
+    public void setOrgTradeNo(String orgTradeNo) {
+        this.orgTradeNo = orgTradeNo;
     }
 }

@@ -7,6 +7,11 @@
     <result column="period" property="period" jdbcType="INTEGER" />
     <result column="pay_amount" property="payAmount" jdbcType="INTEGER" />
     <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="org_trade_no" property="orgTradeNo" jdbcType="VARCHAR" />
+    <result column="request_no" property="requestNo" jdbcType="VARCHAR" />
+    <result column="plan_id" property="planId" jdbcType="VARCHAR" />
+
     <result column="bank_trade_no" property="bankTradeNo" jdbcType="VARCHAR" />
     <result column="bank_account_name" property="bankAccountName" jdbcType="VARCHAR" />
     <result column="certificates_number" property="certificatesNumber" jdbcType="VARCHAR" />
@@ -23,7 +28,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, loan_id, period, pay_amount, trade_no, bank_trade_no, bank_account_name, certificates_number, 
+    id, loan_id, period, pay_amount, trade_no,trade_type,org_trade_no, request_no,plan_id,bank_trade_no, bank_account_name, certificates_number,
     bank_card_no, bank_code, payee_identity, trade_status, trade_pre_status, pay_time, 
     return_time, trade_remark, ctime, mtime, remark
   </sql>
@@ -33,20 +38,22 @@
     from fss_repayment_order
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from fss_repayment_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.yundian.fssapi.domain.FssRepaymentOrderModel" >
     insert into fss_repayment_order (id, loan_id, period, 
-      pay_amount, trade_no, bank_trade_no, 
+      pay_amount, trade_no, trade_type,org_trade_no,request_no,plan_id,bank_trade_no,
       bank_account_name, certificates_number, bank_card_no, 
       bank_code, payee_identity, trade_status, 
       trade_pre_status, pay_time, return_time, 
       trade_remark, ctime, mtime, 
       remark)
     values (#{id,jdbcType=BIGINT}, #{loanId,jdbcType=BIGINT}, #{period,jdbcType=INTEGER}, 
-      #{payAmount,jdbcType=INTEGER}, #{tradeNo,jdbcType=VARCHAR}, #{bankTradeNo,jdbcType=VARCHAR}, 
+      #{payAmount,jdbcType=INTEGER}, #{tradeNo,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR},#{orgTradeNo,jdbcType=VARCHAR},#{requestNo,jdbcType=VARCHAR},#{planId,jdbcType=BIGINT},#{bankTradeNo,jdbcType=VARCHAR},
       #{bankAccountName,jdbcType=VARCHAR}, #{certificatesNumber,jdbcType=VARCHAR}, #{bankCardNo,jdbcType=VARCHAR}, 
       #{bankCode,jdbcType=VARCHAR}, #{payeeIdentity,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, 
       #{tradePreStatus,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{returnTime,jdbcType=TIMESTAMP}, 
@@ -70,6 +77,18 @@
       </if>
       <if test="tradeNo != null" >
         trade_no,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="orgTradeNo != null" >
+        org_trade_no,
+      </if>
+      <if test="requestNo != null" >
+        request_no,
+      </if>
+      <if test="planId != null" >
+        plan_id,
       </if>
       <if test="bankTradeNo != null" >
         bank_trade_no,
@@ -130,6 +149,18 @@
       <if test="tradeNo != null" >
         #{tradeNo,jdbcType=VARCHAR},
       </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTradeNo != null" >
+        #{orgTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null" >
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=BIGINT},
+      </if>
       <if test="bankTradeNo != null" >
         #{bankTradeNo,jdbcType=VARCHAR},
       </if>
@@ -189,6 +220,19 @@
       <if test="tradeNo != null" >
         trade_no = #{tradeNo,jdbcType=VARCHAR},
       </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTradeNo != null" >
+        org_trade_no = #{orgTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null" >
+        request_no =  #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+
       <if test="bankTradeNo != null" >
         bank_trade_no = #{bankTradeNo,jdbcType=VARCHAR},
       </if>
@@ -256,4 +300,11 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByTradeCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from fss_repayment_order
+    where trade_no = #{tradeNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

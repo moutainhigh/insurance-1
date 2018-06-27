@@ -10,4 +10,11 @@ public interface FssLoanRepaymentPlanBizService {
 
     int updateRepaymentPlanPaymenting(Long planId);
     int updateRepaymentPlanUnPayment(Long planId);
+
+
+    void repaymentSuccess(Long planId,Integer payAmount,String repaymentDate,String repaymentTime);
+
+    void repaymentFailed(Long planId);
+
+    void repaymentRefund(Long planId);
 }

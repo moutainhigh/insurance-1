@@ -31,6 +31,9 @@
 	<dubbo:reference id="fssCarService" registry="yundian_center" interface="com.yundian.fssapi.service.FssCarService"
 					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
 
+	<dubbo:reference id="fssRepaymentWithHoldService" registry="yundian_center" interface="com.yundian.fssapi.service.FssRepaymentWithHoldService"
+					 group="${dubbo.yundian.group}" version="${dubbo.yundian.version}" check="false" retries="0"/>
+
 
 
 </beans>

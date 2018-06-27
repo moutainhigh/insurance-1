@@ -17,7 +17,8 @@ class RepaymentStore {
       handleInitDataList: RepaymentAction.initDataListInfo,
       handlePagination: RepaymentAction.setPagination,
       handleOpenShowModal: RepaymentAction.openShowModal,
-      handleCloseShowModal:RepaymentAction.closeShowModal
+      handleCloseShowModal:RepaymentAction.closeShowModal,
+      handleWitholding:RepaymentAction.witholding
 
 
 
@@ -82,6 +83,18 @@ class RepaymentStore {
 
   }
 
+
+  handleWitholding = (data) =>{
+    console.log("planId:"+data.planId);
+    let param = querystring.encode(data);
+    console.log("add:"+param);
+    xPostFetch(SERVER_URL + '/repayment/witholding',param).then(result => {
+      if (result && result.success) {
+        Notify('提交代扣成功！', result.msg, 'success');
+      } else{
+        Notify('提交代扣失败！', result.msg, 'error');
+      }})
+  }
   handleQuerySubmit = (data) => {
     this.setState({loading:true});
     let queryParam = querystring.encode(data.data) + "&" + querystring.encode(data.pager);

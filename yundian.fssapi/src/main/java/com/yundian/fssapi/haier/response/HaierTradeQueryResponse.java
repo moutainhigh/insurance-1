@@ -1,4 +1,4 @@
-package com.yundian.fss.pay.withhold.haier.model;
+package com.yundian.fssapi.haier.response;
 
 /**
  * 代扣申请返回对象

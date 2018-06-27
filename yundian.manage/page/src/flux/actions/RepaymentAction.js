@@ -47,6 +47,15 @@ class RepaymentAction {
     return data;
   };
 
+  /**
+   * 提交代扣
+   * @param data
+   * @returns {*}
+   */
+  witholding =(data)=> {
+    return data;
+  };
+
 
 
 }

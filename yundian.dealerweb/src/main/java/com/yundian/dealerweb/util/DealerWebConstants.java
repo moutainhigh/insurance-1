@@ -1,5 +1,8 @@
 package com.yundian.dealerweb.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class DealerWebConstants {
 
 	
@@ -114,6 +117,18 @@ public class DealerWebConstants {
 	
 	public static final String USER_PASSWORD = "ac@123";//暂时：ac@123
 	
-	
+
+
+	public static void main(String[] args){
+		//时间格式：20091225091010
+		String paymentTimeStr = "20091225091010";
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		LocalDateTime paymentDateTime = LocalDateTime.parse(paymentTimeStr, df);
+		System.out.println("localDateString = [" + paymentDateTime.toLocalDate().toString() + "]");
+
+		DateTimeFormatter df2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		System.out.println("localDateTimeString = [" + paymentDateTime.format(df2) + "]");
+
+	}
 	
 }

@@ -1,28 +1,21 @@
 package com.yundian.fss.pay.withhold.haier;
 
-import com.alibaba.dubbo.common.json.JSON;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.kjtpay.gateway.common.util.security.SecurityService;
-import com.yundian.basic.service.SysConfigService;
 import com.yundian.fss.pay.withhold.haier.annotation.AnnotationValue;
+import com.yundian.fssapi.haier.response.HaierResult;
+import com.yundian.fssapi.haier.response.HaierTradeBankWitholdingResponse;
 import com.yundian.toolkit.utils.DateUtils;
 import com.yundian.toolkit.utils.HttpClientUtil;
-import com.yundian.toolkit.utils.MapUtil;
-import com.yundian.toolkit.utils.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.collections.map.LinkedMap;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -75,7 +68,7 @@ public abstract class HaierRequestBase {
 
     private final static String separator="&";
 
-    public  HaierResult post(){
+    public String post() throws Exception{
 
         Map<String, String> param =new LinkedHashMap();
         param.put("request_no",getRequestNo());
@@ -109,18 +102,20 @@ public abstract class HaierRequestBase {
         String sign = securityService.sign(param,charset);
         param.put("sign",sign);
         param.put("sign_type",signType);
-        log.info("请求：param="+ com.alibaba.fastjson.JSON.toJSONString(param));
+        log.info("请求：param="+ JSON.toJSONString(param));
         try {
 
             for(Map.Entry entry:param.entrySet()){
                 entry.setValue(URLEncoder.encode(entry.getValue()==null?"":entry.getValue().toString(),"utf-8"));
             }
-            log.info("请求 encode param="+ com.alibaba.fastjson.JSON.toJSONString(param));
-            String result = HttpClientUtil.sendSSLPost2(url, param);
-            return JSON.parse(result,HaierResult.class);
+            log.info("请求 encode param="+ JSON.toJSONString(param));
+            return HttpClientUtil.sendSSLPost2(url, param);
         }catch (Exception e){
-            System.out.printf("调用快捷通接口失败，"+e.getMessage());
+            String errorMessage =String.format("调用快捷通接口失败，%s",e.getMessage());
+            log.error(errorMessage);
+            throw new Exception(errorMessage);
         }
-        return null;
     }
+
+
 }

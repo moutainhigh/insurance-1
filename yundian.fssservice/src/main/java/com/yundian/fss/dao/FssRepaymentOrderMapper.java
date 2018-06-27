@@ -14,4 +14,6 @@ public interface FssRepaymentOrderMapper {
     int updateByPrimaryKeySelective(FssRepaymentOrderModel record);
 
     int updateByPrimaryKey(FssRepaymentOrderModel record);
+
+    FssRepaymentOrderModel selectByTradeCode(String  tradeNo);
 }

@@ -1,13 +1,14 @@
 package com.yundian.fss.pay.withhold.haier;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.yundian.fss.pay.withhold.haier.annotation.AnnotationValue;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeBankWitholdingResponse;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeQueryResponse;
+import com.yundian.fssapi.haier.response.HaierResult;
+import com.yundian.fssapi.haier.response.HaierTradeBankWitholdingResponse;
+import com.yundian.fssapi.haier.response.HaierTradeQueryResponse;
 import com.yundian.toolkit.utils.DateUtils;
 import com.yundian.toolkit.utils.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -44,11 +45,13 @@ public class HaierTradeQueryRequest extends HaierRequestBase {
      * @param tradeNo 快捷通订单号
      * @return
      */
-    public HaierResult<HaierTradeQueryResponse> invoke(String tradeNo){
+    public HaierResult<HaierTradeQueryResponse> invoke(String tradeNo) throws Exception{
         log.info("调用交易查询接口:outTradeNo = [" + tradeNo + "]");
         this.tradeNo = tradeNo;
-        HaierResult<HaierTradeQueryResponse> haierResult= post();
-        log.info("返回结果："+ JSON.toJSONString(haierResult));
+        String httpResult = post();
+        HaierResult<HaierTradeQueryResponse> haierResult= JSON.parseObject(httpResult, new TypeReference<HaierResult<HaierTradeQueryResponse>>(){});
+
+        log.info("返回结果："+ httpResult);
         return haierResult;
     }
 

@@ -1,15 +1,15 @@
 package com.yundian.fss.pay.withhold.haier;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.yundian.fss.pay.withhold.haier.annotation.AnnotationValue;
-import com.yundian.fss.pay.withhold.haier.model.HaierTradeBankWitholdingResponse;
-import com.yundian.toolkit.utils.DateUtils;
-import com.yundian.toolkit.utils.RandomUtil;
+import com.yundian.fssapi.haier.response.HaierResult;
+import com.yundian.fssapi.haier.response.HaierTradeBankWitholdingResponse;
+import com.yundian.fssapi.haier.response.HaierTradeRefundResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * 代扣网关接口
@@ -134,7 +134,7 @@ public class HaierTradeBankWitholdingRequest extends HaierRequestBase {
      * @return
      */
     public HaierResult<HaierTradeBankWitholdingResponse> invoke(String requestNo,String outTradeNo, String bankAccountName, String bankCardNo,String bankCode,
-                                                              String certificatesNumber, String payableAmount){
+                                                              String certificatesNumber, String payableAmount) throws Exception{
         log.info("调用代扣申请接口:outTradeNo = [" + outTradeNo + "], bankAccountName = [" + bankAccountName + "], bankCardNo = [" + bankCardNo + "], certificatesNumber = [" + certificatesNumber + "], payableAmount = [" + payableAmount + "]");
         this.requestNo = requestNo;
         this.outTradeNo = outTradeNo;
@@ -143,8 +143,9 @@ public class HaierTradeBankWitholdingRequest extends HaierRequestBase {
         this.bankCode = bankCode;
         this.certificatesNumber = certificatesNumber;
         this.payableAmount = payableAmount;
-        HaierResult<HaierTradeBankWitholdingResponse> haierResult= post();
-        log.info("返回结果："+ JSON.toJSONString(haierResult));
+        String httpResult = post();
+        HaierResult<HaierTradeBankWitholdingResponse> haierResult= JSON.parseObject(httpResult, new TypeReference<HaierResult<HaierTradeBankWitholdingResponse>>(){});
+        log.info("返回结果："+ httpResult);
         return haierResult;
     }
 
