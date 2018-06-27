@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * 支付通知
@@ -30,6 +32,14 @@ public class NotifyController {
                            HttpServletRequest request, HttpServletResponse response) {
 
         try {
+
+            Enumeration em = request.getParameterNames();
+            while (em.hasMoreElements()) {
+                String name = (String) em.nextElement();
+                String value = request.getParameter(name);
+                log.info(String.format("代扣通知：name=%s,value=%s",name,value));
+            }
+
             log.info(String.format("********代扣异步通知开始*****\n,request_param:%s", JSON.toJSONString(witholdingNotifyParam)));
             boolean isVerfiySignSuccess = fssRepaymentWithHoldService.verfiySign(witholdingNotifyParam.getSignMap(),witholdingNotifyParam.getSign());
             if(!isVerfiySignSuccess){
