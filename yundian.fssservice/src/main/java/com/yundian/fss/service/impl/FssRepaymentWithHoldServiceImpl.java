@@ -102,14 +102,13 @@ public class FssRepaymentWithHoldServiceImpl implements FssRepaymentWithHoldServ
             fssLoanRepaymentPlanBizService.repaymentFailed(orderModel.getPlanId());
         }else if(orderStatusEnum ==FssRepaymentOrderStatusEnum.TRADE_FINISHED||
                 orderStatusEnum ==FssRepaymentOrderStatusEnum.TRADE_SUCCESS){
-            Integer tradeAmount = Integer.parseInt(String.valueOf(Long.parseLong(notifyModel.getTradeAmount())*100));
-
+            Double tradeAmountDouble = Double.valueOf(notifyModel.getTradeAmount())*100;
             //时间格式：20091225091010
             String paymentTimeStr = notifyRequest.getGmt_payment();
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
             LocalDateTime paymentDateTime = LocalDateTime.parse(paymentTimeStr, df);
             DateTimeFormatter df2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            fssLoanRepaymentPlanBizService.repaymentSuccess(orderModel.getPlanId(),tradeAmount,
+            fssLoanRepaymentPlanBizService.repaymentSuccess(orderModel.getPlanId(),tradeAmountDouble.intValue(),
                     paymentDateTime.toLocalDate().toString(),paymentDateTime.format(df2));
         }
 
