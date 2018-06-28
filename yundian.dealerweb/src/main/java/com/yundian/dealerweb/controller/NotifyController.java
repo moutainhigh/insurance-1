@@ -38,7 +38,7 @@ public class NotifyController {
                 String value = request.getParameter(name);
                 log.info(String.format("代扣通知：name=%s,value=%s",name,value));
             }
-
+            witholdingNotifyParam.setInput_charset(request.getParameter("_input_charset"));
             log.info(String.format("********代扣异步通知开始*****\n,request_param:%s", JSON.toJSONString(witholdingNotifyParam)));
             boolean isVerfiySignSuccess = fssRepaymentWithHoldService.verfiySign(witholdingNotifyParam.getSignMap(),witholdingNotifyParam.getSign());
             if(!isVerfiySignSuccess){
@@ -60,6 +60,8 @@ public class NotifyController {
                        HttpServletRequest request, HttpServletResponse response) {
 
         try {
+
+            refundNotifyParam.setInput_charset(request.getParameter("_input_charset"));
             log.info(String.format("********退款异步通知开始*****\n,request_param:%s", JSON.toJSONString(refundNotifyParam)));
             boolean isVerfiySignSuccess = fssRepaymentWithHoldService.verfiySign(refundNotifyParam.getSignMap(), refundNotifyParam.getSign());
             if(!isVerfiySignSuccess){
