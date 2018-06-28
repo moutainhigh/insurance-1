@@ -1,5 +1,7 @@
 package com.yundian.fssapi.haier.notify.param;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ public class WitholdingNotifyParam implements Serializable{
     /**
      * 通知的唯一标识
      */
+
     private String notify_id;
     /**
      * 通知类型，交易通知此字段为:trade_status_sync
@@ -27,7 +30,8 @@ public class WitholdingNotifyParam implements Serializable{
     /**
      * UTF-8
      */
-    private String _input_charset;
+    @JSONField(name = "_input_charset")
+    private String input_charset;
     /**
      * 对报文摘要的签名
      */
@@ -94,7 +98,11 @@ public class WitholdingNotifyParam implements Serializable{
             field.setAccessible(true);
             try {
                 if(!field.getName().equals("sign")&&!field.getName().equals("sign_type")) {
-                    map.put(field.getName(), field.get(this) == null ? "" : field.get(this).toString());
+                    if(field.getName().equals("input_charset")){
+                        map.put("_input_charset", field.get(this) == null ? "" : field.get(this).toString());
+                    }else {
+                        map.put(field.getName(), field.get(this) == null ? "" : field.get(this).toString());
+                    }
                 }
             }catch (IllegalAccessException e){
                 System.out.println("WitholdingNotifyRequest getSignMap error, "+e.getMessage());
@@ -128,12 +136,12 @@ public class WitholdingNotifyParam implements Serializable{
         this.notify_time = notify_time;
     }
 
-    public String get_input_charset() {
-        return this._input_charset;
+    public String getInput_charset() {
+        return this.input_charset;
     }
 
-    public void set_input_charset(String _input_charset) {
-        this._input_charset = _input_charset;
+    public void setInput_charset(String input_charset) {
+        this.input_charset = input_charset;
     }
 
     public String getSign() {

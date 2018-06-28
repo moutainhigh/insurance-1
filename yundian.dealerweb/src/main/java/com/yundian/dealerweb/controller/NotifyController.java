@@ -30,7 +30,6 @@ public class NotifyController {
     @RequestMapping("/notify/witholding")
     public void witholding(@ModelAttribute("witholdingNotifyParam") WitholdingNotifyParam witholdingNotifyParam,
                            HttpServletRequest request, HttpServletResponse response) {
-
         try {
 
             Enumeration em = request.getParameterNames();

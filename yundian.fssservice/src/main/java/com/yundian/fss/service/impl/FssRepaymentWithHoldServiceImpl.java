@@ -52,7 +52,7 @@ public class FssRepaymentWithHoldServiceImpl implements FssRepaymentWithHoldServ
     @Override
     public Boolean verfiySign(Map<String, String> param, String sign) {
 
-        return withHoldHaierBizService.verify(param,sign);
+        return withHoldHaierBizService.verify(param,sign,"RSA");
     }
 
     @Override

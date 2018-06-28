@@ -204,15 +204,11 @@ public class WithHoldHaierBizService {
     /**
      * 验签
      */
-    public Boolean verify(Map<String, String> param, String sign){
+    public Boolean verify(Map<String, String> param, String sign,String signType){
 
         VerifyResult verifyResult =null;
-        String bizContent = param.get(BIZ_CONTENT_KEY)==null ? null : JSON.toJSONString(param.get(BIZ_CONTENT_KEY));
-        param.remove(BIZ_CONTENT_KEY);
-        param.put(BIZ_CONTENT_KEY, bizContent);
 
-        String signType = param.get(SIGN_TYPE_KEY);
-        String charset = param.get(CHARSET_KEY);
+        String charset = "utf-8";
 
         try {
             if ("RSA".equals(signType)) {
