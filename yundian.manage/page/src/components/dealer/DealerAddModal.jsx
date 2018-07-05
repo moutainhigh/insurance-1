@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Radio, Form, Checkbox, Input, Modal, Select, Cascader,Button} from "antd";
 import DealerAction from "actions/DealerAction";
-import {propsToFields, isEmptyObject} from "services/functions";
+import {propsToFields, isEmptyObject,checkMobileLength} from "services/functions";
 import {citys} from "services/data"
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
@@ -32,7 +32,15 @@ class DealerAddModal extends Component {
     });
   }
 
-
+  checkMobileLength = (rule, value, callback) => {
+    let regex = /^((\+)?86|((\+)?86)?)0?1[34578]\d{9}$/;
+    if (!regex.test(value)) {
+      callback("请输入正确手机号");
+    }
+    else {
+      callback();
+    }
+  };
 
 
 
@@ -90,7 +98,7 @@ class DealerAddModal extends Component {
                   )}
                 </FormItem>
                 <FormItem label="开户人手机号码" {...formItemLayout}>
-                  {getFieldDecorator('phone', { rules: [ {required: true, message: '请输入开户人手机号码'}]} )(
+                  {getFieldDecorator('phone', { rules: [ {required: true, message: '请输入开户人手机号码'}, {validator: this.checkMobileLength}]} )(
                     <Input/>
                   )}
                 </FormItem>
