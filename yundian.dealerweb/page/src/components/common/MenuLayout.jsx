@@ -5,6 +5,8 @@ import styles from "components/common/Common.less";
 import connectToStores from "alt-utils/lib/connectToStores";
 import LayoutStore from "../../flux/stores/LayoutStore";
 import LayoutAction from "actions/LayoutAction";
+import DealerUserAction from "actions/DealerUserAction";
+import ModifyPwd from './ModifyPwd';
 const Item = Menu.Item;
 const SubMenu = Menu.SubMenu;
 const {Header, Sider, Content,Footer} = Layout;
@@ -52,11 +54,12 @@ class MenuLayout extends Component {
 
     return {
       current: state.current,
-      dealerUser: state.dealerUser
+      dealerUser: state.dealerUser,
+      pwdModalVisible : state.pwdModalVisible
     }
   }
 
-    selectClick = (e) => {
+selectClick = (e) => {
     show(e.key)
     LayoutAction.setCurrent(e.key);
   }
@@ -95,7 +98,7 @@ class MenuLayout extends Component {
           </Sider>
           <Layout>
             <Header style={{ background: '#fff', padding: 0 }} >
-              <div style={{ textAlign: 'right',marginRight:50 }}>您好，{this.props.dealerUser.name+'('+this.props.dealerUser.dealerName+')'} <a onClick={LayoutAction.loginOut}>退出</a></div>
+              <div style={{ textAlign: 'right',marginRight:50 }}>您好，{this.props.dealerUser.name+'('+this.props.dealerUser.dealerName+')'} <a onClick={LayoutAction.openPwdModal}>修改密码</a> <a onClick={LayoutAction.loginOut}>退出</a></div>
             </Header>
             <Content style={{ margin: '0 12px' }}>
               <Breadcrumb style={{ margin: '12px 0' }}>
@@ -103,6 +106,7 @@ class MenuLayout extends Component {
                 <Breadcrumb.Item>{this.props.title}</Breadcrumb.Item>
               </Breadcrumb>
               <div style={{ padding: 20, background: '#fff', minHeight: 590 }}>
+                <ModifyPwd   pwdModalVisible={this.props.pwdModalVisible} />
                 {this.props.children}
               </div>
             </Content>

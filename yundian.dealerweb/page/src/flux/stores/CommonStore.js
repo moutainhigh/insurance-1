@@ -7,7 +7,7 @@ class CommonStore {
   constructor() {
 
     this.bindListeners({
-      handleGetCodeList: CommonAction.getCodeList
+      handleGetCodeList: CommonAction.getCodeList,
     });
 
     this.state = {

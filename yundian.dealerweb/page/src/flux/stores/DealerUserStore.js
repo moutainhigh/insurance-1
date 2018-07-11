@@ -33,8 +33,7 @@ class DealerUserStore {
       handleOpenUpdateModal: DealerUserAction.openUpdateModal,
       handleAddLoan: DealerUserAction.addLoan,
       handleUpdateLoan: DealerUserAction.updateLoan,
-      handleResetPwd: DealerUserAction.resetPwd
-
+      handleResetPwd: DealerUserAction.resetPwd,
 
     });
     this.state = {
@@ -42,6 +41,7 @@ class DealerUserStore {
       loading: true,
       typeList : [],
       addModalVisible : false,
+      pwdModalVisible:false,
       dealerUserInfo:{},
       userId:null,
       pagination: {
@@ -104,7 +104,6 @@ class DealerUserStore {
       }})
   };
 
-
   handleOpenAddModal =() =>{
     console.log("进入store");
     let visible = !this.state.addModalVisible;
@@ -115,6 +114,9 @@ class DealerUserStore {
       userId:null
     });
   };
+
+
+
   //打开修改窗口
   handleOpenUpdateModal =(data) =>{
 

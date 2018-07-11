@@ -1,8 +1,9 @@
 import alt from 'bases/Alt.js';
 import LayoutAction from '../actions/LayoutAction.js';
 import jsonp from "jsonp";
+import querystring from "querystring";
 import {Notify} from "components/common/Common";
-import {xFetch} from "../../services/xFetch";
+import {xFetch,xPostFetch} from "../../services/xFetch";
 class LayoutStore {
 
   constructor() {
@@ -12,14 +13,36 @@ class LayoutStore {
       handleSetCurrent: LayoutAction.setCurrent,
       handleGetLoginInfo:LayoutAction.getLoginInfo,
       handleLoginOut:LayoutAction.loginOut,
+      handleOpenPwdModal: LayoutAction.openPwdModal,
+      handleChangePwd: LayoutAction.changePwd,
     });
 
     this.state = {
+      pwdModalVisible:false,
       menus: {},
       current: "11",
       dealerUser:{name:'',dealerName:''}
     }
   }
+
+  handleOpenPwdModal =() =>{
+    let visible = !this.state.pwdModalVisible;
+    console.log(visible);
+    this.setState({
+      pwdModalVisible : visible,
+    });
+  };
+  handleChangePwd = (data) =>{
+    let param = querystring.encode(data);
+    console.log("update:"+param);
+    xPostFetch(SERVER_URL + '/dealerUser/modifyPwd?'+param).then(result => {
+      if (result && result.success) {
+        Notify('密码修改成功！', result.msg, 'success');
+        this.handleOpenPwdModal();
+      } else{
+        Notify('密码修改失败', result.msg, 'error');
+      }})
+  };
 
   handleGetMenus=(data)=>{
 

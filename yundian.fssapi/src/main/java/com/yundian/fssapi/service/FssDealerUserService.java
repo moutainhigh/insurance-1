@@ -13,6 +13,15 @@ public interface FssDealerUserService {
 
 
 	/**
+	 * 修改密码
+	 * @param userId
+	 * @param oldPwd
+	 * @param newPwd
+	 * @return
+	 */
+	 Boolean modifyPwd(Long userId,String oldPwd, String newPwd);
+
+	/**
 	 * 密码重置
 	 * @param userId
 	 * @param userLoginName

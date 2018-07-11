@@ -16,6 +16,20 @@ class LayoutAction {
   loginOut(){
     return null;
   }
+  /**
+   * 打开修改密码
+   * @param data
+   * @returns {*}
+   */
+  openPwdModal = ()=> {
+    return null;
+  };
+  /**
+   *修改密码
+   */
+  changePwd =(data)=> {
+    return data;
+  };
 }
 
 export default alt.createActions(LayoutAction);

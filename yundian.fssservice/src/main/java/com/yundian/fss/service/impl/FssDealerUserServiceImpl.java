@@ -39,6 +39,28 @@ public class FssDealerUserServiceImpl implements FssDealerUserService{
     private int PWD_PHONE_R_6=6;
 
     @Override
+    public Boolean modifyPwd(Long userId,String oldPwd, String newPwd) {
+
+        try {
+
+            FssDealerUserModel fssDealerUserModel = fssDealerUserModelMapper.selectByPrimaryKey(userId);
+            String oldPwdMd5 = MD5.encodePassword(oldPwd);
+            String newPwdMd5 = MD5.encodePassword(newPwd);
+            if(fssDealerUserModel!=null&&fssDealerUserModel.getUserPwd().equals(oldPwdMd5)) {
+                fssDealerUserModel.setUserPwd(newPwdMd5);
+                Integer resetCount = fssDealerUserModelMapper.updateByPrimaryKeySelective(fssDealerUserModel);
+                return resetCount > 0;
+            }else{
+                throw new FssDealerException(ResultCodeContants.FAILED, "修改密码失败，输入的旧密码有误");
+            }
+        } catch (Exception e) {
+            log.error(String.format("修改密码失败:%s", userId+oldPwd+newPwd), e);
+            throw new FssDealerException(ResultCodeContants.FAILED, "修改密码失败", e);
+
+        }
+    }
+
+    @Override
     public Boolean resetPwd(Long userId, String userLoginName) {
 
         try {

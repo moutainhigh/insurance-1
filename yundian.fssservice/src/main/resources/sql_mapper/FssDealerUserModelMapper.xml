@@ -155,6 +155,9 @@
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
       <if test="mtime != null" >
         mtime = #{mtime,jdbcType=VARCHAR},
       </if>

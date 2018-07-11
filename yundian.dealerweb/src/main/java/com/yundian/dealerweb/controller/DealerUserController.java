@@ -44,6 +44,23 @@ public class DealerUserController {
         }
     }
     @ResponseBody
+    @RequestMapping(value="/dealerUser/modifyPwd",method= RequestMethod.POST)
+    public Result modifyPwd(@RequestParam(value="oldPwd") String oldPwd,
+                            @RequestParam(value="newPwd") String newPwd,HttpSession session)
+    {
+
+        try {
+            FssDealerUserModel fssDealerUserModel =(FssDealerUserModel) session.getAttribute(DealerWebConstants.SYS.WEB_USER_SESSION);
+            fssDealerUserService.modifyPwd(fssDealerUserModel.getUserId(),oldPwd,newPwd);
+            return Result.success("");
+        } catch (Exception ex) {
+            log.error(String.format("修改密码成功："), ex);
+            System.out.printf(ex.getMessage());
+            return Result.fail("", ex.getCause()!=null? ex.getCause().getMessage():ex.getMessage());
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value="/dealerUser/resetPwd",method= RequestMethod.POST)
     public Result resetPwd(@RequestParam(value="userId") Long userId) {
 

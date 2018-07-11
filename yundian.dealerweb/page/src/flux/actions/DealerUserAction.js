@@ -58,21 +58,9 @@ class DealerUserAction {
   resetPwd = (data)=>{
     return data;
   }
-  /**
-   * 删除记录
-   * @param data
-   * @returns {*}
-   */
-  deleteRecord = (data)=> {
-    return data;
-  };
 
-  /**
-   *改变激活状态
-   */
-  changeStatus =(data)=> {
-    return data;
-  };
+
+
 }
 
 export default alt.createActions(DealerUserAction);
