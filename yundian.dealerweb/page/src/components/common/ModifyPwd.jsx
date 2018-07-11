@@ -57,14 +57,14 @@ class ModifyPwd extends React.Component {
               {getFieldDecorator('newPwd', { rules: [ {required: true, message: '请输入新密码'}, {
                 validator: this.validateToNextPassword,
               }]} )(
-                <Input/>
+                <Input type="password" />
               )}
             </FormItem>
             <FormItem label="重复密码" {...formItemLayout}>
               {getFieldDecorator('newPwd2', { rules: [ {required: true, message: '重复新密码'}, {
                 validator: this.compareToFirstPassword,
               }]} )(
-                <Input/>
+                <Input type="password"/>
               )}
             </FormItem>
           </Form>
