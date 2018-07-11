@@ -43,6 +43,7 @@
     <include refid="Base_Column_List" />
     from fss_car_series
     where brand_code = #{brandCode,jdbcType=VARCHAR}
+    order by series_score desc
   </select>
 
 

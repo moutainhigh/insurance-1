@@ -308,8 +308,12 @@ handleCascaderOnChange=(value,selectedOptions)=>{
                     </Col>
                     <Col span="8">
                       <FormItem  label="车辆颜色"  {...formItemLayout}>
-                      {getFieldDecorator('carColor')(
-                        <SelectData codeType="CarColor" attachOption="false"/>
+                      {getFieldDecorator('carColor' ,{initialValue:"1"})(
+                        <Select>
+                        <Option value="3">白色</Option>
+                        <Option value="2">黑色</Option>
+                          <Option value="1">默认</Option>
+                        </Select>
                       )}
 
                     </FormItem>
