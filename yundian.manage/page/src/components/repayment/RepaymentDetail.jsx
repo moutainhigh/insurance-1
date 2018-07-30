@@ -28,12 +28,7 @@ class RepaymentPlan extends Component{
       {
         title: '应还月供', dataIndex: 'planAmount', key: 'planAmount', width: 180
       },
-     {
-       title: '本金', dataIndex: 'planCaptialAmount', key: 'planCaptialAmount', width: 120
-     },
-     {
-       title: '利息', dataIndex: 'planInterestAmount', key: 'planInterestAmount', width: 120
-     },
+
       {
         title: '滞纳金', dataIndex: 'payFee', key: 'payFee', width: 120
       },
