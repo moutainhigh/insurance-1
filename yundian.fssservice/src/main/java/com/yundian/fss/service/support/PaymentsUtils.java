@@ -48,14 +48,14 @@ public class PaymentsUtils {
 
     /**
      * 计算月供，total/periodCount,向上取整
-     * @param totalMoney
+     * @param totalMoney 单位分
      * @param periodCount
      * @return
      */
     public static Integer getMonthMoney(int totalMoney,int periodCount){
         double monthDouble =totalMoney/periodCount;
         //向上取整
-        Double monthDoubleObj = Math.floor(monthDouble/100)*100;
+        Double monthDoubleObj = Math.floor(monthDouble);
 
         return monthDoubleObj.intValue();
     }
