@@ -67,6 +67,7 @@ public class RepaymentController {
                         e.setPayAmount(e.getPayAmount()/100);
                         e.setPayFee(e.getPayFee()/100);
                         e.setPlanInterestAmount(e.getPlanInterestAmount()/100);
+                        e.setPlanCaptialAmount(e.getPlanCaptialAmount()/100);
                     } catch (Exception ex) {
                         log.error(ex.getMessage());
                     }

@@ -46,8 +46,10 @@ public class MD5 {
     }  
     
     public static void main(String[] args)
-    {
-    	String s="902999";
+    {//730d4f266067b012749bcb4c2dab57e8
+    	String s="221201\u202C";
+
+    	String iphone="\u202D189 2122 1201\u202C";
         System.out.printf(encodePassword(s));
     }
 }
