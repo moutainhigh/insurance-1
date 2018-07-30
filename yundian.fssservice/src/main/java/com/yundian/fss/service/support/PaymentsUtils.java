@@ -55,7 +55,7 @@ public class PaymentsUtils {
     public static Integer getMonthMoney(int totalMoney,int periodCount){
         double monthDouble =totalMoney/periodCount;
         //向上取整
-        Double monthDoubleObj = Math.floor(totalMoney/100)*100;
+        Double monthDoubleObj = Math.floor(monthDouble/100)*100;
 
         return monthDoubleObj.intValue();
     }
@@ -72,7 +72,7 @@ public class PaymentsUtils {
     }
     public static void main(String[] args){
 
-        Integer amount = getPaymentsForMonth(400000,0.01,12);
+        Integer amount = getMonthMoney(851000,12);
         System.out.println("月供："+amount);
 //
 //        Integer monthinterestmoney = getMonthInterestMoney(700000,0.01,1,12);
