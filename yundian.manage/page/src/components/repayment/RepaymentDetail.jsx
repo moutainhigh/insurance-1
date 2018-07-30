@@ -3,6 +3,7 @@ import LoanInfo from "../loan/LoanInfo";
 import {Tabs,Modal,Button,Table} from "antd";
 import {Notify} from "../common/Common";
 import RepaymentAction from "actions/RepaymentAction";
+import {fenToYuan} from "services/functions"
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
 class RepaymentPlan extends Component{
@@ -23,14 +24,26 @@ class RepaymentPlan extends Component{
         title: '逾期天数', dataIndex: 'overdueDays', key: 'overdueDays', width: 120
       },
       {
-        title: '还款金额', dataIndex: 'payAmount', key: 'payAmount', width: 180
+        title: '还款金额', dataIndex: 'payAmount', key: 'payAmount', width: 180,
+        render(text, record, index){
+          let moneyYuan =fenToYuan(text);
+          return (<div>{moneyYuan}</div>)
+        }
       },
       {
-        title: '应还月供', dataIndex: 'planAmount', key: 'planAmount', width: 180
+        title: '应还月供', dataIndex: 'planAmount', key: 'planAmount', width: 180,
+        render(text, record, index){
+          let moneyYuan =fenToYuan(text);
+          return (<div>{moneyYuan}</div>)
+        }
       },
 
       {
-        title: '滞纳金', dataIndex: 'payFee', key: 'payFee', width: 120
+        title: '滞纳金', dataIndex: 'payFee', key: 'payFee', width: 120,
+        render(text, record, index){
+          let moneyYuan =fenToYuan(text);
+          return (<div>{moneyYuan}</div>)
+        }
       },
 
       {
