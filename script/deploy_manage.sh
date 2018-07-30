@@ -1,3 +1,4 @@
+set -m
 git pull
 echo ‘………………..打包项目……………………’
 cd /home/luoyiuser/source/insurance/yundian.manage
