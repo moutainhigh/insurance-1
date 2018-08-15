@@ -99,7 +99,7 @@ public class FssRepaymentWithHoldServiceImpl implements FssRepaymentWithHoldServ
         fssRepaymentOrderBizService.updateRepaymentOrderStatus(orderModel.getId(),orderStatusEnum,notifyRequest.getFailReason());
 
         if(orderStatusEnum ==FssRepaymentOrderStatusEnum.TRADE_CLOSED){
-            fssLoanRepaymentPlanBizService.repaymentFailed(orderModel.getPlanId());
+            fssLoanRepaymentPlanBizService.updateRepaymentPlanUnPayment(orderModel.getPlanId());
         }else if(orderStatusEnum ==FssRepaymentOrderStatusEnum.TRADE_FINISHED||
                 orderStatusEnum ==FssRepaymentOrderStatusEnum.TRADE_SUCCESS){
             Double tradeAmountDouble = Double.valueOf(notifyModel.getTradeAmount())*100;
