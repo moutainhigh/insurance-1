@@ -67,12 +67,12 @@ public class PaymentsUtils {
      */
     public static String moneyFormat(Integer money){
 
-        double f = money/100;
+        double f = BigDecimalUtil.div(money,100);
         return NumberUtil.format2Str(f);
     }
     public static void main(String[] args){
 
-        Integer amount = getMonthMoney(851000,12);
+        String amount = moneyFormat(50916);
         System.out.println("月供："+amount);
 //
 //        Integer monthinterestmoney = getMonthInterestMoney(700000,0.01,1,12);
